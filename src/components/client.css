@@ -1,0 +1,468 @@
+button:focus {
+    outline: none; /* Убираем стандартный outline */
+}
+button:active {
+    box-shadow: 0 0 0 2px #0077FF; /* Синяя тень вокруг кнопки */
+}
+/* хедер */
+.header {
+    height: 30vh; /* 30% высоты экрана */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    color: white;
+    overflow: hidden;
+    background: url('../assets/companyback.png'); /* Замените на путь к вашему изображению */
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    pointer-events: none; /* Чтобы можно было взаимодействовать с элементами под затемнением */
+    z-index: -1;
+  }
+  .roundLogo{
+    background-color: #FFFFFF;
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    background-image: url(../assets/logo1.png);
+    background-repeat: no-repeat;
+    background-position: 46% 50%;
+    background-size: auto;
+    
+  }
+  .headWrap{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+   
+    z-index:-1;
+  }
+  
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .online-booking-button {
+    background-color: #0077FF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+  }
+  
+  .burger-menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px; /* Увеличили ширину в 2 раза */
+    height: 80px; /* Увеличили высоту в 2 раза */
+    color: #0077FF; /* Цвет для иконки */
+  }
+  
+  .burger-icon {
+    width: 38%;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .burger-icon::before,
+  .burger-icon::after,
+  .burger-icon div {
+    content: '';
+    width: 100%;
+    height: 4px; /* Увеличили толщину полосок в 2 раза */
+    background-color: #0077FF; /* Цвет полосок */
+    border-radius: 4px; /* Увеличили радиус скругления */
+  }
+  .header-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 10vh;
+    justify-content: space-around;
+  }
+  
+  .service-name {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  
+  .company-name {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+/* секция с кнопками */
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #ffffff; /* Фон блока */
+  }
+  
+  /* Заголовок */
+  .header-text {
+    text-align: center;
+    margin-bottom: 40px; /* Отступ от заголовка до кнопок */
+    text-align: center;
+    margin-bottom: 40px;
+    display: flex
+;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .zapisites {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #0077FF;
+  }
+  
+  .na-priem {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000000;
+  }
+  
+  /* Кнопки */
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Расстояние между кнопками */
+  }
+  
+  .custom-button {
+    width: 400px;
+    height: 64px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 13px; /* Расстояние между иконкой и текстом */
+    border-radius: 30px;
+    background: #0077FF;
+    border: none;
+    cursor: pointer;
+  }
+ .fast{
+    background: linear-gradient(92.3deg, #9C07FF 24.82%, #4F35EC 41.54%, #294CE3 57.3%, #0065D9 74.17%, #004799 91.1%);
+  }
+.center{
+  justify-content: center;
+}
+  .button-text {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  
+  .button-icon {
+    /* Стили для иконки (добавьте свои иконки) */
+    width: 24px;
+    height: 24px;
+    background-color: transparent; /* Временный фон для визуализации */
+  }
+  
+  /* Полоска */
+  .divider {
+    width: 176px;
+    height: 1px;
+    border: 1px solid #0077FF;
+    margin-top: 40px; /* Отступ от кнопок до полоски */
+    background-color: #0077FF;
+  }
+  /* Контейнер для дополнительной кнопки */
+.additional-button-container {
+    margin-top: 40px; /* Отступ от полоски до кнопки "Общая консультация" */
+  }
+  /* Блок с кнопками */
+.buttons-block {
+    margin-top: 40px; /* Отступ сверху */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Равный отступ между кнопками */
+    margin-bottom: 40px;
+  }
+  
+  /* Круглые кнопки */
+  .round-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Делаем кнопку круглой */
+    border: none;
+    background-color: #ffffff; 
+    cursor: pointer;
+    background-size: cover; /* Масштабируем изображение, чтобы оно заполнило кнопку */
+    background-position: center; /* Центрируем изображение */
+    cursor: pointer;
+  }
+  .round-button:nth-child(1) {
+    background-image: url('../assets/tg.png'); /* Путь к изображению */
+    width: 40px;
+    height: 40px;
+  }
+  
+  .round-button:nth-child(2) {
+    background-image: url('../assets/WhatsAppOutlined.svg'); /* Путь к изображению */
+    width: 45px;
+    height: 45px;
+  }
+  /* Кнопка "НАПИСАТЬ" */
+.write-button {
+    width: 181px;
+    height: 40px;
+    padding: 0; /* Убираем padding-top и padding-bottom */
+    border: none;
+    border-radius: 20px;
+    background-color: #0077FF; /* Цвет фона */
+    color: white; /* Цвет текста */
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: auto; /* Выравниваем справа */
+    display: flex;
+    align-items: center; /* Центрируем текст по вертикали */
+    justify-content: center; /* Центрируем текст по горизонтали */
+  }
+  
+  /* Кнопка "Войти в личный кабинет" */
+  .login-button {
+    width: 350px;
+    height: 40px;
+    padding: 0 14px; /* padding-right и padding-left */
+    margin-top: 10px; /* Отступ сверху */
+    border: none;
+    border-radius: 20px;
+    background-color: #0077FF; /* Цвет фона */
+    color: white; /* Цвет текста */
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px; /* Отступ между иконкой и текстом (если будет иконка) */
+  }
+  .MuiDateCalendar-root {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+/* Стили для календаря */
+.custom-calendar {
+  width: 100%;
+}
+
+.custom-calendar .MuiPickersDay-root {
+  color: black;
+}
+
+.custom-calendar .Mui-selected {
+  background-color: #1976D2;
+  color: white;
+}
+
+.custom-calendar .MuiPickersDay-today {
+  border-color: #1976D2;
+  color: #1976D2;
+}
+
+.custom-calendar .Mui-selected.MuiPickersDay-today {
+  background-color: #1976D2;
+  color: white;
+  border-color: #1976D2;
+}
+
+.custom-calendar .MuiPickersCalendarHeader-label {
+  color: black;
+}
+
+/* Стили для списка специалистов */
+.time-slots-container {
+  margin-top: 24px;
+}
+
+.time-slots-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.time-slot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 12px 0;
+}
+
+.specialist-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.specialist-avatar {
+  background-color: #BDBDBD;
+  width: 40px;
+  height: 40px;
+}
+
+.next-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.next-button {
+  width: 352px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #0077FF;
+  color: white;
+  text-transform: none;
+}
+
+.next-button:hover {
+  background-color: #005BB5;
+}
+/* Стили для календаря */
+.custom-calendar {
+  width: 100%;
+}
+
+.custom-calendar .MuiPickersDay-root {
+  color: black;
+}
+
+.custom-calendar .Mui-selected {
+  background-color: #1976D2;
+  color: white;
+}
+
+.custom-calendar .MuiPickersDay-today {
+  border-color: #1976D2;
+  color: #1976D2;
+}
+
+.custom-calendar .Mui-selected.MuiPickersDay-today {
+  background-color: #1976D2;
+  color: white;
+  border-color: #1976D2;
+}
+
+.custom-calendar .MuiPickersCalendarHeader-label {
+  color: black;
+}
+
+/* Стили для списка специалистов */
+.time-slots-container {
+  margin-top: 24px;
+}
+
+.time-slots-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.time-slot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 12px 0;
+}
+
+.specialist-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.specialist-avatar {
+  background-color: #BDBDBD;
+  width: 40px;
+  height: 40px;
+}
+
+.next-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.next-button {
+  width: 352px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #0077FF;
+  color: white;
+  text-transform: none;
+}
+
+.next-button:hover {
+  background-color: #005BB5;
+}

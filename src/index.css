@@ -53,7 +53,15 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+/* Общие стили для страницы */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Убираем горизонтальную прокрутку */
+  min-height: 100vh; /* Минимальная высота = высота экрана */
+}
 
+/* Остальные стили (оставьте их без изменений) */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
