@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => {
     server: {
       host: true, // позволяет принимать подключения извне
       allowedHosts: ['.ngrok-free.app'], // разрешаем ngrok-домены
+      historyApiFallback: true,
       proxy: {
         '/api': {
           target: env.VITE_API_URL || 'http://localhost:4000',
