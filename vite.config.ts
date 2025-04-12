@@ -7,6 +7,8 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     server: {
+      host: true, // позволяет принимать подключения извне
+      allowedHosts: ['.ngrok-free.app'], // разрешаем ngrok-домены
       proxy: {
         '/api': {
           target: env.VITE_API_URL || 'http://localhost:4000',

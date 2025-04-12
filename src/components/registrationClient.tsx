@@ -8,6 +8,7 @@ import CodeEnter from './UI/clientRegAuth/codeEnter';
 import ClientData from './UI/clientRegAuth/clientData';
 import Congratulations from './UI/clientRegAuth/congratulations';
 import Header from './UI/header';
+import TelegramRedir from './UI/clientRegAuth/telegramRedir';
 const apiUrl = import.meta.env.VITE_API_URL;
 export default function RegistrationClient() {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function RegistrationClient() {
     const [clientCreationError, setClientCreationError] = useState('');
     const [codeError, setCodeError] = useState(false);
     const [codeType, setCodeType] = useState('WA')
-    const totalSteps = 4;
+    const totalSteps = codeType === 'TG' ? 5 : 4;
 
     const createClient = async (username = null,chatId = null) => { 
         console.log(username, chatId)
@@ -150,39 +151,44 @@ export default function RegistrationClient() {
             setIsVerifying(false);
         }
     };
-    useEffect(()=>{
-        console.log(codeType)
-    },[codeType])
     const handleNext = async () => {
         if (step < totalSteps) {
             if (step === 2) {
-                if(codeType == 'TG')window.open('https://t.me/technica1lbot?start=activate', '_blank');
-                else {
+                if (codeType === 'TG') {
+                    // window.open('https://t.me/technica1lbot?start=activate', '_blank');
+                    setStep(3); // <- идём на TelegramRedir
+                    return;
+                } else {
                     const cleanPhone = formData.phone.replace(/\s+/g, '').replace(/\D/g, '');
-                    const sendResponse = await fetch(`${apiUrl}/whatsapp/send-code/${cleanPhone}`,{
+                    const sendResponse = await fetch(`${apiUrl}/whatsapp/send-code/${cleanPhone}`, {
                         method: 'POST',
                         headers: {
-                          'Content-Type': 'application/json',
+                            'Content-Type': 'application/json',
                         },
-                      });
-                    console.log(sendResponse)
-                    if(!sendResponse.ok){
-                            setCodeError(true);
-                            throw new Error('Неверный номер телефона');
+                    });
+                    if (!sendResponse.ok) {
+                        setCodeError(true);
+                        throw new Error('Неверный номер телефона');
                     }
+                    setStep(3); // <- идём сразу на CodeEnter
+                    return;
                 }
-                setStep(3);
-            } else if (step === 3) {
-               if(codeType == 'TG') await verifyCodeAndProceedTg();
-               else if(codeType == 'WA') await verifyCodeAndProceedWa();
-            } else {
-                setStep(step + 1);
             }
+    
+            if ( codeType === 'WA' && step === 3) {
+              
+               if (codeType === 'WA') await verifyCodeAndProceedWa();
+                return;
+            }
+            if(codeType === 'TG' && step === 4){
+                if (codeType === 'TG') await verifyCodeAndProceedTg();
+            }
+            setStep(step + 1);
         } else {
-            console.log('Все данные формы:', formData);
             navigate('/client');
         }
     };
+    
 
     const handleBack = () => {
         if (step > 1) {
@@ -217,156 +223,349 @@ export default function RegistrationClient() {
     };
 
     const renderStepContent = () => {
-        switch (step) {
-            case 1:
-                return (
-                    <>
-                        <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
-                            <div>
-                                <span className="zapisites">Укажите </span>
-                                <span className="na-priem"> данные</span>
+        if (codeType === 'WA') {
+            switch (step) {
+                case 1:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Укажите </span>
+                                    <span className="na-priem"> данные</span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px'}}></div>
                             </div>
-                            <div className="divider" style={{marginTop:'20px'}}></div>
-                        </div>
-                        <PhoneEnter phone={formData.phone} onSubmit={handlePhoneSubmit}/>
-                    </>
-                );
-            case 2:
-                return (
-                    <>
-                        <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
-                            <div>
-                                <span className="zapisites">Укажите </span>
-                                <span className="na-priem"> данные</span>
+                            <PhoneEnter phone={formData.phone} onSubmit={handlePhoneSubmit}/>
+                        </>
+                    );
+                case 2:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Укажите </span>
+                                    <span className="na-priem"> данные</span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px'}}></div>
                             </div>
-                            <div className="divider" style={{marginTop:'20px'}}></div>
-                        </div>
-                        <ClientData onSubmit={handleClientDataSubmit}/>
-                    </>
-                );
-            case 3:
-                return (
-                    <>
-                        <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
-                            <div>
-                                <span className="zapisites">Введите </span>
-                                <span className="na-priem"> код подтверждения</span>
+                            <ClientData onSubmit={handleClientDataSubmit}/>
+                        </>
+                    );
+                case 3:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Введите </span>
+                                    <span className="na-priem"> код подтверждения</span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px'}}></div>
                             </div>
-                            <div className="divider" style={{marginTop:'20px'}}></div>
-                        </div>
-                        <CodeEnter 
-                            onSubmit={handleCodeSubmit}
-                            error={verificationError}
-                        />
-                    </>
-                );
-            case 4:
-                return (
-                    <>
-                        <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
-                            <div>
-                                <span className="zapisites">Спасибо </span>
+                            <CodeEnter 
+                                onSubmit={handleCodeSubmit}
+                                error={verificationError}
+                            />
+                        </>
+                    );
+                case 4:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Спасибо </span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px'}}></div>
                             </div>
-                            <div className="divider" style={{marginTop:'20px'}}></div>
-                        </div>
-                        <Congratulations name={{first_name: formData.firstName, patronymic: formData.middleName}}/>
-                    </>
-                );
-            default:
-                return null;
+                            <Congratulations name={{first_name: formData.firstName, patronymic: formData.middleName}}/>
+                        </>
+                    );
+                default:
+                    return null;
+            }
+        }
+        if (codeType === 'TG') {
+            switch (step) {
+                case 1:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Укажите </span>
+                                    <span className="na-priem"> данные</span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px'}}></div>
+                            </div>
+                            <PhoneEnter phone={formData.phone} onSubmit={handlePhoneSubmit}/>
+                        </>
+                    );
+                case 2:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Укажите </span>
+                                    <span className="na-priem"> данные</span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px'}}></div>
+                            </div>
+                            <TelegramRedir />
+                        </>
+                    );
+                case 3:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Укажите </span>
+                                    <span className="na-priem"> данные</span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px'}}></div>
+                            </div>
+                            <ClientData onSubmit={handleClientDataSubmit}/>
+                        </>
+                    );
+                case 4:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Введите </span>
+                                    <span className="na-priem"> код подтверждения</span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px'}}></div>
+                            </div>
+                            <CodeEnter 
+                                onSubmit={handleCodeSubmit}
+                                error={verificationError}
+                            />
+                        </>
+                    );
+                case 5:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Спасибо </span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px'}}></div>
+                            </div>
+                            <Congratulations name={{first_name: formData.firstName, patronymic: formData.middleName}}/>
+                        </>
+                    );
+                default:
+                    return null;
+            }
         }
     };
 
     const renderButtons = () => {
-        switch(step) {
-            case 1:
-                return (
-                    <>
+        if(codeType === 'TG'){
+            switch(step) {
+                case 1:
+                    return (
+                        <>
+                            <Button 
+                                sx={buttonStyle} 
+                                onClick={handleNext}
+                                disabled={!isPhoneValid}
+                            >
+                                ЗАРЕГИСТРИРОВАТЬСЯ
+                                <img src={arrow} alt='далее' />
+                            </Button>
+                            <Button 
+                                sx={{ 
+                                    ...buttonStyle, 
+                                    backgroundColor: 'white', 
+                                    border: '1px solid #0077FF', 
+                                    color: '#0077FF',
+                                    width: '350px'
+                                }}
+                                onClick={()=>{navigate('/client')}}
+                            >
+                                Вернуться на главную
+                            </Button>
+                        </>
+                    );
+                case 2:
+                        return (
+                            <>
                         <Button 
                             sx={buttonStyle} 
                             onClick={handleNext}
-                            disabled={!isPhoneValid}
+                            // disabled={!formData.isValid}
+                            >
+                            ДАЛЕЕ
+                            <img src={arrow} alt='далее' />
+                            </Button>
+                            <Button 
+                                sx={{ 
+                                    ...buttonStyle, 
+                                    backgroundColor: 'white', 
+                                    border: '1px solid #0077FF', 
+                                    color: '#0077FF' 
+                                }}
+                                onClick={handleBack}
+                            >
+                                <img src={arrowRight} alt='назад' />
+                                НАЗАД
+                            </Button>
+                        </>
+                );
+                case 3:
+                    return (
+                        <>
+                            <Button 
+                                sx={buttonStyle} 
+                                onClick={handleNext}
+                                disabled={!formData.isValid}
+                            >
+                                ДАЛЕЕ
+                                <img src={arrow} alt='далее' />
+                            </Button>
+                            <Button 
+                                sx={{ 
+                                    ...buttonStyle, 
+                                    backgroundColor: 'white', 
+                                    border: '1px solid #0077FF', 
+                                    color: '#0077FF' 
+                                }}
+                                onClick={handleBack}
+                            >
+                                <img src={arrowRight} alt='назад' />
+                                НАЗАД
+                            </Button>
+                        </>
+                    );
+                case 4:
+                    return (
+                        <>
+                            <Button 
+                                sx={buttonStyle} 
+                                onClick={handleNext}
+                                disabled={!formData.code || isVerifying}
+                            >
+                                {isVerifying ? 'ПОДТВЕРЖДАЕМ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
+                                {!isVerifying && <img src={arrow} alt='далее' />}
+                            </Button>
+                            <Button 
+                                sx={{ 
+                                    ...buttonStyle, 
+                                    backgroundColor: 'white', 
+                                    border: '1px solid #0077FF', 
+                                    color: '#0077FF' 
+                                }}
+                                onClick={handleBack}
+                            >
+                                <img src={arrowRight} alt='назад' />
+                                НАЗАД
+                            </Button>
+                        </>
+                    );
+                case 5:
+                    return (
+                        <Button 
+                            sx={buttonStyle} 
+                            onClick={handleNext}
                         >
-                            ЗАРЕГИСТРИРОВАТЬСЯ
+                            ПЕРЕЙТИ НА ГЛАВНУЮ
                             <img src={arrow} alt='далее' />
                         </Button>
-                        <Button 
-                            sx={{ 
-                                ...buttonStyle, 
-                                backgroundColor: 'white', 
-                                border: '1px solid #0077FF', 
-                                color: '#0077FF',
-                                width: '350px'
-                            }}
-                            onClick={()=>{navigate('/client')}}
-                        >
-                            Вернуться на главную
-                        </Button>
-                    </>
-                );
-            case 2:
-                return (
-                    <>
+                    );
+                default:
+                    return null;
+            }
+        }else if(codeType === 'WA'){
+            switch(step) {
+                case 1:
+                    return (
+                        <>
+                            <Button 
+                                sx={buttonStyle} 
+                                onClick={handleNext}
+                                disabled={!isPhoneValid}
+                            >
+                                ЗАРЕГИСТРИРОВАТЬСЯ
+                                <img src={arrow} alt='далее' />
+                            </Button>
+                            <Button 
+                                sx={{ 
+                                    ...buttonStyle, 
+                                    backgroundColor: 'white', 
+                                    border: '1px solid #0077FF', 
+                                    color: '#0077FF',
+                                    width: '350px'
+                                }}
+                                onClick={()=>{navigate('/client')}}
+                            >
+                                Вернуться на главную
+                            </Button>
+                        </>
+                    );
+                case 2:
+                    return (
+                        <>
+                            <Button 
+                                sx={buttonStyle} 
+                                onClick={handleNext}
+                                disabled={!formData.isValid}
+                            >
+                                ЗАРЕГИСТРИРОВАТЬСЯ
+                                <img src={arrow} alt='далее' />
+                            </Button>
+                            <Button 
+                                sx={{ 
+                                    ...buttonStyle, 
+                                    backgroundColor: 'white', 
+                                    border: '1px solid #0077FF', 
+                                    color: '#0077FF' 
+                                }}
+                                onClick={handleBack}
+                            >
+                                <img src={arrowRight} alt='назад' />
+                                НАЗАД
+                            </Button>
+                        </>
+                    );
+                case 3:
+                    return (
+                        <>
+                            <Button 
+                                sx={buttonStyle} 
+                                onClick={handleNext}
+                                disabled={!formData.code || isVerifying}
+                            >
+                                {isVerifying ? 'ПОДТВЕРЖДАЕМ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
+                                {!isVerifying && <img src={arrow} alt='далее' />}
+                            </Button>
+                            <Button 
+                                sx={{ 
+                                    ...buttonStyle, 
+                                    backgroundColor: 'white', 
+                                    border: '1px solid #0077FF', 
+                                    color: '#0077FF' 
+                                }}
+                                onClick={handleBack}
+                            >
+                                <img src={arrowRight} alt='назад' />
+                                НАЗАД
+                            </Button>
+                        </>
+                    );
+                case 4:
+                    return (
                         <Button 
                             sx={buttonStyle} 
                             onClick={handleNext}
-                            disabled={!formData.isValid}
                         >
-                            ЗАРЕГИСТРИРОВАТЬСЯ
+                            ПЕРЕЙТИ НА ГЛАВНУЮ
                             <img src={arrow} alt='далее' />
                         </Button>
-                        <Button 
-                            sx={{ 
-                                ...buttonStyle, 
-                                backgroundColor: 'white', 
-                                border: '1px solid #0077FF', 
-                                color: '#0077FF' 
-                            }}
-                            onClick={handleBack}
-                        >
-                            <img src={arrowRight} alt='назад' />
-                            НАЗАД
-                        </Button>
-                    </>
-                );
-            case 3:
-                return (
-                    <>
-                        <Button 
-                            sx={buttonStyle} 
-                            onClick={handleNext}
-                            disabled={!formData.code || isVerifying}
-                        >
-                            {isVerifying ? 'ПОДТВЕРЖДАЕМ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
-                            {!isVerifying && <img src={arrow} alt='далее' />}
-                        </Button>
-                        <Button 
-                            sx={{ 
-                                ...buttonStyle, 
-                                backgroundColor: 'white', 
-                                border: '1px solid #0077FF', 
-                                color: '#0077FF' 
-                            }}
-                            onClick={handleBack}
-                        >
-                            <img src={arrowRight} alt='назад' />
-                            НАЗАД
-                        </Button>
-                    </>
-                );
-            case 4:
-                return (
-                    <Button 
-                        sx={buttonStyle} 
-                        onClick={handleNext}
-                    >
-                        ПЕРЕЙТИ НА ГЛАВНУЮ
-                        <img src={arrow} alt='далее' />
-                    </Button>
-                );
-            default:
-                return null;
+                    );
+                default:
+                    return null;
+            }
         }
+
     };
 
     return (
