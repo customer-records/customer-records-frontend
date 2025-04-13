@@ -6,6 +6,7 @@ import './client.css';
 import OnDate from './UI/onDate';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import {createTheme} from '@mui/material'
 // Импортируем другие компоненты, которые будут использоваться
 import OnSpecialist from './UI/onSpecialist'; // Предполагается, что этот компонент существует
 import OnService from './UI/onService'; // Предполагается, что этот компонент существует
@@ -13,9 +14,20 @@ import OnFastRecord from './UI/onFastRecord'; // Предполагается, �
 import Header from './UI/header';
 
 export default function CustomerRecord() {
+    const theme = createTheme({
+      breakpoints: {
+        values: {
+          xs: 0,
+          sm: 300,  
+          md: 450,   
+          lg: 1200,
+          xl: 1600,
+        },
+      },
+    });
   const navigate = useNavigate()
   const location = useLocation();
-  const theme = useTheme();
+  // const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   // Функция для определения, какой компонент отображать
@@ -42,7 +54,7 @@ export default function CustomerRecord() {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Box
         sx={{
-          width: isDesktop ? '50vh' : '50vh',
+          width: isDesktop ? '50vh' : '100vw',
           maxWidth: 800,
           margin: '0 auto',
           minHeight: '100vh',

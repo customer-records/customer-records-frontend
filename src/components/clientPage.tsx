@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 import './client.css';
 import calendarIcon from '../assets/calendar.png';
 import chelikIcon from '../assets/chelik.png';
@@ -9,7 +10,17 @@ import { useNavigate } from "react-router-dom";
 import Header from './UI/header';
 export default function ClientPage() {
   const navigate = useNavigate();
-  const theme = useTheme();
+  const theme = createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 300,  
+        md: 450,   
+        lg: 1200,
+        xl: 1600,
+      },
+    },
+  });
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const handleClick = (route: string) => {
     navigate(route)
@@ -17,7 +28,7 @@ export default function ClientPage() {
   return (
     <Box
       sx={{
-        width: isDesktop ? '50vh' : '50vh',
+        width: isDesktop ? '50vh' : '100vw',
         maxWidth: 800,
         margin: '0 auto',
         minHeight: '100vh',

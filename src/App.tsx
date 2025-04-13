@@ -36,7 +36,7 @@ function App() {
 
   return (
     <Router>
-      <div className='xxx'>
+      
         <Routes>
           {/* Маршрут для авторизации */}
           <Route
@@ -100,7 +100,7 @@ function App() {
           element={<CustomerRecord/>} />
           {/* Перенаправление по умолчанию */}
         </Routes>
-      </div>
+      
     </Router>
   );
 }
