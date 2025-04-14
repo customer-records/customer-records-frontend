@@ -7,6 +7,7 @@ button:active {
 /* хедер */
 .header {
     height: 30vh; /* 30% высоты экрана */
+    min-height: 25vh;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -530,5 +531,23 @@ button:active {
   .custom-button{
     width: 100%;
     height: 45px;
+  }
+}
+@media(max-height:800px) and (max-width:450px){
+  .zapisites{
+    font-size: 5.5vw;
+  }
+  .na-priem{
+    font-size: 5.5vw;
+  }
+}
+@media(max-height:755px){
+  .online-booking-button{
+    font-size: 13px;
+  }
+}
+@media(max-width:330px){
+  .online-booking-button{
+    font-size: 11px;
   }
 }

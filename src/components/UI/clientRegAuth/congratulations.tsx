@@ -19,7 +19,8 @@ export default function Congratulations({name}:any){
             letterSpacing: '0%',
             marginBottom: '24px',
             textAlign:'center',
-            color:'#000000'
+            color:'#000000',
+            p:1
         }}>   
         Уважаемый <span style={{fontWeight:'700'}}>{name.first_name} {name.patronymic}</span>  теперь для Вас доступен персональный доктор,
          а также доступ в Личный кабинет

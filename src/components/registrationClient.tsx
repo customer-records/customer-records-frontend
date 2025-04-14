@@ -244,7 +244,7 @@ export default function RegistrationClient() {
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px'}}></div>
+                                <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
                             </div>
                             <PhoneEnter phone={formData.phone} onSubmit={handlePhoneSubmit}/>
                         </>
@@ -257,7 +257,7 @@ export default function RegistrationClient() {
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px'}}></div>
+                                <div className="divider" style={{marginTop:'20px', marginBottom:'5px'}}></div>
                             </div>
                             <ClientData onSubmit={handleClientDataSubmit}/>
                         </>
@@ -270,11 +270,12 @@ export default function RegistrationClient() {
                                     <span className="zapisites">Введите </span>
                                     <span className="na-priem"> код подтверждения</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px'}}></div>
+                                <div className="divider" style={{marginTop:'20px',marginBottom:'10px'}}></div>
                             </div>
                             <CodeEnter 
                                 onSubmit={handleCodeSubmit}
                                 error={verificationError}
+                                type={codeType}
                             />
                         </>
                     );
@@ -304,7 +305,7 @@ export default function RegistrationClient() {
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px'}}></div>
+                                <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
                             </div>
                             <PhoneEnter phone={formData.phone} onSubmit={handlePhoneSubmit}/>
                         </>
@@ -317,7 +318,7 @@ export default function RegistrationClient() {
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px'}}></div>
+                                <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
                             </div>
                             <TelegramRedir />
                         </>
@@ -330,7 +331,7 @@ export default function RegistrationClient() {
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px'}}></div>
+                                <div className="divider" style={{marginTop:'20px', marginBottom:'5px'}}></div>
                             </div>
                             <ClientData onSubmit={handleClientDataSubmit}/>
                         </>
@@ -343,11 +344,12 @@ export default function RegistrationClient() {
                                     <span className="zapisites">Введите </span>
                                     <span className="na-priem"> код подтверждения</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px'}}></div>
+                                <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
                             </div>
                             <CodeEnter 
                                 onSubmit={handleCodeSubmit}
                                 error={verificationError}
+                                type={codeType}
                             />
                         </>
                     );
@@ -585,7 +587,7 @@ export default function RegistrationClient() {
                 width: isDesktop ? '50vh' : '100vw',
                 maxWidth: 800,
                 margin: '0 auto',
-                minHeight: '100vh',
+                height:'100vh',
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: '#fff',
@@ -695,5 +697,11 @@ const buttonStyle = {
     '&:disabled': {
         backgroundColor: '#cccccc',
         color: '#666666'
+    },
+    [`@media (max-width: 360px)`]: {
+        width: 300,
+        height: 50,
+        borderRadius: '25px'
     }
+    
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Snackbar, Alert } from '@mui/material';
+import { Box, Button, Snackbar, Alert, createTheme, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import arrow from '../assets/arrow.png';
 import arrowRight from '../assets/arrow-right.png';
@@ -9,6 +9,7 @@ import ClientData from './UI/clientRegAuth/clientData';
 import Congratulations from './UI/clientRegAuth/congratulations';
 import Header from './UI/header';
 import SpecPicker from './UI/adminRegAuth/specPicker';
+import '../components/client.css'
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function RegistrationWorker() {
@@ -25,7 +26,18 @@ export default function RegistrationWorker() {
     const [registrationError, setRegistrationError] = useState(false);
     const [codeType, setCodeType] = useState('WA')
     const totalSteps = 5;
-
+        const theme = createTheme({
+            breakpoints: {
+                values: {
+                  xs: 0,
+                  sm: 300,  
+                  md: 450,   
+                  lg: 1200,
+                  xl: 1600,
+            },
+            },
+        });
+        const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
     const registerUser = async (username?:string,chatId?:number) => {
         try {
             const response = await fetch(`${apiUrl}/auth/worker/register`, {
@@ -219,7 +231,7 @@ export default function RegistrationWorker() {
             case 2:
                 return (
                     <>
-                        <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                        <div className="header-text" style={{marginBottom:'20px', marginTop:'20px'}}>
                             <div>
                                 <span className="zapisites">Укажите </span>
                                 <span className="na-priem"> данные</span>
@@ -252,7 +264,7 @@ export default function RegistrationWorker() {
                             </div>
                             <div className="divider" style={{marginTop:'20px'}}></div>
                         </div>
-                        <CodeEnter onSubmit={handleCodeSubmit} error={verificationError}/>
+                        <CodeEnter onSubmit={handleCodeSubmit} error={verificationError} type={codeType}/>
                     </>
                 );
             case 5:
@@ -387,10 +399,11 @@ export default function RegistrationWorker() {
     return (
         <Box
             sx={{
-                width: '50vh',
+                width: isDesktop ? '50vh' : '100vw',
                 maxWidth: 800,
                 margin: '0 auto',
                 minHeight: '100vh',
+                height:'100vh',
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: '#fff',
@@ -493,5 +506,10 @@ const buttonStyle = {
     '&:disabled': {
         backgroundColor: '#cccccc',
         color: '#666666'
+    },
+    [`@media (max-width: 360px)`]: {
+        width: 300,
+        height: 50,
+        borderRadius: '25px'
     }
 };

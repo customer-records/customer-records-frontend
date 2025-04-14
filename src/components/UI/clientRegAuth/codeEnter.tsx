@@ -1,8 +1,8 @@
 import { Box, TextField, useMediaQuery } from '@mui/material';
 import { createTheme, styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
-
-export default function CodeEnter({ onSubmit, initialData = { code: '' } }: any) {
+import '../../client.css'
+export default function CodeEnter({ onSubmit, initialData = { code: '' },type }: any) {
       const theme = createTheme({
           breakpoints: {
               values: {
@@ -62,7 +62,7 @@ export default function CodeEnter({ onSubmit, initialData = { code: '' } }: any)
           maxWidth: '402px',
           color:'#000000'
         }}>
-          Мы отправили проверочный код в <span style={{ color: '#0077FF' }}>Telegram</span> введите:
+          Мы отправили проверочный код в <span style={{ color: '#0077FF' }}>{type == 'TG' ? 'Telegram' : 'WhatsApp'}</span> введите:
         </Box>
         
         <StyledTextField

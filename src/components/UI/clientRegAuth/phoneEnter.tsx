@@ -74,9 +74,10 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }:
       justifyContent: 'center',
       width: '100%', 
       alignItems: 'center',
-      height: '20vh',
+      height: '25vh',
       mb:4,
-      mt:3
+      mt:isDesktop ? 3 :'10vw',
+
     }}>
       <Box sx={{
         display: 'flex',
@@ -104,18 +105,6 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }:
             }
           }}
         />
-        <Box sx={{
-          height: '20px',
-          width: '100%',
-          visibility: 'hidden',
-          position: 'absolute',
-          bottom: '-24px',
-          left: 0,
-          fontFamily: 'Roboto',
-          fontSize: '0.75rem'
-        }}>
-          &nbsp;
-        </Box>
       </Box>
       <Box sx={{ 
         display: 'flex', 
@@ -132,7 +121,7 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }:
             color: '#000000',
             textAlign: 'left',
             mb: 1.5,
-            marginLeft: isDesktop ? 7 : '3vw',
+            marginLeft: isDesktop ? 3 : '5vw',
           }}
         >
           Мы отправим проверочный код в мессенджер:
@@ -172,7 +161,7 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }:
               mb: 1.5,
               alignItems: 'center',
               justifyContent:'start',
-              marginLeft: isDesktop ? 7 : '3vw',
+              marginLeft: isDesktop ? 3 : '5vw',
               marginRight: 0
             }}
           />
@@ -220,14 +209,24 @@ const StyledTextField = styled(TextField)({
       color: '#0077FF',
     },
   },
-  '& .MuiFormHelperText-root': {
-    fontFamily: 'Roboto',
-    textTransform: 'none',
-    position: 'absolute',
-    bottom: '-24px',
-    left: '14px',
-    margin: 0
+  [`@media (max-height: 720px)`]: {
+    '& .MuiOutlinedInput-root': {
+      width: 280,
+      height: 50,
+    },
+    '& .MuiInputLabel-root': {
+      fontSize: '14px',
+    }
   },
+  [`@media (max-width: 360px)`]:{
+    '& .MuiOutlinedInput-root': {
+      width: 280,
+      height: 50,
+    },
+    '& .MuiInputLabel-root': {
+      fontSize: '14px',
+    }
+  }
 });
 
 const RoundCheckbox = styled(Checkbox)(({ theme }) => ({

@@ -204,7 +204,7 @@ export default function AuthClient() {
                                 <span className="zapisites">Укажите </span>
                                 <span className="na-priem"> данные</span>
                             </div>
-                            <div className="divider" style={{marginTop:'20px'}}></div>
+                            <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
                         </div>
                         <PhoneEnter phone={phone} onSubmit={handlePhoneSubmit}/>
                     </>    
@@ -217,9 +217,9 @@ export default function AuthClient() {
                                 <span className="zapisites">Введите </span>
                                 <span className="na-priem"> код подтверждения</span>
                             </div>
-                            <div className="divider" style={{marginTop:'20px'}}></div>
+                            <div className="divider" style={{marginTop:'20px', marginBottom:'10px' }}></div>
                         </div>
-                        <CodeEnter onSubmit={(code: string) => setCode(code)} error={verificationError}/>
+                        <CodeEnter onSubmit={(code: string) => setCode(code)} error={verificationError} type={codeType}/>
                     </>
                 )
             case 3:
@@ -246,6 +246,7 @@ export default function AuthClient() {
                 maxWidth: 800,
                 margin: '0 auto',
                 minHeight: '100vh',
+                height:'100vh',
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',
@@ -401,5 +402,10 @@ const buttonStyle = {
     '&:disabled': {
         backgroundColor: '#cccccc',
         color: '#666666'
-    }
+    },
+    [`@media (max-width: 360px)`]: {
+        width: 300,
+        height: 50,
+        borderRadius: '25px'
+      }
 };

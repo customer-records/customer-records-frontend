@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Snackbar, Alert } from '@mui/material';
+import { Box, Button, Snackbar, Alert, createTheme, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import arrow from '../assets/arrow.png';
 import arrowRight from '../assets/arrow-right.png';
@@ -21,7 +21,18 @@ export default function AuthWorker() {
     const [clientNotFoundError, setClientNotFoundError] = useState(false);
     const [codeType, setCodeType] = useState('WA')
     const totalSteps = 3;
-
+            const theme = createTheme({
+                breakpoints: {
+                    values: {
+                      xs: 0,
+                      sm: 300,  
+                      md: 450,   
+                      lg: 1200,
+                      xl: 1600,
+                },
+                },
+            });
+            const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
     const loginUser = async () => {
         try {
             const response = await fetch(`${apiUrl}/auth/worker/login`, {
@@ -165,7 +176,6 @@ export default function AuthWorker() {
                     let res = await fetch(`${apiUrl}/telegram/send_code/user/+${phone.replace(/\D/g, '')}`, {
                     method: 'POST'  
                     });
-                
                 }
                 else if(codeType == 'WA' && clientExists){
                     const cleanPhone = phone.replace(/\s+/g, '').replace(/\D/g, '');
@@ -236,7 +246,7 @@ export default function AuthWorker() {
                             </div>
                             <div className="divider" style={{marginTop:'20px'}}></div>
                         </div>
-                        <CodeEnter onSubmit={(code: string) => setCode(code)} error={verificationError}/>
+                        <CodeEnter onSubmit={(code: string) => setCode(code)} error={verificationError} type={codeType}/>
                     </>
                 )
             case 3:
@@ -263,10 +273,11 @@ export default function AuthWorker() {
     return (
         <Box
             sx={{
-                width: '50vh',
+                width: isDesktop ? '50vh' : '100vw',
                 maxWidth: 800,
                 margin: '0 auto',
                 minHeight: '100vh',
+                height:'100vh',
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',
@@ -417,5 +428,10 @@ const buttonStyle = {
     '&:disabled': {
         backgroundColor: '#cccccc',
         color: '#666666'
+    },
+    [`@media (max-width: 360px)`]: {
+        width: 300,
+        height: 50,
+        borderRadius: '25px'
     }
 };
