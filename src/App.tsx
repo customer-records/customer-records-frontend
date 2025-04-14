@@ -8,6 +8,7 @@ import AuthClient from './components/authClient';
 import RegistrationWorker from './components/registrationWorker';
 import AuthWorker from './components/authWorker';
 import AdminPanel from './components/adminPanel';
+import 'normalize.css';
 function App() {
   const [type, setType] = useState('auth'); // Для переключения между регистрацией и авторизацией
   const [user, setUser] = useState(() => {
