@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Snackbar, Alert } from '@mui/material';
+import { Box, Button, Snackbar, Alert, createTheme, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import arrow from '../assets/arrow.png';
 import arrowRight from '../assets/arrow-right.png';
@@ -21,7 +21,18 @@ export default function AuthClient() {
     const [codeType, setCodeType] = useState('WA')
     const [useData, setUserData] = useState({name: null, sur_name: null, last_name: null})
     const totalSteps = 3;
-
+    const theme = createTheme({
+      breakpoints: {
+        values: {
+          xs: 0,
+          sm: 300,  
+          md: 450,   
+          lg: 1200,
+          xl: 1600,
+        },
+        },
+    });
+    const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
     const checkClientExists = async (phoneNumber: string) => {
         try {
             const response = await fetch(`${apiUrl}/auth/client/find-by-phone/+${phoneNumber}`);
@@ -231,7 +242,7 @@ export default function AuthClient() {
     return (
         <Box
             sx={{
-                width: '50vh',
+                width: isDesktop ? '50vh' : '100vw',
                 maxWidth: 800,
                 margin: '0 auto',
                 minHeight: '100vh',

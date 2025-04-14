@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, Snackbar, Alert } from '@mui/material';
+import { Box, Button, Snackbar, Alert, createTheme, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import arrow from '../assets/arrow.png';
 import arrowRight from '../assets/arrow-right.png';
@@ -30,7 +30,18 @@ export default function RegistrationClient() {
     const [codeError, setCodeError] = useState(false);
     const [codeType, setCodeType] = useState('WA')
     const totalSteps = codeType === 'TG' ? 5 : 4;
-
+    const theme = createTheme({
+        breakpoints: {
+            values: {
+              xs: 0,
+              sm: 300,  
+              md: 450,   
+              lg: 1200,
+              xl: 1600,
+        },
+        },
+    });
+    const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
     const createClient = async (username = null,chatId = null) => { 
         console.log(username, chatId)
         try {
@@ -241,7 +252,7 @@ export default function RegistrationClient() {
                 case 2:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                            <div className="header-text" style={{marginBottom:'40px', marginTop:'20px'}}>
                                 <div>
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
@@ -571,7 +582,7 @@ export default function RegistrationClient() {
     return (
         <Box
             sx={{
-                width: '50vh',
+                width: isDesktop ? '50vh' : '100vw',
                 maxWidth: 800,
                 margin: '0 auto',
                 minHeight: '100vh',
@@ -591,7 +602,7 @@ export default function RegistrationClient() {
                     flex: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    padding: '0 16px',
+                    padding:isDesktop ? '0 16px' : 0,
                     overflow: 'visible',
                 }}
             >

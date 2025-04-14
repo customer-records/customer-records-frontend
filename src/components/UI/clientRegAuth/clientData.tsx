@@ -1,8 +1,55 @@
 import { useState, useEffect } from 'react';
-import { Box, TextField, FormControlLabel, Radio, RadioGroup } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, TextField, FormControlLabel, Radio, RadioGroup, useMediaQuery, useTheme, styled } from '@mui/material';
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+    '& .MuiOutlinedInput-root': {
+        width: 400,
+        height: 60,
+        borderRadius: '50px',
+        fontFamily: 'Roboto',
+        fontWeight: 400,
+        fontSize: '16px',
+
+        [theme.breakpoints.down('sm')]: {
+            height: 50,
+            width:300
+        },
+
+        '& input': {
+            textAlign: 'center',
+            fontFamily: 'Roboto',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            color: '#000000',
+            '&::placeholder': {
+                opacity: 1,
+                fontFamily: 'Roboto',
+                color: '#000000',
+                fontWeight: '700',
+                textTransform: 'uppercase'
+            }
+        },
+        '&.Mui-focused': {
+            '& input::placeholder': {
+                opacity: 0
+            }
+        },
+        '& fieldset': {
+            border: '1px solid #0077FF',
+        },
+        '&:hover fieldset': {
+            border: '1px solid #0077FF',
+        },
+        '&.Mui-focused fieldset': {
+            border: '1px solid #0077FF',
+        },
+    },
+}));
 
 export default function ClientData({ onSubmit }: { onSubmit: (data: any) => void }) {
+    const theme = useTheme();
+    const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -96,17 +143,10 @@ export default function ClientData({ onSubmit }: { onSubmit: (data: any) => void
             flexDirection: 'column', 
             gap: '20px',
             width: '100%',
-            maxWidth: '402px',
+            maxWidth: isDesktop ? '402px' : '300px',
             margin: '0 auto',
+            alignItems:'center'
         }}>
-            <h1 style={{
-                fontFamily: 'Roboto',
-                fontWeight: 700,
-                fontSize: '24px',
-                textAlign: 'center',
-                marginBottom: '20px'
-            }}>Введите данные</h1>
-
             {['lastName', 'firstName', 'middleName'].map((field) => (
                 <StyledTextField
                     key={field}
@@ -224,43 +264,3 @@ export default function ClientData({ onSubmit }: { onSubmit: (data: any) => void
         </Box>
     );
 }
-
-const StyledTextField = styled(TextField)({
-    '& .MuiOutlinedInput-root': {
-        width: 402,
-        height: 60,
-        borderRadius: '50px',
-        fontFamily: 'Roboto',
-        fontWeight: 400,
-        fontSize: '16px',
-
-        '& input': {
-            textAlign: 'center',
-            fontFamily: 'Roboto',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            color: '#000000',
-            '&::placeholder': {
-                opacity: 1,
-                fontFamily: 'Roboto',
-                color: '#000000',
-                fontWeight: '700',
-                textTransform: 'uppercase'
-            }
-        },
-        '&.Mui-focused': {
-            '& input::placeholder': {
-                opacity: 0
-            }
-        },
-        '& fieldset': {
-            border: '1px solid #0077FF',
-        },
-        '&:hover fieldset': {
-            border: '1px solid #0077FF',
-        },
-        '&.Mui-focused fieldset': {
-            border: '1px solid #0077FF',
-        },
-    },
-});

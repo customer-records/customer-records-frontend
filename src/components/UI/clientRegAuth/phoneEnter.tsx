@@ -1,5 +1,5 @@
-import { Box, Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Checkbox, FormControlLabel, TextField, Typography, useMediaQuery } from '@mui/material';
+import { createTheme, styled } from '@mui/material/styles';
 import { useCallback, useEffect, useState } from 'react';
 
 export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }: any) {
@@ -7,7 +7,18 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }:
   const [phoneError, setPhoneError] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [selectedSpecs, setSelectedSpecs] = useState<number[]>([1]);
-
+  const theme = createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 369,  
+        md: 450,   
+        lg: 1200,
+        xl: 1600,
+      },
+      },
+  });
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const validateForm = useCallback(() => {
     const numDigits = phone.replace(/\D/g, '').length - 1;
     return numDigits === 10 && !phoneError;
@@ -121,7 +132,7 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }:
             color: '#000000',
             textAlign: 'left',
             mb: 1.5,
-            marginLeft: 7
+            marginLeft: isDesktop ? 7 : '3vw',
           }}
         >
           Мы отправим проверочный код в мессенджер:
@@ -161,7 +172,7 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }:
               mb: 1.5,
               alignItems: 'center',
               justifyContent:'start',
-              marginLeft: 7,
+              marginLeft: isDesktop ? 7 : '3vw',
               marginRight: 0
             }}
           />

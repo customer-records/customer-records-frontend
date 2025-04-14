@@ -1,8 +1,20 @@
-import { Box, TextField } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, TextField, useMediaQuery } from '@mui/material';
+import { createTheme, styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 
 export default function CodeEnter({ onSubmit, initialData = { code: '' } }: any) {
+      const theme = createTheme({
+          breakpoints: {
+              values: {
+                xs: 0,
+                sm: 300,  
+                md: 450,   
+                lg: 1200,
+                xl: 1600,
+          },
+          },
+      });
+      const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const [code, setCode] = useState(initialData.code);
   const [isValid, setIsValid] = useState(false);
 
@@ -43,7 +55,7 @@ export default function CodeEnter({ onSubmit, initialData = { code: '' } }: any)
         <Box sx={{
           fontFamily: 'Roboto',
           fontWeight: 700,
-          fontSize: '14px',
+          fontSize: isDesktop?'14px':'13px',
           lineHeight: '100%',
           letterSpacing: '0%',
           marginBottom: '24px',
@@ -74,8 +86,14 @@ export default function CodeEnter({ onSubmit, initialData = { code: '' } }: any)
   );
 }
 
-const StyledTextField = styled(TextField)({
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  
   '& .MuiOutlinedInput-root': {
+    [theme.breakpoints.down('sm')]: {
+      height: 50,
+      width:310
+  },
+
     width: 402,
     height: 60,
     borderRadius: '50px',
@@ -96,4 +114,4 @@ const StyledTextField = styled(TextField)({
       border: '1px solid #0077FF',
     },
   },
-});
+}));
