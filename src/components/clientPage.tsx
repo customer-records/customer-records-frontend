@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import './client.css';
-import calendarIcon from '../assets/calendar.png';
-import chelikIcon from '../assets/chelik.png';
-import teethIcon from '../assets/teeth.png';
-import zipIcon from '../assets/zip.png';
+import calendarIcon from '../assets/calendar.svg';
+import chelikIcon from '../assets/chelik.svg';
+import teethIcon from '../assets/teeth.svg';
+import zipIcon from '../assets/zip.svg';
 import { useNavigate } from "react-router-dom";
 import Header from './UI/header';
 export default function ClientPage() {

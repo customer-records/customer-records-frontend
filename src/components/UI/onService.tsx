@@ -3,8 +3,8 @@ import { Box, Typography, Button, Snackbar, Alert, CircularProgress } from '@mui
 import { useNavigate } from "react-router-dom";
 import ServiceList from './serviceList';
 import '../client.css';
-import arrow from '../../assets/arrow.png';
-import arrowRight from '../../assets/arrow-right.png';
+import arrow from '../../assets/arrow.svg';
+import arrowRight from '../../assets/arrow-right.svg';
 import ClientDataForm from './clientDataForm';
 import FinalStep from './finalDate';
 import DateSpecialistPicker from './dateSpecialistPicker';

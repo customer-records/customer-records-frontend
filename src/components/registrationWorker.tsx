@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Box, Button, Snackbar, Alert, createTheme, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import arrow from '../assets/arrow.png';
-import arrowRight from '../assets/arrow-right.png';
+import arrow from '../assets/arrow.svg';
+import arrowRight from '../assets/arrow-right.svg';
 import PhoneEnter from './UI/clientRegAuth/phoneEnter';
 import CodeEnter from './UI/clientRegAuth/codeEnter';
 import ClientData from './UI/clientRegAuth/clientData';

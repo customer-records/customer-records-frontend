@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Snackbar, Alert } from '@mui/material';
 import '../client.css';
-import arrow from '../../assets/arrow.png';
-import arrowRight from '../../assets/arrow-right.png';
+import arrow from '../../assets/arrow.svg';
+import arrowRight from '../../assets/arrow-right.svg';
 import ClientDataForm from './clientDataForm';
 import DateTimePicker from './fastRecTimePicker';
 import FinalStep from './finalDate';

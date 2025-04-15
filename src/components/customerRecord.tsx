@@ -7,10 +7,9 @@ import OnDate from './UI/onDate';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import {createTheme} from '@mui/material'
-// Импортируем другие компоненты, которые будут использоваться
-import OnSpecialist from './UI/onSpecialist'; // Предполагается, что этот компонент существует
-import OnService from './UI/onService'; // Предполагается, что этот компонент существует
-import OnFastRecord from './UI/onFastRecord'; // Предполагается, что этот компонент существует
+import OnSpecialist from './UI/onSpecialist'; 
+import OnService from './UI/onService'; 
+import OnFastRecord from './UI/onFastRecord'; 
 import Header from './UI/header';
 
 export default function CustomerRecord() {
