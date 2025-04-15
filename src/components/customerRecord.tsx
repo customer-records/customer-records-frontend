@@ -55,6 +55,7 @@ export default function CustomerRecord() {
       <Box
         sx={{
           width: isDesktop ? '50vh' : '100vw',
+          height:'100vh',
           maxWidth: 800,
           margin: '0 auto',
           minHeight: '100vh',

@@ -6,7 +6,8 @@ import {
   MenuItem, 
   Select,
   Typography,
-  Box
+  Box,
+  CircularProgress
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
@@ -100,7 +101,16 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
     };
 
     if (loading) {
-        return <Typography>Загрузка данных...</Typography>;
+        return (
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight:85
+            }}>
+                <CircularProgress  sx={{ width: '24px !important', height: '24px !important' }}/>
+            </Box>
+        );
     }
 
     if (error) {

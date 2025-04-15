@@ -29,6 +29,7 @@ export default function RegistrationClient() {
     const [clientCreationError, setClientCreationError] = useState('');
     const [codeError, setCodeError] = useState(false);
     const [codeType, setCodeType] = useState('WA')
+    const [clientTG, setClientTG] = useState<any>();
     const totalSteps = codeType === 'TG' ? 5 : 4;
     const theme = createTheme({
         breakpoints: {
@@ -105,8 +106,7 @@ export default function RegistrationClient() {
                 if (!clearResponse.ok) {
                     throw new Error('Ошибка при очистке кода');
                 }
-
-                await createClient(username, chat_id);
+                setClientTG({username:username, chat_id:chat_id})
                 setStep(4);
             } else {
                 throw new Error('Номер телефона не совпадает');
@@ -149,9 +149,6 @@ export default function RegistrationClient() {
                 if (!clearResponse.ok) {
                     throw new Error('Ошибка при очистке кода');
                 }
-
-                await createClient(username, chat_id);
-                setStep(4);
             } else {
                 throw new Error('Номер телефона не совпадает');
             }
@@ -164,35 +161,43 @@ export default function RegistrationClient() {
     };
     const handleNext = async () => {
         if (step < totalSteps) {
+            if(step === 1 && codeType == 'WA'){
+                const cleanPhone = formData.phone.replace(/\s+/g, '').replace(/\D/g, '');
+                const sendResponse = await fetch(`${apiUrl}/whatsapp/send-code/${cleanPhone}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (!sendResponse.ok) {
+                    setCodeError(true);
+                    throw new Error('Неверный номер телефона');
+                }else setStep(2)
+            }
             if (step === 2) {
                 if (codeType === 'TG') {
-                    // window.open('https://t.me/technica1lbot?start=activate', '_blank');
-                    setStep(3); // <- идём на TelegramRedir
+                    setStep(3); 
                     return;
                 } else {
-                    const cleanPhone = formData.phone.replace(/\s+/g, '').replace(/\D/g, '');
-                    const sendResponse = await fetch(`${apiUrl}/whatsapp/send-code/${cleanPhone}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    });
-                    if (!sendResponse.ok) {
-                        setCodeError(true);
-                        throw new Error('Неверный номер телефона');
-                    }
-                    setStep(3); // <- идём сразу на CodeEnter
+                    
+                    let codeRes = await verifyCodeAndProceedWa();
+                    console.log(codeRes)
+                    setStep(3);                  
                     return;
                 }
             }
     
             if ( codeType === 'WA' && step === 3) {
-              
-               if (codeType === 'WA') await verifyCodeAndProceedWa();
-                return;
+              let regAns = await createClient();
+              console.log(regAns)
             }
-            if(codeType === 'TG' && step === 4){
+            if(codeType === 'TG' && step === 3){
                 if (codeType === 'TG') await verifyCodeAndProceedTg();
+            }
+            if(codeType == 'TG' && step === 4){
+                let regAnswer = await createClient(clientTG.username, clientTG.chat_id);
+                console.log(regAnswer)
+                if(regAnswer.status == 'success')setStep(step + 1);
             }
             setStep(step + 1);
         } else {
@@ -252,19 +257,6 @@ export default function RegistrationClient() {
                 case 2:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'40px', marginTop:'20px'}}>
-                                <div>
-                                    <span className="zapisites">Укажите </span>
-                                    <span className="na-priem"> данные</span>
-                                </div>
-                                <div className="divider" style={{marginTop:'20px', marginBottom:'5px'}}></div>
-                            </div>
-                            <ClientData onSubmit={handleClientDataSubmit}/>
-                        </>
-                    );
-                case 3:
-                    return (
-                        <>
                             <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
                                 <div>
                                     <span className="zapisites">Введите </span>
@@ -277,6 +269,19 @@ export default function RegistrationClient() {
                                 error={verificationError}
                                 type={codeType}
                             />
+                        </>
+                    );
+                case 3:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'40px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Укажите </span>
+                                    <span className="na-priem"> данные</span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px', marginBottom:'5px'}}></div>
+                            </div>
+                            <ClientData onSubmit={handleClientDataSubmit}/>
                         </>
                     );
                 case 4:
@@ -315,8 +320,8 @@ export default function RegistrationClient() {
                         <>
                             <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
                                 <div>
-                                    <span className="zapisites">Укажите </span>
-                                    <span className="na-priem"> данные</span>
+                                <span className="zapisites">Подтвердите</span>
+                                <span className="na-priem"> регистрацию</span>
                                 </div>
                                 <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
                             </div>
@@ -324,19 +329,6 @@ export default function RegistrationClient() {
                         </>
                     );
                 case 3:
-                    return (
-                        <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
-                                <div>
-                                    <span className="zapisites">Укажите </span>
-                                    <span className="na-priem"> данные</span>
-                                </div>
-                                <div className="divider" style={{marginTop:'20px', marginBottom:'5px'}}></div>
-                            </div>
-                            <ClientData onSubmit={handleClientDataSubmit}/>
-                        </>
-                    );
-                case 4:
                     return (
                         <>
                             <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
@@ -351,6 +343,19 @@ export default function RegistrationClient() {
                                 error={verificationError}
                                 type={codeType}
                             />
+                        </>
+                    );
+                case 4:
+                    return (
+                        <>
+                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                                <div>
+                                    <span className="zapisites">Укажите </span>
+                                    <span className="na-priem"> данные</span>
+                                </div>
+                                <div className="divider" style={{marginTop:'20px', marginBottom:'5px'}}></div>
+                            </div>
+                            <ClientData onSubmit={handleClientDataSubmit}/>
                         </>
                     );
                 case 5:
@@ -383,7 +388,7 @@ export default function RegistrationClient() {
                                 disabled={!isPhoneValid}
                             >
                                 ЗАРЕГИСТРИРОВАТЬСЯ
-                                <img src={arrow} alt='далее' />
+                                <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
                             <Button 
                                 sx={{ 
@@ -408,7 +413,7 @@ export default function RegistrationClient() {
                             // disabled={!formData.isValid}
                             >
                             ДАЛЕЕ
-                            <img src={arrow} alt='далее' />
+                            <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
                             <Button 
                                 sx={{ 
@@ -419,7 +424,7 @@ export default function RegistrationClient() {
                                 }}
                                 onClick={handleBack}
                             >
-                                <img src={arrowRight} alt='назад' />
+                            <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад' />
                                 НАЗАД
                             </Button>
                         </>
@@ -430,10 +435,10 @@ export default function RegistrationClient() {
                             <Button 
                                 sx={buttonStyle} 
                                 onClick={handleNext}
-                                disabled={!formData.isValid}
+                                disabled={!formData.code || isVerifying}
                             >
-                                ДАЛЕЕ
-                                <img src={arrow} alt='далее' />
+                                {isVerifying ? 'ПОДТВЕРЖДАЕМ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
+                                {!isVerifying && <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />}
                             </Button>
                             <Button 
                                 sx={{ 
@@ -444,7 +449,7 @@ export default function RegistrationClient() {
                                 }}
                                 onClick={handleBack}
                             >
-                                <img src={arrowRight} alt='назад' />
+                                <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад' />
                                 НАЗАД
                             </Button>
                         </>
@@ -455,10 +460,10 @@ export default function RegistrationClient() {
                             <Button 
                                 sx={buttonStyle} 
                                 onClick={handleNext}
-                                disabled={!formData.code || isVerifying}
+                                disabled={!formData.isValid}
                             >
-                                {isVerifying ? 'ПОДТВЕРЖДАЕМ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
-                                {!isVerifying && <img src={arrow} alt='далее' />}
+                                ДАЛЕЕ
+                                <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
                             <Button 
                                 sx={{ 
@@ -469,7 +474,7 @@ export default function RegistrationClient() {
                                 }}
                                 onClick={handleBack}
                             >
-                                <img src={arrowRight} alt='назад' />
+                                <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад' />
                                 НАЗАД
                             </Button>
                         </>
@@ -481,7 +486,7 @@ export default function RegistrationClient() {
                             onClick={handleNext}
                         >
                             ПЕРЕЙТИ НА ГЛАВНУЮ
-                            <img src={arrow} alt='далее' />
+                            <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                         </Button>
                     );
                 default:
@@ -498,7 +503,7 @@ export default function RegistrationClient() {
                                 disabled={!isPhoneValid}
                             >
                                 ЗАРЕГИСТРИРОВАТЬСЯ
-                                <img src={arrow} alt='далее' />
+                                <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
                             <Button 
                                 sx={{ 
@@ -520,10 +525,10 @@ export default function RegistrationClient() {
                             <Button 
                                 sx={buttonStyle} 
                                 onClick={handleNext}
-                                disabled={!formData.isValid}
+                                disabled={!formData.code || isVerifying}
                             >
-                                ЗАРЕГИСТРИРОВАТЬСЯ
-                                <img src={arrow} alt='далее' />
+                                {isVerifying ? 'ПОДТВЕРЖДАЕМ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
+                                {!isVerifying && <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />}
                             </Button>
                             <Button 
                                 sx={{ 
@@ -534,7 +539,7 @@ export default function RegistrationClient() {
                                 }}
                                 onClick={handleBack}
                             >
-                                <img src={arrowRight} alt='назад' />
+                                <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад' />
                                 НАЗАД
                             </Button>
                         </>
@@ -545,10 +550,10 @@ export default function RegistrationClient() {
                             <Button 
                                 sx={buttonStyle} 
                                 onClick={handleNext}
-                                disabled={!formData.code || isVerifying}
+                                disabled={!formData.isValid}
                             >
-                                {isVerifying ? 'ПОДТВЕРЖДАЕМ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
-                                {!isVerifying && <img src={arrow} alt='далее' />}
+                                ЗАРЕГИСТРИРОВАТЬСЯ
+                                <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
                             <Button 
                                 sx={{ 
@@ -559,7 +564,7 @@ export default function RegistrationClient() {
                                 }}
                                 onClick={handleBack}
                             >
-                                <img src={arrowRight} alt='назад' />
+                                <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад' />
                                 НАЗАД
                             </Button>
                         </>
@@ -571,7 +576,7 @@ export default function RegistrationClient() {
                             onClick={handleNext}
                         >
                             ПЕРЕЙТИ НА ГЛАВНУЮ
-                            <img src={arrow} alt='далее' />
+                            <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                         </Button>
                     );
                 default:

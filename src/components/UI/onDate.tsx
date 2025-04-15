@@ -323,14 +323,14 @@ export default function OnDate() {
                         disabled={isNextDisabled()}
                     >
                         {getButtonText()}
-                        <img src={arrow} alt='далее' />
+                        <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                     </Button>
                     {step > 1 && (
                         <Button 
                             sx={{ ...buttonStyle, backgroundColor: 'white', border:'1px solid #0077FF', color:'#0077FF'}}
                             onClick={handleBack}
                         >
-                            <img src={arrowRight} alt='назад'></img>
+                            <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад'></img>
                             НАЗАД
                         </Button>
                     )}

@@ -256,14 +256,14 @@ export default function OnFastRecord() {
                         disabled={isNextDisabled()}
                     >
                         {getButtonText()}
-                        <img src={arrow} alt='далее' />
+                        <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                     </Button>
                     {step > 1 && step < 3 && (
                         <Button 
                             sx={{ ...buttonStyle, backgroundColor: 'white', border:'1px solid #0077FF', color:'#0077FF'}}
                             onClick={handleBack}
                         >
-                            <img src={arrowRight} alt='назад'></img>
+                            <img src={arrowRight} alt='назад' loading="eager" fetchPriority="high"></img>
                             НАЗАД
                         </Button>
                     )}

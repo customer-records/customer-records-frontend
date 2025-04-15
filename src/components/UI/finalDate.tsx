@@ -301,7 +301,7 @@ const FinalStep: React.FC<any> = ({ date, time }) => {
                     }}>
                         Напоминание для календаря
                     </Typography>
-                    <img src={save} alt="Save icon" />
+                    <img loading="eager" fetchPriority="high" src={save} alt="Save icon" />
                 </Button>
                 <Typography sx={{
                     fontFamily: 'Roboto',

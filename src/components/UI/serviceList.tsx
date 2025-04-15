@@ -69,34 +69,4 @@ const ServiceList = ({ specialist, services, selectedService, onSelect }: Servic
   );
 };
 
-// ... (моковые данные остаются без изменений)
-
-export const mockData = [
-  {
-    specialist: "Терапевт",
-    services: [
-      { id: 1, name: "Консультация терапевта" },
-      { id: 2, name: "Диагностика заболеваний" },
-      { id: 3, name: "Назначение лечения" }
-    ]
-  },
-  {
-    specialist: "Хирург",
-    services: [
-      { id: 4, name: "Консультация хирурга" },
-      { id: 5, name: "Плановые операции" },
-      { id: 6, name: "Экстренные операции" },
-      { id: 7, name: "Перевязки" }
-    ]
-  },
-  {
-    specialist: "Офтальмолог",
-    services: [
-      { id: 8, name: "Проверка зрения" },
-      { id: 9, name: "Подбор очков" },
-      { id: 10, name: "Лечение глазных заболеваний" }
-    ]
-  }
-];
-
 export default ServiceList;

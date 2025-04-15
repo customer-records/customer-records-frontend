@@ -299,7 +299,7 @@ export default function OnSpecialist() {
                         disabled={isNextDisabled()}
                     >
                         {getButtonText()}
-                        <img src={arrow} alt='далее' />
+                        <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                     </Button>
                     {step > 1 && (
                         <Button 
@@ -311,7 +311,7 @@ export default function OnSpecialist() {
                             }}
                             onClick={handleBack}
                         >
-                            <img src={arrowRight} alt='назад'></img>
+                            <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад'></img>
                             НАЗАД
                         </Button>
                     )}

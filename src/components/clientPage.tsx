@@ -49,19 +49,19 @@ export default function ClientPage() {
         <div className="buttons-container">
           <button onClick={()=>handleClick('/client/date')} className="custom-button">
             <span className="button-icon">
-              <img src={calendarIcon} alt="Календарь" />
+              <img loading="eager" fetchPriority="high" src={calendarIcon} alt="Календарь" />
             </span>
             <span className="button-text">На определённую дату</span>
           </button>
           <button onClick={()=>handleClick('/client/specialist')} className="custom-button">
             <span className="button-icon">
-              <img src={chelikIcon} alt="Специалист" />
+              <img loading="eager" fetchPriority="high" src={chelikIcon} alt="Специалист" />
             </span>
             <span className="button-text">К специалисту</span>
           </button>
           <button onClick={()=>handleClick('/client/service')} className="custom-button">
             <span className="button-icon">
-              <img src={teethIcon} alt="Услуга" />
+              <img loading="eager" fetchPriority="high" src={teethIcon} alt="Услуга" />
             </span>
             <span className="button-text">На услугу</span>
           </button>
@@ -70,7 +70,7 @@ export default function ClientPage() {
         <div className="additional-button-container">
           <button onClick={()=>handleClick('/client/fastreacord')} className="custom-button fast">
             <span className="button-icon">
-              <img src={zipIcon} alt="Быстрая запись" />
+              <img loading="eager" fetchPriority="high" src={zipIcon} alt="Быстрая запись" />
             </span>
             <span className="button-text">Быстрая запись</span>
           </button>

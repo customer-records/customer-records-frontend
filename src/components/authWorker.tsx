@@ -176,6 +176,7 @@ export default function AuthWorker() {
                     let res = await fetch(`${apiUrl}/telegram/send_code/user/+${phone.replace(/\D/g, '')}`, {
                     method: 'POST'  
                     });
+                    console.log(res)
                 }
                 else if(codeType == 'WA' && clientExists){
                     const cleanPhone = phone.replace(/\s+/g, '').replace(/\D/g, '');
@@ -323,7 +324,7 @@ export default function AuthWorker() {
                                 }
                             >
                                 {isVerifying ? 'ПРОВЕРКА...' : (step === 1 ? 'ВОЙТИ' : 'ДАЛЕЕ')}
-                                {!isVerifying && <img src={arrow} alt='далее' />}
+                                {!isVerifying && <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />}
                             </Button>
 
                             {step === 1 ? (
@@ -349,7 +350,7 @@ export default function AuthWorker() {
                                     }}
                                     onClick={handleBack}
                                 >
-                                    <img src={arrowRight} alt='назад' />
+                                    <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад' />
                                     НАЗАД
                                 </Button>
                             )}
@@ -360,7 +361,7 @@ export default function AuthWorker() {
                             onClick={handleNext}
                         >
                             перейти в панель
-                            <img src={arrow} alt='далее' />
+                            <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                         </Button>
                     )}
                 </Box>

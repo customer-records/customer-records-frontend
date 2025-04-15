@@ -1,18 +1,17 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ClientPage from './components/clientPage';
 import CustomerRecord from './components/customerRecord';
-import RegistrationClient from './components/registrationClient';
-import AuthClient from './components/authClient';
-import RegistrationWorker from './components/registrationWorker';
-import AuthWorker from './components/authWorker';
-import AdminPanel from './components/adminPanel';
+const RegistrationClient = lazy(() => import('./components/registrationClient'));
+const AuthClient = lazy(() => import('./components/authClient'));
+const RegistrationWorker = lazy(() => import('./components/registrationWorker'));
+const AuthWorker = lazy(() => import('./components/authWorker'));
+const AdminPanel = lazy(() => import('./components/adminPanel'));
 import 'normalize.css';
 function App() {
   const [type, setType] = useState('auth'); // Для переключения между регистрацией и авторизацией
   const [user, setUser] = useState(() => {
-    // Восстанавливаем данные пользователя из localStorage при загрузке приложения
     const savedUser = localStorage.getItem('user');
     return savedUser ? JSON.parse(savedUser) : null;
   });

@@ -290,7 +290,7 @@ export default function AuthClient() {
                                 }
                             >
                                 {isVerifying ? 'ПРОВЕРКА...' : (step === 1 ? 'ВОЙТИ' : 'ДАЛЕЕ')}
-                                {!isVerifying && <img src={arrow} alt='далее' />}
+                                {!isVerifying && <img  loading="eager" fetchPriority="high" src={arrow} alt='далее' />}
                             </Button>
 
                             {step === 1 ? (
@@ -316,7 +316,7 @@ export default function AuthClient() {
                                     }}
                                     onClick={handleBack}
                                 >
-                                    <img src={arrowRight} alt='назад' />
+                                    <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад' />
                                     НАЗАД
                                 </Button>
                             )}
@@ -327,7 +327,7 @@ export default function AuthClient() {
                             onClick={handleNext}
                         >
                             перейти на главную
-                            <img src={arrow} alt='далее' />
+                            <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                         </Button>
                     )}
                 </Box>

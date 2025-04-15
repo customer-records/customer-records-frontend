@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Box, Typography, Button, Snackbar, Alert } from '@mui/material';
+import { Box, Typography, Button, Snackbar, Alert, CircularProgress } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import ServiceList from './serviceList';
 import '../client.css';
@@ -8,7 +8,9 @@ import arrowRight from '../../assets/arrow-right.png';
 import ClientDataForm from './clientDataForm';
 import FinalStep from './finalDate';
 import DateSpecialistPicker from './dateSpecialistPicker';
-const apiUrl = import.meta.env.VITE_API_URL
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
 interface Service {
   id: number;
   name: string;
@@ -40,57 +42,60 @@ export default function OnService() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [selectedServiceName, setSelectedServiceName] = useState<string | null>(null);
-    const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null)
-    const [companyId, SetCompanyId] = useState<number | any>(null)
-    const [clientId, SetClientId] = useState<null | number>(null)
+    const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null);
+    const [companyId, SetCompanyId] = useState<number | any>(null);
+    const [clientId, SetClientId] = useState<null | number>(null);
+
     const getCompanyId = async () => {
-        const result = await fetch(`${apiUrl}/calendar/company/`)
-        const data = await result.json()
-        SetCompanyId(data.id)
-    }
-    async function bookingTime(time_slot_id:any, client_id:any, company_id:any, employer_id:any){
-        try{
-            const result = await fetch(`${apiUrl}/calendar/bookings/`,{
-                method:'POST',
+        const result = await fetch(`${apiUrl}/calendar/company/`);
+        const data = await result.json();
+        SetCompanyId(data.id);
+    };
+
+    async function bookingTime(time_slot_id: any, client_id: any, company_id: any, employer_id: any) {
+        try {
+            const result = await fetch(`${apiUrl}/calendar/bookings/`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
+                },
+                body: JSON.stringify({
                     time_slot_id: time_slot_id,
                     client_id: client_id,
                     company_id: company_id,
                     employer_id: employer_id
-                  })
-            })
-            if(!result.ok)throw new Error(`HTTP error! status: ${result.status}`);
+                })
+            });
+            if (!result.ok) throw new Error(`HTTP error! status: ${result.status}`);
             const data = await result.json();
             console.log('Бронирование создано:', data);
-        }catch(e){
+        } catch (e) {
             throw new Error(`HTTP error! status: ${e}`);
         }
     }
-    async function createUser(name:string, phone_number:string){
-        try{
-            const response = await fetch(`${apiUrl}/auth/client/create`,{
-                method:"POST",
+
+    async function createUser(name: string, phone_number: string) {
+        try {
+            const response = await fetch(`${apiUrl}/auth/client/create`, {
+                method: "POST",
                 headers: {
-                'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     name: name,
-                    phone_number:phone_number 
+                    phone_number: phone_number
                 })
-            })
-            if(!response.ok)throw new Error(`HTTP error! status: ${response.status}`);
+            });
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
             console.log('Клиент создан', data);
-            SetClientId(data.client.id)
-            return data.client.id
-        }
-        catch(e){
-            throw new Error(`ошибка:${e}`)
+            SetClientId(data.client.id);
+            return data.client.id;
+        } catch (e) {
+            throw new Error(`ошибка:${e}`);
         }
     }
+
     useEffect(() => {
         const fetchServices = async () => {
             try {
@@ -99,7 +104,7 @@ export default function OnService() {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log(data)
+                console.log(data);
                 setServicesData(data);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Неизвестная ошибка');
@@ -111,18 +116,19 @@ export default function OnService() {
         getCompanyId();
     }, []);
 
-    const totalSteps = 4; // Изменил на 4 шага, чтобы добавить финальный шаг
-        // Преобразование данных для ServiceList
-        const transformServicesData = () => {
-            return servicesData.map(category => ({
-                specialist: category.name_category,
-                id: category.id,
-                services: category.services_array.map((service:any) => service)
-            }));
-        };
+    const totalSteps = 4;
+
+    const transformServicesData = () => {
+        return servicesData.map(category => ({
+            specialist: category.name_category,
+            id: category.id,
+            services: category.services_array.map((service: any) => service)
+        }));
+    };
+
     const handleClick = (route: string) => {
         navigate(route);
-    }
+    };
 
     const handleNext = async () => {
         if (step === 1 && !selectedServiceName) {
@@ -136,51 +142,35 @@ export default function OnService() {
         }
 
         if (step === 3) {
-            console.log('запрос')
-            const res = await createUser(clientData.name, clientData.phone)
+            console.log('запрос');
+            const res = await createUser(clientData.name, clientData.phone);
             
-            if(res){
-                console.log(selectedTime?.id, res, companyId, selectedSpecialist?.id)
-                bookingTime(selectedTime.id, res, companyId, selectedSpecialist.id)
-                console.log('запрос')
-        }
+            if (res) {
+                console.log(selectedTime?.id, res, companyId, selectedSpecialist?.id);
+                bookingTime(selectedTime.id, res, companyId, selectedSpecialist.id);
+                console.log('запрос');
+            }
         }
         if (step < totalSteps) {
             setStep(step + 1);
         }
-    }
-
-    const logAllData = useCallback(() => {
-        console.log('Все собранные данные:', {
-            service: selectedService?.name || 'Не выбрано',
-            date: selectedDate.toLocaleDateString('ru-RU'),
-            specialist: selectedSpecialist 
-                ? `${selectedSpecialist.name} ${selectedSpecialist.surname}` 
-                : 'Не выбрано',
-            time: selectedTime || 'Не выбрано',
-            client: {
-                name: clientData.name || 'Не указано',
-                phone: clientData.phone || 'Не указан'
-            }
-        });
-    }, [selectedService, selectedDate, selectedSpecialist, selectedTime, clientData]);
+    };
 
     const handleBack = () => {
         if (step > 1) {
             setStep(step - 1);
         }
-    }
+    };
 
     const handleSelectService = useCallback((name: string | null, id?: null | number) => {
         setSelectedServiceName(name);
-        if(id)setSelectedServiceId(id)
+        if (id) setSelectedServiceId(id);
         setShowAlert(false);
     }, []);
 
     const handleDateChange = useCallback((date: Date | null) => {
         if (date) {
             setSelectedDate(date);
-            // Сбрасываем выбор специалиста при изменении даты
             setSelectedSpecialist(null);
             setSelectedTime(null);
             setShowAlert(false);
@@ -192,10 +182,10 @@ export default function OnService() {
         setSelectedTime({
             name: time.specialist_name.split(' ')[0],
             surname: time.specialist_name.split(' ')[1],
-            category:time.service_name,
+            category: time.service_name,
             ...time
         });
-        console.log(time)
+        console.log(time);
         setShowAlert(false);
     }, []);
 
@@ -212,12 +202,12 @@ export default function OnService() {
         if (step === 2) return !selectedDate || !selectedSpecialist || !selectedTime;
         if (step === 3) return !isFormValid;
         return false;
-    }
+    };
 
     const getButtonText = () => {
         if (step === 3) return 'ЗАПИСАТЬСЯ';
         return 'ДАЛЕЕ';
-    }
+    };
 
     const getAlertMessage = () => {
         if (step === 1) return "Пожалуйста, выберите услугу перед продолжением";
@@ -227,7 +217,7 @@ export default function OnService() {
             if (!selectedTime) return "Пожалуйста, выберите время";
         }
         return "";
-    }
+    };
 
     const renderStepContent = () => {
         switch (step) {
@@ -246,15 +236,27 @@ export default function OnService() {
                                 </button>
                             </div>
                         </div>
-                        {transformServicesData().map((item, index) => (
-                            <ServiceList
-                                key={index}
-                                specialist={{name:item.specialist, id:item.id}}
-                                services={item.services}
-                                selectedService={selectedServiceName}
-                                onSelect={handleSelectService}
-                            />
-                        ))}
+                        {loading ? (
+                            <Box sx={{ 
+                                display: 'flex', 
+                                justifyContent: 'center', 
+                                alignItems: 'center', 
+                                height: 180 
+                            }}>
+                                <CircularProgress size={24} />
+                            </Box>
+                        ) : (
+                            transformServicesData().map((item, index) => (
+                                <ServiceList
+                                    key={index}
+                                    specialist={{ name: item.specialist, id: item.id }}
+                                    services={item.services}
+                                    selectedService={selectedServiceName}
+                                    onSelect={handleSelectService}
+                                    
+                                />
+                            ))
+                        )}
                     </>
                 );
             case 2:
@@ -285,7 +287,7 @@ export default function OnService() {
                             </div>
                             <div className="divider"></div>
                         </div>
-                        <ClientDataForm onSubmit={handleFormSubmit}/>
+                        <ClientDataForm onSubmit={handleFormSubmit} />
                     </>
                 );
             case 4:
@@ -306,7 +308,7 @@ export default function OnService() {
             default:
                 return null;
         }
-    }
+    };
 
     return (
         <Box sx={{ 
@@ -316,7 +318,7 @@ export default function OnService() {
             maxWidth: 800,
             display: 'flex',
             flexDirection: 'column',
-            alignItems:'center',
+            alignItems: 'center',
         }}>
             {renderStepContent()}
 
@@ -326,7 +328,7 @@ export default function OnService() {
                     justifyContent: 'center', 
                     mt: 3, 
                     gap: 2, 
-                    flexDirection:'column' 
+                    flexDirection: 'column' 
                 }}>
                     <Button 
                         sx={buttonStyle} 
@@ -334,19 +336,19 @@ export default function OnService() {
                         disabled={isNextDisabled()}
                     >
                         {getButtonText()}
-                        <img src={arrow} alt='далее' />
+                        <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                     </Button>
                     {step > 1 && (
                         <Button 
                             sx={{ 
                                 ...buttonStyle, 
                                 backgroundColor: 'white', 
-                                border:'1px solid #0077FF', 
-                                color:'#0077FF'
+                                border: '1px solid #0077FF', 
+                                color: '#0077FF'
                             }}
                             onClick={handleBack}
                         >
-                            <img src={arrowRight} alt='назад'></img>
+                            <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад'></img>
                             НАЗАД
                         </Button>
                     )}
