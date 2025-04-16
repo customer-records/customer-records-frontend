@@ -1,5 +1,4 @@
 import { Box, useTheme, useMediaQuery, createTheme } from "@mui/material";
-import { useRef, useState, useEffect } from "react";
 import MenuList from "./menuList";
 import { useNavigate } from "react-router-dom";
 
@@ -54,7 +53,7 @@ export default function BurgerMenu({ onClose }:any) {
     breakpoints: {
       values: {
         xs: 0,
-        sm: 300,  
+        sm: 300,
         md: 450,   
         lg: 1200,
         xl: 1600,
@@ -141,6 +140,7 @@ export default function BurgerMenu({ onClose }:any) {
               specialist={{ name: item.specialist, id: item.id }}
               services={item.services}
               currentId={item.id}
+              onClose={onClose}
             />
           ))}
         </Box>

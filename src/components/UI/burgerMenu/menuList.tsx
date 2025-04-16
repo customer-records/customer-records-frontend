@@ -9,10 +9,11 @@ import { Link } from 'react-router-dom';
   interface ServiceListProps {
     specialist: any;
     services: string[];
-    currentId:number 
+    currentId:number;
+    onClose: ()=>void 
   }
   
-export default function MenuList({ specialist, services }: ServiceListProps){
+export default function MenuList({ specialist, services , currentId, onClose}: ServiceListProps){
       const returnIcon = (indx:number) => {
         switch(indx){
             case 0:
@@ -23,6 +24,16 @@ export default function MenuList({ specialist, services }: ServiceListProps){
                 return TGmenu
             default:
                 return AdressMenu
+        }
+      }
+      const returnLink = (indx:number) => {
+        switch(indx){
+          case 0:
+            return('/client/date')
+          case 1:
+            return('/client/specialist')
+          default:
+            return('/client/service')
         }
       }
       const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +73,12 @@ export default function MenuList({ specialist, services }: ServiceListProps){
                     className={`service-item`}
                   >
                     {specialist.name === 'Контакты' ? <img src={returnIcon(indx)}></img> : null}
-                    <Link style={{color:'#000000DE', fontSize:'14px'}} to={'/client'}>{service}</Link>
+                    <Link 
+                    onClick={onClose} 
+                    style={{color:'#000000DE', fontSize:'14px'}} 
+                    to={currentId == 1 ? returnLink(indx) : '/client'}>
+                    {service}
+                    </Link>
                   </li>
                 ))}
               </ul>

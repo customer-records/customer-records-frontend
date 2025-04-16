@@ -9,6 +9,7 @@ const RegistrationWorker = lazy(() => import('./components/registrationWorker'))
 const AuthWorker = lazy(() => import('./components/authWorker'));
 const AdminPanel = lazy(() => import('./components/adminPanel'));
 import 'normalize.css';
+import Contacts from './components/UI/contacts/contacts';
 function App() {
   const [type, setType] = useState('auth'); // Для переключения между регистрацией и авторизацией
   const [user, setUser] = useState(() => {
@@ -77,7 +78,10 @@ function App() {
               )
             }
           />
-
+          <Route
+            path="/client/contacts"
+            element={<Contacts/>}
+          />
           {/* Маршрут авторизации клиента */}
           <Route
             path="/client/login"
