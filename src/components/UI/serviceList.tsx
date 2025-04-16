@@ -10,10 +10,13 @@ interface ServiceListProps {
   specialist: any;
   services: Service[];
   selectedService: string | null;
-  onSelect: (name: string | null, id?: number | null) => void; // Изменён тип параметра
+  selectedServiceId: number | null;
+  currentId:number;
+  onSelect: (name: string | null, id?: number | null) => void; 
 }
 
-const ServiceList = ({ specialist, services, selectedService, onSelect }: ServiceListProps) => {
+const ServiceList = ({ specialist, services, selectedService, currentId, selectedServiceId, onSelect }: ServiceListProps) => {
+  console.log(services, currentId, selectedServiceId)
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -22,11 +25,11 @@ const ServiceList = ({ specialist, services, selectedService, onSelect }: Servic
   };
 
   const handleServiceClick = (name: string, id: number) => {
-    if (selectedService === name) {
-      onSelect(null); // Снимаем выбор при повторном клике
+    if (selectedService === name && selectedServiceId == id) {
+      onSelect(null); 
     } else {
       console.log(name, id)
-      onSelect(name, id); // Выбираем услугу
+      onSelect(name, id); 
     }
   };
 
@@ -52,12 +55,13 @@ const ServiceList = ({ specialist, services, selectedService, onSelect }: Servic
           <ul className="services-list">
             {services.map((service,indx) => (
               <li 
+                style={{userSelect: 'none'}}
                 key={indx} 
-                className={`service-item ${selectedService === service ? 'selected' : ''}`}
+                className={`service-item ${(selectedService === service  && currentId === selectedServiceId) ? 'selected' : ''}`}
                 onClick={() => handleServiceClick(service, specialist.id)}
               >
                 {service}
-                {selectedService === service && (
+                {(selectedService === service && currentId === selectedServiceId) && (
                   <span className="checkmark">✓</span>
                 )}
               </li>

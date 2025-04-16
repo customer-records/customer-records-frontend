@@ -2,7 +2,7 @@ import { Box, Checkbox, FormControlLabel, TextField, Typography, useMediaQuery }
 import { createTheme, styled } from '@mui/material/styles';
 import { useCallback, useEffect, useState } from 'react';
 
-export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }: any) {
+export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: any) {
   const [phone, setPhone] = useState(initialData.phone);
   const [phoneError, setPhoneError] = useState('');
   const [isValid, setIsValid] = useState(false);
@@ -40,21 +40,28 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '+7 ' } }:
   }, [phone, phoneError, validateForm, isValid, submitForm]);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const digits = value.replace(/[^\d+]/g, '');
-    
-    if (!digits.startsWith('+7') || digits.length > 12) {
-      return;
+    let input = e.target.value.replace(/\D/g, '');
+  
+    // Обработка всех возможных форматов
+    if (input.startsWith('8')) {
+      input = '7' + input.slice(1);
+    } else if (input.startsWith('9')) {
+      input = '7' + input;
+    } else if (!input.startsWith('7')) {
+      input = '7' + input;
     }
-    
-    let formattedPhone = '+7 ' + digits.substring(2, 5);
-    if (digits.length > 5) formattedPhone += ' ' + digits.substring(5, 8);
-    if (digits.length > 8) formattedPhone += ' ' + digits.substring(8, 10);
-    if (digits.length > 10) formattedPhone += ' ' + digits.substring(10, 12);
-    
-    setPhone(formattedPhone);
-    setPhoneError(digits.length < 12 && digits.length > 2 ? 'Введите 10 цифр номера' : '');
+  
+    input = input.slice(0, 11); // не больше 11 цифр
+    let formatted = '+7';
+    if (input.length > 1) formatted += ' ' + input.slice(1, 4);
+    if (input.length > 4) formatted += ' ' + input.slice(4, 7);
+    if (input.length > 7) formatted += ' ' + input.slice(7, 9);
+    if (input.length > 9) formatted += ' ' + input.slice(9, 11);
+  
+    setPhone(formatted);
+    setPhoneError(input.length < 11 && input.length > 1 ? 'Введите 10 цифр номера' : '');
   };
+  
 
   const handleToggle = (specId: number) => {
     const newSelectedSpecs = [specId];
@@ -187,6 +194,10 @@ const StyledTextField = styled(TextField)({
       height: '100%',
       display: 'flex',
       alignItems: 'center',
+      caretColor: 'black',
+      animationName: 'onAutoFillStart',
+      animationDuration: '0.01s',
+      animationFillMode: 'both',
     },
     '& fieldset': {
       border: '1px solid #0077FF',
@@ -209,6 +220,23 @@ const StyledTextField = styled(TextField)({
       color: '#0077FF',
     },
   },
+  '& input:-webkit-autofill': {
+    boxShadow: '0 0 0 1000px white inset',
+    WebkitTextFillColor: '#000',
+    caretColor: 'black',
+    borderRadius: '50px',
+    animationName: 'onAutoFillStart',
+    animationDuration: '0.01s',
+    animationFillMode: 'both',
+  },
+  '@keyframes onAutoFillStart': {
+    '0%': {
+      caretColor: 'black',
+    },
+    '100%': {
+      caretColor: 'black',
+    },
+  },
   [`@media (max-height: 720px)`]: {
     '& .MuiOutlinedInput-root': {
       width: 280,
@@ -218,7 +246,7 @@ const StyledTextField = styled(TextField)({
       fontSize: '14px',
     }
   },
-  [`@media (max-width: 360px)`]:{
+  [`@media (max-width: 360px)`]: {
     '& .MuiOutlinedInput-root': {
       width: 280,
       height: 50,
@@ -228,6 +256,7 @@ const StyledTextField = styled(TextField)({
     }
   }
 });
+
 
 const RoundCheckbox = styled(Checkbox)(({ theme }) => ({
   width: 24,

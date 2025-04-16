@@ -3,49 +3,72 @@ import { Box, TextField, FormControlLabel, Radio, RadioGroup, useMediaQuery, use
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
     '& .MuiOutlinedInput-root': {
-        width: 400,
-        height: 60,
-        borderRadius: '50px',
+      width: 400,
+      height: 60,
+      borderRadius: '50px',
+      fontFamily: 'Roboto',
+      fontWeight: 400,
+      fontSize: '16px',
+  
+      [theme.breakpoints.down('sm')]: {
+        height: 50,
+        width: 300,
+      },
+  
+      '& input': {
+        textAlign: 'center',
         fontFamily: 'Roboto',
-        fontWeight: 400,
-        fontSize: '16px',
-
-        [theme.breakpoints.down('sm')]: {
-            height: 50,
-            width:300
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        color: '#000000',
+        caretColor: 'black',
+        animationName: 'onAutoFillStart',
+        animationDuration: '0.01s',
+        animationFillMode: 'both',
+        '&::placeholder': {
+          opacity: 1,
+          fontFamily: 'Roboto',
+          color: '#000000',
+          fontWeight: '700',
+          textTransform: 'uppercase',
         },
-
-        '& input': {
-            textAlign: 'center',
-            fontFamily: 'Roboto',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            color: '#000000',
-            '&::placeholder': {
-                opacity: 1,
-                fontFamily: 'Roboto',
-                color: '#000000',
-                fontWeight: '700',
-                textTransform: 'uppercase'
-            }
+      },
+      '&.Mui-focused': {
+        '& input::placeholder': {
+          opacity: 0,
         },
-        '&.Mui-focused': {
-            '& input::placeholder': {
-                opacity: 0
-            }
-        },
-        '& fieldset': {
-            border: '1px solid #0077FF',
-        },
-        '&:hover fieldset': {
-            border: '1px solid #0077FF',
-        },
-        '&.Mui-focused fieldset': {
-            border: '1px solid #0077FF',
-        },
+      },
+      '& fieldset': {
+        border: '1px solid #0077FF',
+      },
+      '&:hover fieldset': {
+        border: '1px solid #0077FF',
+      },
+      '&.Mui-focused fieldset': {
+        border: '1px solid #0077FF',
+      },
     },
-}));
-
+  
+    '& input:-webkit-autofill': {
+      boxShadow: '0 0 0 1000px white inset',
+      WebkitTextFillColor: '#000',
+      borderRadius: '50px',
+      caretColor: 'black',
+      animationName: 'onAutoFillStart',
+      animationDuration: '0.01s',
+      animationFillMode: 'both',
+    },
+  
+    '@keyframes onAutoFillStart': {
+      '0%': {
+        caretColor: 'black',
+      },
+      '100%': {
+        caretColor: 'black',
+      },
+    },
+  }));
+  
 export default function ClientData({ onSubmit }: { onSubmit: (data: any) => void }) {
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'));

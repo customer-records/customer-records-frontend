@@ -26,7 +26,6 @@ export default function CustomerRecord() {
     });
   const navigate = useNavigate()
   const location = useLocation();
-  // const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   // Функция для определения, какой компонент отображать

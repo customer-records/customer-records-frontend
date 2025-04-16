@@ -76,10 +76,21 @@ button:active {
     justify-content: center;
     text-transform: uppercase;
   }
-  
+  .on-close-burger:focus, .on-close-burger:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  .on-close-burger{
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .burger-menu-button:focus, .burger-menu-button:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
   .burger-menu-button {
     background: none;
-    border: none;
     cursor: pointer;
     padding: 0;
     display: flex;
@@ -87,7 +98,9 @@ button:active {
     justify-content: center;
     width: 80px; /* Увеличили ширину в 2 раза */
     height: 80px; /* Увеличили высоту в 2 раза */
-    color: #0077FF; /* Цвет для иконки */
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
   }
   
   .burger-icon {
@@ -151,8 +164,7 @@ button:active {
     margin-bottom: 40px; /* Отступ от заголовка до кнопок */
     text-align: center;
     margin-bottom: 40px;
-    display: flex
-;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -336,7 +348,6 @@ button:active {
   color: white;
   border-color: #1976D2;
 }
-
 .custom-calendar .MuiPickersCalendarHeader-label {
   color: black;
 }

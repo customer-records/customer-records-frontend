@@ -1,19 +1,29 @@
-export default function Header (){
+import { useState } from "react";
+import BurgerMenu from "./burgerMenu/burgerMenu";
+
+export default function Header() {
+    const [isOpen, setIsOpen] = useState(false);
+    
     const switchText = () => {
-        let path = location.pathname
+        let path = window.location.pathname;
         if(path.startsWith('/admin')){
-            return 'Панель администратора'
+            return 'Панель администратора';
         }else if(path.startsWith('/client')){
-            return 'Онлайн запись'
+            return 'Онлайн запись';
         }
+        return ''; // Добавляем возврат по умолчанию
     }
+
     return (
         <>
             <header className="header">
                 <div className="header-background"></div>
                 <div className="header-top">
-                    <button className="online-booking-button">{switchText()}</button>
-                    <button className="burger-menu-button">
+                    <button disabled className="online-booking-button">{switchText()}</button>
+                    <button 
+                        onClick={() => setIsOpen(true)} 
+                        className="burger-menu-button"
+                    >
                         <div className="burger-icon">
                             <div></div>
                         </div>
@@ -24,11 +34,11 @@ export default function Header (){
                         <h1 className="service-name">Стоматология</h1>
                         <p className="company-name">Denta - rell</p>
                     </div>
-                    <div className="roundLogo">
-                    
-                    </div>
+                    <div className="roundLogo"></div>
                 </div>
             </header>
+
+            {isOpen && <BurgerMenu onClose={()=>setIsOpen(false)} />}
         </>
-    )
+    );
 }

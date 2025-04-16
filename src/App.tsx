@@ -9,6 +9,7 @@ const RegistrationWorker = lazy(() => import('./components/registrationWorker'))
 const AuthWorker = lazy(() => import('./components/authWorker'));
 const AdminPanel = lazy(() => import('./components/adminPanel'));
 import 'normalize.css';
+import BurgerMenu from './components/UI/burgerMenu/burgerMenu';
 function App() {
   const [type, setType] = useState('auth'); // Для переключения между регистрацией и авторизацией
   const [user, setUser] = useState(() => {
@@ -50,7 +51,6 @@ function App() {
           <Route
             path="/admin/login"
             element={
-              // Если пользователь уже авторизован, перенаправляем на /welcome
               isAuthenticated ? (
                 <Navigate to="/admin" replace />
               ) : (
@@ -58,7 +58,6 @@ function App() {
               )
             }
           />
-          {/* Маршрут для страницы приветствия */}
           <Route
             path="/admin"
             element={
@@ -68,6 +67,10 @@ function App() {
                 <Navigate to="/admin/login" replace />
               )
             }
+          />
+          <Route
+          path='/client/burger'
+          element={<BurgerMenu/>}
           />
             <Route
             path="/"

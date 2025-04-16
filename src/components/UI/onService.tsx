@@ -125,6 +125,9 @@ export default function OnService() {
             services: category.services_array.map((service: any) => service)
         }));
     };
+    useEffect(()=>{
+        console.log(transformServicesData())
+    },[servicesData])
 
     const handleClick = (route: string) => {
         navigate(route);
@@ -253,7 +256,8 @@ export default function OnService() {
                                     services={item.services}
                                     selectedService={selectedServiceName}
                                     onSelect={handleSelectService}
-                                    
+                                    currentId={item.id}
+                                    selectedServiceId={selectedServiceId}
                                 />
                             ))
                         )}

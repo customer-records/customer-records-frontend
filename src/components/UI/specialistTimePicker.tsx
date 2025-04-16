@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Avatar, 
   List, 
@@ -14,7 +14,7 @@ import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const getInitials = (name: any, surname: any) => {
+const getInitials = (name: string, surname: string) => {
   return `${name.charAt(0)}${surname.charAt(0)}`.toUpperCase();
 };
 

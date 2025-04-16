@@ -8,7 +8,7 @@ interface ClientDataFormProps {
   initialData?: { name: string; phone: string };
 }
 
-const ClientDataForm: React.FC<ClientDataFormProps> = ({ onSubmit, initialData = { name: '', phone: '+7 ' } }) => {
+const ClientDataForm: React.FC<ClientDataFormProps> = ({ onSubmit, initialData = { name: '', phone: '' } }) => {
   const [name, setName] = useState(initialData.name);
   const [phone, setPhone] = useState(initialData.phone);
   const [phoneError, setPhoneError] = useState('');
@@ -21,29 +21,41 @@ const ClientDataForm: React.FC<ClientDataFormProps> = ({ onSubmit, initialData =
 
   useEffect(() => {
     const formIsValid = validateForm();
-    if (formIsValid !== isValid) {
-      setIsValid(formIsValid);
-      onSubmit({ name, phone, isValid: formIsValid });
-    }
-  }, [name, phone, phoneError, validateForm, isValid, onSubmit]);
+    const rawPhone = phone.replace(/\s/g, '');
+  
+    setIsValid(formIsValid);
+  
+    onSubmit({ name, phone: rawPhone, isValid: formIsValid });
+  }, [name, phone, phoneError, validateForm, onSubmit]);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const digits = value.replace(/[^\d+]/g, '');
+    let input = e.target.value;
     
-    if (!digits.startsWith('+7') || digits.length > 12) {
-      return;
-    }
-    
-    let formattedPhone = '+7 ' + digits.substring(2, 5);
-    if (digits.length > 5) formattedPhone += ' ' + digits.substring(5, 8);
-    if (digits.length > 8) formattedPhone += ' ' + digits.substring(8, 10);
-    if (digits.length > 10) formattedPhone += ' ' + digits.substring(10, 12);
-    
-    setPhone(formattedPhone);
-    setPhoneError(digits.length < 12 && digits.length > 2 ? 'Введите 10 цифр номера' : '');
-  };
+    let digits = input.replace(/\D/g, '');
 
+    if (digits.startsWith('8')) {
+      digits = '7' + digits.slice(1);
+    } else if (digits.startsWith('9')) {
+      digits = '7' + digits;
+    } else if (!digits.startsWith('7')) {
+      digits = '7' + digits;
+    }
+  
+    digits = digits.slice(0, 11);
+  
+    let formattedPhone = '+7';
+    if (digits.length > 1) formattedPhone += ' ' + digits.slice(1, 4);
+    if (digits.length > 4) formattedPhone += ' ' + digits.slice(4, 7);
+    if (digits.length > 7) formattedPhone += ' ' + digits.slice(7, 9);
+    if (digits.length > 9) formattedPhone += ' ' + digits.slice(9, 11);
+  
+    setPhone(formattedPhone);
+    console.log(formattedPhone)
+    const isValid = digits.length === 11;
+    setPhoneError(!isValid && digits.length > 1 ? 'Введите 10 цифр номера' : '');
+  };
+  
+  
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
       <StyledTextField
@@ -56,6 +68,11 @@ const ClientDataForm: React.FC<ClientDataFormProps> = ({ onSubmit, initialData =
         label="Телефон"
         value={phone}
         onChange={handlePhoneChange}
+        onPaste={(e) => {
+          e.preventDefault();
+          const pasted = e.clipboardData.getData('Text');
+          handlePhoneChange({ target: { value: pasted } } as React.ChangeEvent<HTMLInputElement>);
+        }}
         error={!!phoneError}
         helperText={phoneError}
         placeholder="+7 912 345 67 89"
@@ -66,7 +83,7 @@ const ClientDataForm: React.FC<ClientDataFormProps> = ({ onSubmit, initialData =
   );
 };
 
-// Стили остаются без изменений
+
 const StyledTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     width: 350,
@@ -83,6 +100,10 @@ const StyledTextField = styled(TextField)({
       height: '100%',
       display: 'flex',
       alignItems: 'center',
+      caretColor: 'black', // цвет курсора по умолчанию
+      animationName: 'onAutoFillStart',
+      animationDuration: '0.01s',
+      animationFillMode: 'both',
     },
     '& fieldset': {
       border: '1px solid #0077FF',
@@ -109,6 +130,23 @@ const StyledTextField = styled(TextField)({
     marginLeft: '14px',
     fontFamily: 'Roboto',
     textTransform: 'none',
+  },
+  '& input:-webkit-autofill': {
+    boxShadow: '0 0 0 1000px white inset',
+    WebkitTextFillColor: '#000',
+    borderRadius: '50px',
+    caretColor: 'black',
+    animationName: 'onAutoFillStart',
+    animationDuration: '0.01s',
+    animationFillMode: 'both',
+  },
+  '@keyframes onAutoFillStart': {
+    '0%': {
+      caretColor: 'black',
+    },
+    '100%': {
+      caretColor: 'black',
+    },
   },
 });
 

@@ -9,6 +9,7 @@ import arrowRight from '../../assets/arrow-right.svg';
 import SpecialistSelector from './specialistTimePicker';
 import ClientDataForm from './clientDataForm';
 import FinalStep from './finalDate';
+import { useCallback } from 'react';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function OnDate() {
@@ -81,10 +82,6 @@ export default function OnDate() {
             throw new Error(`HTTP error! status: ${e}`);
         }
     }
-    // useEffect(()=>{
-    //     console.log( selectedServiceId, selectedSpecialist, selectedTime)
-    // },[step])
-    // Загрузка данных с сервера
     useEffect(() => {
         const fetchServices = async () => {
             try {
@@ -156,7 +153,7 @@ export default function OnDate() {
 
     const handleSelectService = (name: string | null, id?: null | number) => {
         setSelectedServiceName(name);
-        if(id)setSelectedServiceId(id)
+        if(id)setSelectedServiceId(Number(id))
         setShowAlert(false);
     }
 
@@ -177,16 +174,17 @@ export default function OnDate() {
             setSelectedDate(date);
             const formattedDate = date.toISOString().split('T')[0];
             setDateForPicker(formattedDate)
-            console.log(formattedDate); // Формат YYYY-MM-DD
+            console.log(formattedDate); 
         }
     }
-    const handleFormSubmit = (data: { name: string; phone: string, isValid: boolean }) => {
+    const handleFormSubmit = useCallback((data: { name: string; phone: string, isValid: boolean }) => {
         setClientData({
             name: data.name,
             phone: data.phone
         });
+        console.log(data.phone)
         setIsFormValid(data.isValid);
-    };
+    },[]);
 
     const isNextDisabled = () => {
         if (step === 2) return !selectedServiceName;
@@ -235,10 +233,12 @@ export default function OnDate() {
                         </div>
                         {transformServicesData().map((item, index) => (
                             <ServiceList
-                                key={index}
+                                key={item.id}
                                 specialist={{name:item.specialist, id:item.id}}
                                 services={item.services}
                                 selectedService={selectedServiceName}
+                                currentId={item.id}
+                                selectedServiceId={selectedServiceId}
                                 onSelect={handleSelectService}
                             />
                         ))}
