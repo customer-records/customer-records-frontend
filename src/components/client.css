@@ -19,6 +19,7 @@ button:active {
     background-size: cover;
     background-position: center;
     z-index: 0;
+    width: 100%;
   }
   .header::after {
     content: '';
@@ -36,10 +37,10 @@ button:active {
     width: 74px;
     height: 74px;
     border-radius: 50%;
-    background-image: url(../assets/logo1.png);
+    background-image: url(../assets/logo1.svg);
     background-repeat: no-repeat;
-    background-position: 46% 50%;
-    background-size: auto;
+    background-position: 50% 50%;
+    background-size:75%;
     
   }
   .headWrap{
@@ -271,17 +272,16 @@ button:active {
     cursor: pointer;
   }
   .round-button:nth-child(1) {
-    background-image: url('../assets/tg.png'); /* Путь к изображению */
+    background-image: url('../assets/tg.svg'); 
     width: 40px;
     height: 40px;
   }
   
   .round-button:nth-child(2) {
-    background-image: url('../assets/WhatsAppOutlined.svg'); /* Путь к изображению */
+    background-image: url('../assets/WhatsAppOutlined.svg'); 
     width: 45px;
     height: 45px;
   }
-  /* Кнопка "НАПИСАТЬ" */
 .write-button {
     width: 181px;
     height: 40px;

@@ -10,17 +10,17 @@ const AuthWorker = lazy(() => import('./components/authWorker'));
 const AdminPanel = lazy(() => import('./components/adminPanel'));
 import 'normalize.css';
 import Contacts from './components/UI/contacts/contacts';
+import { Box } from '@mui/material';
+import Chat from './components/UI/chat/chat';
 function App() {
-  const [type, setType] = useState('auth'); // Для переключения между регистрацией и авторизацией
+  const [type, setType] = useState('auth');
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('user');
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
-  // Проверяем, есть ли user в localStorage
   const isAuthenticated = !!user;
 
-  // Сохраняем данные пользователя в localStorage при изменении user
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
@@ -29,80 +29,67 @@ function App() {
     }
   }, [user]);
 
-  // Обработчик выхода
   const handleLogout = () => {
-    setUser(null); // Удаляем данные пользователя
-    localStorage.removeItem('user'); // Очищаем localStorage
+    setUser(null);
+    localStorage.removeItem('user');
   };
 
   return (
     <Router>
-      
-        <Routes>
-          {/* Маршрут для авторизации */}
-          <Route
-            path="/admin/registration"
-            element={<RegistrationWorker/>}
-          />
-          <Route
-            path="/admin/login"
-            element={<AuthWorker/>}
-          />
-          <Route
-            path="/admin/login"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/admin" replace />
-              ) : (
-                <Navigate to="/admin/registration" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              isAuthenticated ? (
-                <AdminPanel />
-              ) : (
-                <Navigate to="/admin/login" replace />
-              )
-            }
-          />
+      <Box sx={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden'
+      }}>
+        <Box sx={{
+          flex: 1,
+          overflowY: 'auto',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          <Routes>
+            <Route path="/admin/registration" element={<RegistrationWorker/>} />
+            <Route path="/admin/login" element={<AuthWorker/>} />
             <Route
-            path="/"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/client" replace />
-              ) : (
-                <Navigate to="/client" replace />
-              )
-            }
-          />
-          <Route
-            path="/client/contacts"
-            element={<Contacts/>}
-          />
-          {/* Маршрут авторизации клиента */}
-          <Route
-            path="/client/login"
-            element={<AuthClient/>}
-          />
-          {/* Маршрут регистрации клиента */}
-          <Route
-            path="/client/registration"
-            element={<RegistrationClient/>}
-          />
-          {/* Маршрут для страницы клиента */}
-          <Route
-            path="/client"
-            element={<ClientPage />}
-          />
-          <Route 
-          path="/client/:step" 
-          element={<CustomerRecord/>} />
-          {/* Перенаправление по умолчанию */}
-        </Routes>
-      
+              path="/admin/login"
+              element={
+                isAuthenticated ? (
+                  <Navigate to="/admin" replace />
+                ) : (
+                  <Navigate to="/admin/registration" replace />
+                )
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                isAuthenticated ? (
+                  <AdminPanel />
+                ) : (
+                  <Navigate to="/admin/login" replace />
+                )
+              }
+            />
+            <Route
+              path="/"
+              element={
+                isAuthenticated ? (
+                  <Navigate to="/client" replace />
+                ) : (
+                  <Navigate to="/client" replace />
+                )
+              }
+            />
+            <Route path='/client/chat' element={<Chat/>}/>
+            <Route path="/client/contacts" element={<Contacts/>} />
+            <Route path="/client/login" element={<AuthClient/>} />
+            <Route path="/client/registration" element={<RegistrationClient/>} />
+            <Route path="/client" element={<ClientPage />} />
+            <Route path="/client/:step" element={<CustomerRecord/>} />
+          </Routes>
+        </Box>
+      </Box>
     </Router>
   );
 }

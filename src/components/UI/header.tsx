@@ -11,7 +11,7 @@ export default function Header() {
         }else if(path.startsWith('/client')){
             return 'Онлайн запись';
         }
-        return ''; // Добавляем возврат по умолчанию
+        return ''; 
     }
 
     return (
@@ -19,7 +19,14 @@ export default function Header() {
             <header className="header">
                 <div className="header-background"></div>
                 <div className="header-top">
-                    <button disabled className="online-booking-button">{switchText()}</button>
+                    <button 
+                    disabled={true} 
+                    className="online-booking-button"
+                    style={{  
+                        outline: 'none',
+                        border: 'none',
+                        boxShadow: 'none'
+                        }}>{switchText()}</button>
                     <button 
                         onClick={() => setIsOpen(true)} 
                         className="burger-menu-button"

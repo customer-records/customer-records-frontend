@@ -77,7 +77,6 @@ const TimeSlotList = ({ onSelect, TimeSlots }: TimeSlotListProps) => {
       maxWidth: 400,
       margin: '0 auto',
       boxSizing: 'border-box',
-      marginLeft:'-25px'
     }}>
       <TimeHeader>Время</TimeHeader>
       
