@@ -282,7 +282,7 @@ export default function AuthWorker() {
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundColor: '#fff', 
+                backgroundColor: '#FFFFFF', 
             }}
         >
             <Box sx={{ flexShrink: 0 }}>

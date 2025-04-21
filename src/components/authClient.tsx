@@ -250,7 +250,7 @@ export default function AuthClient() {
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundColor: '#fff', 
+                backgroundColor: '#FFFFFF', 
             }}
         >
             <Header/>

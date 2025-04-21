@@ -65,12 +65,12 @@ export default function Contacts (){
             maxWidth: 800,
             margin: '0 auto',
             boxSizing: 'border-box',
-            background:'white',
+            background:'#FFFFFF',
             display:'flex',
             flexDirection:'column',
             alignItems:'center',
             gap:'20px',
-            flex: 1 
+            flex: 1 ,
         }}
         >
         <Header/>

@@ -58,6 +58,7 @@ export default function CustomerRecord() {
           margin: '0 auto',
           minHeight: '100vh',
           boxSizing: 'border-box',
+          background:'#FFFFFF'
         }}
       >
         <Header/>

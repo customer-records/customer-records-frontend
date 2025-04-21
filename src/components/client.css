@@ -20,6 +20,8 @@ button:active {
     background-position: center;
     z-index: 0;
     width: 100%;
+    border-bottom: 2px solid #0077FF;
+    border-bottom-right-radius: 40px;
   }
   .header::after {
     content: '';

@@ -649,6 +649,7 @@ export default function RegistrationWorker() {
                 flexDirection: 'column',
                 backgroundColor: '#fff',
                 overflowY: 'auto',
+                background:'#FFFFFF'
             }}
         >
             <Box sx={{ flexShrink: 0 }}>

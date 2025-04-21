@@ -597,6 +597,7 @@ export default function RegistrationClient() {
                 flexDirection: 'column',
                 backgroundColor: '#fff',
                 overflowY: 'auto',
+                background:'#FFFFFF'
             }}
         >
             <Box sx={{ flexShrink: 0 }}>
