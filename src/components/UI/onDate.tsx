@@ -209,11 +209,11 @@ export default function OnDate() {
                                 <span className="na-priem"> дату</span>
                             </div>
                             <div className="divider"></div>
-                            <div className="additional-button-container">
+                            {/* <div className="additional-button-container">
                                 <button onClick={() => handleClick('/client/fastreacord')} className="custom-button fast center">
                                     <span className="button-text">Быстрая запись</span>
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                         <Calendare selectedDate={selectedDate} onDateChange={handleDateChange} />
                     </>
