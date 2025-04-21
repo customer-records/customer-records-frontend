@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BurgerMenu from "./burgerMenu/burgerMenu";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
-    
+    const [display, SetDisplay] = useState('flex')
+    const [height, SetHeight] = useState('30vh')
+    const [MinHeight, SetMinHeight] = useState('25vh')
     const switchText = () => {
         let path = window.location.pathname;
         if(path.startsWith('/admin')){
@@ -13,10 +15,21 @@ export default function Header() {
         }
         return ''; 
     }
-
+    useEffect(()=>{
+        let path = window.location.pathname;
+        if(path !== '/client' && path !== '/client/') {
+            SetDisplay('none')
+            SetHeight('10vh')
+            SetMinHeight('13vh')
+        }else{
+            SetDisplay('flex')
+            SetHeight('30vh')
+            SetMinHeight('25vh')
+        }
+    },[])
     return (
         <>
-            <header className="header">
+            <header style={{height:height, minHeight:MinHeight}} className="header">
                 <div className="header-background"></div>
                 <div className="header-top">
                     <button 
@@ -36,7 +49,7 @@ export default function Header() {
                         </div>
                     </button>
                 </div>
-                <div className="headWrap">
+                <div className="headWrap" style={{display:display}}>
                     <div className="header-bottom">
                         <h1 className="service-name">Стоматология</h1>
                         <p className="company-name">Denta - rell</p>
