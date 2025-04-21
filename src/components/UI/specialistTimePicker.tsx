@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   Avatar, 
   List, 
@@ -27,11 +27,11 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const containerRef = useRef(null);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log(serviceId)
-                // Загрузка специалистов
                 let specialistsResponse 
                 if(serviceId) specialistsResponse = await fetch(`${apiUrl}/calendar/specialists/?category_id=${serviceId}`);
                 else specialistsResponse = await fetch(`${apiUrl}/calendar/specialists/`);
@@ -40,7 +40,6 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
                 }
                 const specialistsData: any[] = await specialistsResponse.json();
                 
-                // Загрузка временных слотов
                 const slotsResponse = await fetch(`${apiUrl}/calendar/timeslots/${selectedDate}`);
                 if (!slotsResponse.ok) {
                     throw new Error('Ошибка при загрузке временных слотов');
@@ -48,13 +47,12 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
                 const slotsData: any[] = await slotsResponse.json();
                 setAllTimeSlots(slotsData);
 
-                // Преобразуем данные с бэкенда в нужный формат
                 const formattedSpecialists = specialistsData.map(spec => ({
                     id: spec.id,
                     name: spec.name,
                     surname: spec.last_name,
                     category: spec.category_name,
-                    slots: [] // Изначально слоты пустые
+                    slots: []
                 }));
                 
                 setSpecialists(formattedSpecialists);
@@ -81,7 +79,7 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
         
         setSelectedSpecialist(updatedSpecialist);
         setSelectedTimeSlot(null);
-        setOpen(false); // Закрываем выпадающий список после выбора
+        setOpen(false); 
         onSelect(null, null);
     };
 
@@ -106,9 +104,9 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                minHeight:85
+                minHeight: 85
             }}>
-                <CircularProgress  sx={{ width: '24px !important', height: '24px !important' }}/>
+                <CircularProgress sx={{ width: '24px !important', height: '24px !important' }}/>
             </Box>
         );
     }
@@ -118,7 +116,7 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
     }
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box ref={containerRef} sx={{ width: '100%' }}>
             <SelectContainer>
                 <WideSelect
                     displayEmpty
@@ -129,6 +127,8 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
                     onOpen={handleOpen}
                     IconComponent={() => null}
                     MenuProps={{
+                        container: containerRef.current,
+                        disablePortal: true,
                         PaperProps: {
                             sx: {
                                 width: '33%',
@@ -136,7 +136,8 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
                                 boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
                                 left: '50% !important',
                                 transform: 'translateX(-50%) !important',
-                                marginTop: '4px'
+                                marginTop: '4px',
+                                overflowY: 'auto'
                             }
                         }
                     }}
@@ -199,7 +200,7 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
                     </ListItem>
                     
                     {selectedSpecialist.slots.length > 0 ? (
-                        selectedSpecialist.slots.map((slot:any) => (
+                        selectedSpecialist.slots.map((slot: any) => (
                             <ListItem 
                                 key={slot.id}
                                 sx={{ 
@@ -252,15 +253,15 @@ const HeaderText = styled(Typography)({
     color: '#757575',
     padding: '10px 16px'
 });
-  
+
 const TimeHeader = styled(HeaderText)({
     fontWeight: 700
 });
-  
+
 const SpecialistHeader = styled(HeaderText)({
     fontWeight: 400
 });
-  
+
 const SlotText = styled(Typography)({
     fontFamily: 'Roboto',
     fontWeight: 400,
@@ -271,12 +272,12 @@ const SlotText = styled(Typography)({
     color: '#000000DE',
     padding: '14px 16px'
 });
-  
+
 const SelectContainer = styled(Box)({
     margin: '16px auto',
     position: 'relative'
 });
-  
+
 const WideSelect = styled(Select)({
     width: '100%',
     boxShadow: '0px -1px 0px 0px #0000001F inset',
@@ -297,20 +298,20 @@ const WideSelect = styled(Select)({
       border: 'none'
     }
 });
-  
+
 const SelectContent = styled(Box)({
     display: 'flex',
     alignItems: 'center',
     width: '100%',
     justifyContent: 'space-between'
 });
-  
+
 const SelectArrow = styled(Box)({
     marginLeft: 'auto',
     display: 'flex',
     alignItems: 'center'
 });
-  
+
 const TimeSlotItem = styled(Box)({
     display: 'flex',
     width: '100%',
@@ -321,7 +322,7 @@ const TimeSlotItem = styled(Box)({
       backgroundColor: '#F5F5F5'
     }
 });
-  
+
 const SpecialistAvatar = styled(Avatar)({
     width: 36,
     height: 36,

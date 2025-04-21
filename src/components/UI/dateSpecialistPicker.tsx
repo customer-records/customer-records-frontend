@@ -39,8 +39,6 @@ export default function DateSpecialistPicker({
         selectedDate={selectedDate} 
         onDateChange={onDateChange} 
       />
-      
-      {/* Синяя полоска-разделитель */}
       <Box sx={{
         width: 176,
         height: 1,
@@ -48,8 +46,6 @@ export default function DateSpecialistPicker({
         margin: '16px auto',
         backgroundColor: '#0077FF'
       }} />
-      
-      {/* Компонент выбора специалиста - передаем обработчик выбора */}
       <SpecialistSelector 
         selectedDate={selectedDate.toISOString().split('T')[0]}
         onSelect={onSelect}
