@@ -246,7 +246,7 @@ export default function AuthClient() {
                 maxWidth: 800,
                 margin: '0 auto',
                 minHeight: '100vh',
-                height:'100vh',
+                height:'auto',
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',

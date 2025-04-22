@@ -592,7 +592,7 @@ export default function RegistrationClient() {
                 width: isDesktop ? '50vh' : '100vw',
                 maxWidth: 800,
                 margin: '0 auto',
-                height:'100vh',
+                height:'auto',
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: '#fff',
