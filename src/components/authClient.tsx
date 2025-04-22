@@ -242,12 +242,15 @@ export default function AuthClient() {
     return (
         <Box
             sx={{
+                width: isDesktop ? '50vh' : '100vw',
                 maxWidth: 800,
-               
-                
+                margin: '0 auto',
+                minHeight: '100dvh',
+                height:'auto',
+                boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundColor: '#FFFFFF',
+                backgroundColor: '#FFFFFF', 
                 
             }}
         >

@@ -16,9 +16,10 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
         lg: 1200,
         xl: 1600,
       },
-      },
+    },
   });
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+
   const validateForm = useCallback(() => {
     const numDigits = phone.replace(/\D/g, '').length - 1;
     return numDigits === 10 && !phoneError;
@@ -39,10 +40,33 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
     }
   }, [phone, phoneError, validateForm, isValid, submitForm]);
 
+  useEffect(() => {
+    const onFocus = () => {
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    };
+
+    const onBlur = () => {
+      document.body.style.overflow = '';
+    };
+
+    const input = document.querySelector('input');
+    if (input) {
+      input.addEventListener('focus', onFocus);
+      input.addEventListener('blur', onBlur);
+    }
+
+    return () => {
+      if (input) {
+        input.removeEventListener('focus', onFocus);
+        input.removeEventListener('blur', onBlur);
+      }
+    };
+  }, []);
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let input = e.target.value.replace(/\D/g, '');
-  
-    // Обработка всех возможных форматов
+
     if (input.startsWith('8')) {
       input = '7' + input.slice(1);
     } else if (input.startsWith('9')) {
@@ -50,18 +74,17 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
     } else if (!input.startsWith('7')) {
       input = '7' + input;
     }
-  
-    input = input.slice(0, 11); // не больше 11 цифр
+
+    input = input.slice(0, 11);
     let formatted = '+7';
     if (input.length > 1) formatted += ' ' + input.slice(1, 4);
     if (input.length > 4) formatted += ' ' + input.slice(4, 7);
     if (input.length > 7) formatted += ' ' + input.slice(7, 9);
     if (input.length > 9) formatted += ' ' + input.slice(9, 11);
-  
+
     setPhone(formatted);
     setPhoneError(input.length < 11 && input.length > 1 ? 'Введите 10 цифр номера' : '');
   };
-  
 
   const handleToggle = (specId: number) => {
     const newSelectedSpecs = [specId];
@@ -82,9 +105,8 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
       width: '100%', 
       alignItems: 'center',
       height: '25dvh',
-      mb:4,
-      mt:isDesktop ? 3 :'10vw',
-
+      mb: 4,
+      mt: isDesktop ? 3 : '10vw',
     }}>
       <Box sx={{
         display: 'flex',
@@ -93,7 +115,7 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
         justifyContent: 'center',
         height: '100%',
         position: 'relative',
-        mb:3
+        mb: 3
       }}>
         <StyledTextField
           label="Телефон"
@@ -256,7 +278,6 @@ const StyledTextField = styled(TextField)({
     }
   }
 });
-
 
 const RoundCheckbox = styled(Checkbox)(({ theme }) => ({
   width: 24,
