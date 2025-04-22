@@ -265,7 +265,6 @@ export default function AuthClient() {
                     padding: '0 16px',
                     position: 'relative',
                     justifyContent:'center',
-                    // overflowY: 'auto',
                     maxHeight: '100dvh',
                 }}
             >
