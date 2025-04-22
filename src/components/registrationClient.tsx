@@ -410,7 +410,6 @@ export default function RegistrationClient() {
                         <Button 
                             sx={buttonStyle} 
                             onClick={handleNext}
-                            // disabled={!formData.isValid}
                             >
                             ДАЛЕЕ
                             <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />

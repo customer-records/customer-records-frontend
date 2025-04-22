@@ -245,7 +245,7 @@ export default function AuthClient() {
                 width: isDesktop ? '50vh' : '100vw',
                 maxWidth: 800,
                 margin: '0 auto',
-                minHeight: '100vh',
+                minHeight: '100dvh',
                 height:'auto',
                 boxSizing: 'border-box',
                 display: 'flex',
@@ -264,7 +264,9 @@ export default function AuthClient() {
                     flexDirection: 'column',
                     padding: '0 16px',
                     position: 'relative',
-                    justifyContent:'center'
+                    justifyContent:'center',
+                    overflowY: 'auto',
+                    maxHeight: '100dvh',
                 }}
             >
                 {renderStepContent()}
