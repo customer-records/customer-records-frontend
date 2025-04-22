@@ -243,8 +243,8 @@ export default function AuthClient() {
         <Box
             sx={{
                 maxWidth: 800,
-                margin: '0 auto',
-                minHeight: '100dvh',
+               
+                
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: '#FFFFFF',
