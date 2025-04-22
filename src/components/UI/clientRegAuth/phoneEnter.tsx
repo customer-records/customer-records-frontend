@@ -81,7 +81,7 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
       justifyContent: 'center',
       width: '100%', 
       alignItems: 'center',
-      height: '25vh',
+      height: '25dvh',
       mb:4,
       mt:isDesktop ? 3 :'10vw',
 

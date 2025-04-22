@@ -19,12 +19,12 @@ export default function Header() {
         let path = window.location.pathname;
         if(path !== '/client' && path !== '/client/') {
             SetDisplay('none')
-            SetHeight('10vh')
-            SetMinHeight('13vh')
+            SetHeight('10dvh')
+            SetMinHeight('13dvh')
         }else{
             SetDisplay('flex')
-            SetHeight('30vh')
-            SetMinHeight('25vh')
+            SetHeight('30dvh')
+            SetMinHeight('25dvh')
         }
     },[])
     return (
