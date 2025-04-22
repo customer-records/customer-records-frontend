@@ -297,6 +297,7 @@ export default function AuthWorker() {
                     flexDirection: 'column',
                     padding: '0 16px',
                     position: 'relative',
+                    justifyContent:'center'
                 }}
             >
                 {renderStepContent()}
@@ -373,6 +374,7 @@ export default function AuthWorker() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '16px',
+                background:'#FFFFFF',
             }}>
                 <Box sx={{ 
                     display: 'flex', 

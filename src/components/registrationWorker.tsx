@@ -664,6 +664,7 @@ export default function RegistrationWorker() {
                     flexDirection: 'column',
                     padding: '0 16px',
                     overflow: 'visible',
+                    justifyContent:'center'
                 }}
             >
                 {renderStepContent()}
@@ -692,6 +693,7 @@ export default function RegistrationWorker() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '16px',
+                background:'#FFFFFF'
             }}>
                 <Box sx={{ 
                     display: 'flex', 

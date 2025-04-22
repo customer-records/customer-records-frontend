@@ -78,29 +78,25 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
     <Box sx={{ 
       display: 'flex', 
       flexDirection: 'column', 
-      justifyContent: 'center',
-      width: '100%', 
       alignItems: 'center',
-      height: '25vh',
-      mb:4,
-      mt:isDesktop ? 3 :'10vw',
-
+      width: '100%',
+      mb: 4,
+      mt: isDesktop ? 3 : '10vw',
     }}>
       <Box sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100%',
-        position: 'relative',
-        mb:3
+        width: '100%',
+        mb: 3
       }}>
         <StyledTextField
           label="Телефон"
           value={phone}
           onChange={handlePhoneChange}
           error={!!phoneError}
-          helperText={phoneError || ' '} 
+          helperText={phoneError || ' '}
           placeholder="+7 912 345 67 89"
           required
           inputProps={{ maxLength: 16 }}

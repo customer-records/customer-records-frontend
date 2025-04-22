@@ -77,7 +77,6 @@ export default function OnFastRecord() {
     useEffect(()=>{
         getCompanyId()
     },[])
-    // Формируем данные о времени для FinalStep
     const getTimeSlotData = () => {
         if (!selectedTime) return null;
         return {

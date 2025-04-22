@@ -4,6 +4,19 @@ button:focus {
 button:active {
     box-shadow: 0 0 0 2px #0077FF; /* Синяя тень вокруг кнопки */
 }
+.fixed-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: white;
+  z-index: 999;
+  padding: 16px;
+}
+
 /* хедер */
 .header {
     height: 30vh; /* 30% высоты экрана */

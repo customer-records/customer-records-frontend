@@ -612,6 +612,7 @@ export default function RegistrationClient() {
                     flexDirection: 'column',
                     padding:isDesktop ? '0 16px' : 0,
                     overflow: 'visible',
+                    justifyContent:'center'
                 }}
             >
                 {renderStepContent()}
@@ -640,6 +641,7 @@ export default function RegistrationClient() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '16px',
+                background:'#FFFFFF'
             }}>
                 <Box sx={{ 
                     display: 'flex', 

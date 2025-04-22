@@ -41,7 +41,6 @@ export default function MenuList({ specialist, services, currentId, onClose, set
     setIsOpen(!isOpen);
   };
 
-  // Measure height when needed
   useLayoutEffect(() => {
     if (setSyncedHeight && contentRef.current) {
       const height = contentRef.current.scrollHeight;
@@ -58,19 +57,19 @@ export default function MenuList({ specialist, services, currentId, onClose, set
           onClick={toggleList}
         >
           {specialist.name == 'Онлайн запись' && (
-                      <Link
-                      to={'/client/'}
-                      style={{
-                        fontWeight: '700',
-                        color: '#0077FF',
-                        fontSize: '14px',
-                        lineHeight: '20px',
-                        textTransform: 'uppercase'
-                      }}
-                      className="specialist-name"
-                    >
-                      {specialist.name}
-                    </Link>
+              <Link
+                to={'/client/'}
+                style={{
+                fontWeight: '700',
+                color: '#0077FF',
+                fontSize: '14px',
+                lineHeight: '20px',
+                textTransform: 'uppercase'
+                }}
+                className="specialist-name"
+                >
+                  {specialist.name}
+              </Link>
           )}
           {specialist.name == 'Контакты' && (
               <Link
@@ -129,7 +128,6 @@ export default function MenuList({ specialist, services, currentId, onClose, set
                 {specialist.name === 'Контакты' && (
                   <img src={returnIcon(indx)} alt="icon" />
                 )}
-
                 <Link
                   onClick={onClose}
                   style={{ color: '#000000DE', fontSize: '14px' }}

@@ -220,14 +220,6 @@ export default function OnSpecialist() {
                                 <span className="na-priem"> специалиста </span>
                             </div>
                             <div className="divider"></div>
-                            {/* <div className="additional-button-container">
-                                <button 
-                                    onClick={() => handleClick('/client/fastreacord')} 
-                                    className="custom-button fast center"
-                                >
-                                    <span className="button-text">Быстрая запись</span>
-                                </button>
-                            </div> */}
                         </div>
                         <DateSpecialistPicker
                             selectedDate={selectedDate}

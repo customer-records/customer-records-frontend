@@ -251,6 +251,7 @@ export default function AuthClient() {
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: '#FFFFFF', 
+                
             }}
         >
             <Header/>
@@ -263,6 +264,7 @@ export default function AuthClient() {
                     flexDirection: 'column',
                     padding: '0 16px',
                     position: 'relative',
+                    justifyContent:'center'
                 }}
             >
                 {renderStepContent()}
@@ -339,6 +341,7 @@ export default function AuthClient() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '16px',
+                background:'#FFFFFF'
             }}>
                 <Box sx={{ 
                     display: 'flex', 
