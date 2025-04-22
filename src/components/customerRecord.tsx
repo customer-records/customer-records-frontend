@@ -53,10 +53,10 @@ export default function CustomerRecord() {
       <Box
         sx={{
           width: isDesktop ? '50vh' : '100vw',
-          height:'100vh',
+          height:'100dvh',
           maxWidth: 800,
           margin: '0 auto',
-          minHeight: '100vh',
+          minHeight: '100dvh',
           boxSizing: 'border-box',
           background:'#FFFFFF'
         }}
