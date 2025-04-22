@@ -4,7 +4,16 @@ button, a, input, textarea, div {
   -webkit-focus-ring-color: transparent;
   tap-highlight-color: transparent;
 }
-
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+}
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -70,7 +79,6 @@ body, html {
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* Убираем горизонтальную прокрутку */
-  min-height: 100vh; /* Минимальная высота = высота экрана */
 }
 
 /* Остальные стили (оставьте их без изменений) */
