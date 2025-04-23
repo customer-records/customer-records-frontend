@@ -33,7 +33,6 @@ export default function ClientPage() {
         margin: '0 auto',
         minHeight: '100dvh',
         boxSizing: 'border-box',
-        // height:'100vh',
         background:'#FFFFFF'
       }}
     >

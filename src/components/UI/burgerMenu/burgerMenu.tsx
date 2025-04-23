@@ -77,7 +77,7 @@ export default function BurgerMenu({ onClose }:any) {
         alignItems: 'flex-start',
         overflowY: 'auto',
         backgroundColor: '#f5f5f5',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         zIndex: 1300
       }}
     >
@@ -90,7 +90,7 @@ export default function BurgerMenu({ onClose }:any) {
           alignItems: 'center',
           boxShadow: isDesktop ? '0 0 20px rgba(0,0,0,0.1)' : 'none',
           position: 'relative',
-          minHeight: '100vh',
+          minHeight: '100dvh',
           backgroundColor: '#FFFFFF',
         }}
       >

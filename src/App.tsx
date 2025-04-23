@@ -40,7 +40,6 @@ function App() {
         height: '100dvh',
         display: 'flex',
         flexDirection: 'column',
-        // overflow: 'hidden'
       }}>
         <Box sx={{
           flex: 1,
