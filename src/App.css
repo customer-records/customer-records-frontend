@@ -4,14 +4,6 @@ html, body {
   padding: 0;
 }
 
-/* Убедимся, что #root занимает всю высоту экрана */
-#root {
-
-  width: 100%;
-  margin: 0 auto;
-  display: flex; /* Используем Flexbox для управления дочерними элементами */
-  flex-direction: column; /* Элементы располагаются вертикально */
-}
 
 /* Общие стили для body */
 body {
