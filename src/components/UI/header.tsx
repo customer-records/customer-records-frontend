@@ -20,7 +20,7 @@ export default function Header() {
         if(path !== '/client' && path !== '/client/') {
             SetDisplay('none')
             SetHeight('auto')
-            SetMinHeight('13dvh')
+            SetMinHeight('15dvh')
         }else{
             SetDisplay('flex')
             SetHeight('30dvh')
