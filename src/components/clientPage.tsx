@@ -31,9 +31,9 @@ export default function ClientPage() {
         width: isDesktop ? '50vh' : '100vw',
         maxWidth: 800,
         margin: '0 auto',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         boxSizing: 'border-box',
-        height:'100vh',
+        // height:'100vh',
         background:'#FFFFFF'
       }}
     >

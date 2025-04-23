@@ -37,10 +37,10 @@ function App() {
   return (
     <Router>
       <Box sx={{
-        height: '100vh',
+        height: '100dvh',
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'hidden'
+        // overflow: 'hidden'
       }}>
         <Box sx={{
           flex: 1,
