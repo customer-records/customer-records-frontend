@@ -1,8 +1,10 @@
 import { ThemeProvider } from "@emotion/react";
 import { Box, createTheme, CssBaseline, useMediaQuery } from "@mui/material";
 import DoctorChat from "./DoctorChat";
-
+import Header from "../header";
+import { useNavigate } from "react-router-dom";
 export default function Chat(){
+    const navigate = useNavigate()
     const theme = createTheme({
         breakpoints: {
             values: {
@@ -32,9 +34,19 @@ export default function Chat(){
             flex: 1 
         }}
         >
-
+            <Header/>
+            <div className="header-text" style={{marginTop:'20px'}}>
+                <div>
+                    <span className="zapisites">У вас  </span>
+                    <span className="na-priem"> вопрос?</span>
+                </div>
+                <div className="divider" style={{marginTop:'20px'}}></div>
+            </div>
             <DoctorChat />
-
+            <div className="divider" style={{marginTop:'20px'}}></div>
+            <Box sx={{width:'100%', display:'flex', justifyContent:'center', pb:2.5}}>
+            <button className="login-button" onClick={()=>navigate('./login')}>Войти в личный кабинет</button>
+            </Box>
         </Box>
 
         </>

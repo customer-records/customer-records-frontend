@@ -7,10 +7,24 @@ import {
   TextField,
   IconButton,
   Divider,
+  useMediaQuery,
+  createTheme,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
 const DoctorChat: React.FC = () => {
+  const theme = createTheme({
+      breakpoints: {
+          values: {
+            xs: 0,
+            sm: 300,  
+            md: 350,   
+            lg: 1200,
+            xl: 1600,
+          },
+      },
+  });
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const doctor = {
     name: 'Ринат Леонидович',
     status: 'ОНЛАЙН',
@@ -30,23 +44,31 @@ const DoctorChat: React.FC = () => {
 
     <Box
       sx={{
-        width: 320,
+        width: '80%',
+        height:'55dvh',
         border: '1px solid #c6d2f0',
         borderRadius: 3,
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
         fontFamily: 'Arial',
+        background:'#F1F1F1'
       }}
     >
-      {/* Header */}
       <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
         <Avatar src={doctor.avatarUrl} sx={{ mr: 1 }} />
         <Box>
-          <Typography variant="subtitle2" fontWeight="bold" sx={{color:'#000000DE'}}>
-            {doctor.name} <Typography component="span" color="primary">| {doctor.status}</Typography>
+          <Typography sx={{
+            fontSize: isDesktop ? "14px" : '11px',
+            color:'#000000DE'
+          }} variant="subtitle2" fontWeight="bold">
+            {doctor.name} <Typography
+            sx={{
+              fontSize: isDesktop ? "14px" : '11px',
+            }}
+            component="span" color="primary">| {doctor.status}</Typography>
           </Typography>
-          <Typography variant="caption" color="text.secondary">
+          <Typography  variant="caption" color="text.secondary">
             {doctor.role}
           </Typography>
         </Box>
@@ -64,26 +86,30 @@ const DoctorChat: React.FC = () => {
           borderRadius: 2,
         }}
       >
-        <Typography fontWeight="bold" gutterBottom>
+        <Typography sx={{
+          fontSize: isDesktop ? '14px' : '11px'
+        }} fontWeight="bold" gutterBottom>
           {doctor.message.title}
         </Typography>
         <ul style={{ paddingLeft: '1.2em', margin: 0 }}>
           {doctor.message.list.map((item, idx) => (
             <li key={idx}>
-              <Typography fontSize="14px">{item}</Typography>
+              <Typography sx={{
+                fontSize: isDesktop ? "12px" : '9.5px'
+              }}>{item}</Typography>
             </li>
           ))}
         </ul>
       </Paper>
 
       {/* Input */}
-      <Box sx={{ mt: 'auto', display: 'flex', borderTop: '1px solid #ddd', px: 1, py: 0.5 }}>
+      <Box sx={{ mt: 'auto', display: 'flex', borderTop: '1px solid #ddd', px: 1, py: 0.5, alignItems:'center' }}>
         <TextField
           placeholder="Напишите нам свой вопрос"
           variant="standard"
           fullWidth
           InputProps={{ disableUnderline: true }}
-          sx={{ fontSize: '14px' }}
+          sx={{ fontSize: isDesktop ? '14px' : '12px' }}
         />
         <IconButton color="primary">
           <SendIcon />

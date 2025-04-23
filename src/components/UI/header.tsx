@@ -19,7 +19,7 @@ export default function Header() {
         let path = window.location.pathname;
         if(path !== '/client' && path !== '/client/') {
             SetDisplay('none')
-            SetHeight('10dvh')
+            SetHeight('auto')
             SetMinHeight('13dvh')
         }else{
             SetDisplay('flex')
