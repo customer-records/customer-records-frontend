@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -25,9 +25,7 @@ const DoctorChat: React.FC = () => {
       },
   });
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-  useEffect(()=>{
-    console.log(isDesktop)
-  },[])
+  const [isInputFocused, setIsInputFocused] = useState(false);
   const doctor = {
     name: 'Ринат Леонидович',
     status: 'ОНЛАЙН',
@@ -48,7 +46,7 @@ const DoctorChat: React.FC = () => {
     <Box
       sx={{
         width: '80%',
-        height: { xs: '60dvh', md: '55dvh' },
+        height: isInputFocused ? '70dvh' : { xs: '60dvh', md: '55dvh' },
         minHeight: 300, // минимальная высота
         border: '1px solid #c6d2f0',
         borderRadius: 3,
@@ -111,6 +109,8 @@ const DoctorChat: React.FC = () => {
       {/* Input */}
       <Box sx={{ mt: 'auto', display: 'flex', borderTop: '1px solid #ddd', px: 1, py: 0.5, alignItems:'center' }}>
         <TextField
+          onFocus={() => setIsInputFocused(true)}
+          onBlur={() => setIsInputFocused(false)}
           placeholder="Напишите нам свой вопрос"
           variant="standard"
           fullWidth
