@@ -48,14 +48,17 @@ const DoctorChat: React.FC = () => {
     <Box
       sx={{
         width: '80%',
-        height:'55dvh',
+        height: { xs: '60dvh', md: '55dvh' },
+        minHeight: 300, // минимальная высота
         border: '1px solid #c6d2f0',
         borderRadius: 3,
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
         fontFamily: 'Arial',
-        background:'#F1F1F1'
+        background:'#F1F1F1',
+        flexShrink: 0, // предотвращает сжатие
+        position: 'relative'
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>

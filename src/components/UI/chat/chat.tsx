@@ -32,8 +32,17 @@ export default function Chat(){
             alignItems:'center',
             gap:'20px',
             height: '100dvh',
-            overflowY: 'auto', 
-            paddingBottom: 'env(safe-area-inset-bottom)' // для устройств с "вырезом"
+            overflowY: 'auto',
+            paddingBottom: 'env(safe-area-inset-bottom)',
+            WebkitOverflowScrolling: 'touch', 
+            position: 'fixed', 
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            '&::-webkit-scrollbar': {
+            display: 'none'
+            }
         }}
         >
             <Header/>
