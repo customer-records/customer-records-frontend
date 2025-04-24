@@ -34,6 +34,11 @@ export default function DateSpecialistPicker({
       maxWidth: 400,
       margin: '0 auto'
     }}>
+      <SpecialistSelector 
+        selectedDate={selectedDate.toISOString().split('T')[0]}
+        onSelect={onSelect}
+        serviceId={serviceId}
+      />
       {/* Календарь - передаем текущую дату и обработчик изменения */}
       <Calendare 
         selectedDate={selectedDate} 
@@ -46,11 +51,6 @@ export default function DateSpecialistPicker({
         margin: '16px auto',
         backgroundColor: '#0077FF'
       }} />
-      <SpecialistSelector 
-        selectedDate={selectedDate.toISOString().split('T')[0]}
-        onSelect={onSelect}
-        serviceId={serviceId}
-      />
     </Box>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Avatar,
   Box,
@@ -18,13 +18,16 @@ const DoctorChat: React.FC = () => {
           values: {
             xs: 0,
             sm: 300,  
-            md: 350,   
+            md: 450,   
             lg: 1200,
             xl: 1600,
           },
       },
   });
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+  useEffect(()=>{
+    console.log(isDesktop)
+  },[])
   const doctor = {
     name: 'Ринат Леонидович',
     status: 'ОНЛАЙН',
@@ -87,7 +90,7 @@ const DoctorChat: React.FC = () => {
         }}
       >
         <Typography sx={{
-          fontSize: isDesktop ? '14px' : '11px'
+          fontSize: isDesktop ? '13px' : '10px'
         }} fontWeight="bold" gutterBottom>
           {doctor.message.title}
         </Typography>
@@ -95,7 +98,7 @@ const DoctorChat: React.FC = () => {
           {doctor.message.list.map((item, idx) => (
             <li key={idx}>
               <Typography sx={{
-                fontSize: isDesktop ? "12px" : '9.5px'
+                fontSize: isDesktop ? "11px" : '9.5px'
               }}>{item}</Typography>
             </li>
           ))}
@@ -109,7 +112,7 @@ const DoctorChat: React.FC = () => {
           variant="standard"
           fullWidth
           InputProps={{ disableUnderline: true }}
-          sx={{ fontSize: isDesktop ? '14px' : '12px' }}
+          sx={{ fontSize: isDesktop ? '14px' : '11px' }}
         />
         <IconButton color="primary">
           <SendIcon />

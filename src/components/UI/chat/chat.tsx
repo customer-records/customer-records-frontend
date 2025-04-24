@@ -31,7 +31,9 @@ export default function Chat(){
             flexDirection:'column',
             alignItems:'center',
             gap:'20px',
-            flex: 1 
+            height: '100dvh',
+            overflowY: 'auto', 
+            paddingBottom: 'env(safe-area-inset-bottom)' // для устройств с "вырезом"
         }}
         >
             <Header/>
