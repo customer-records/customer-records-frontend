@@ -67,16 +67,19 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
     }, [selectedDate]);
 
     useEffect(() => {
-        const handleScroll = () => {
+        const handleInteraction = () => {
             if (open) setOpen(false);
         };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
+    
+        document.addEventListener('touchstart', handleInteraction);
+        document.addEventListener('mousedown', handleInteraction);
+    
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            document.removeEventListener('touchstart', handleInteraction);
+            document.removeEventListener('mousedown', handleInteraction);
         };
     }, [open]);
-
+    
     const handleSpecialistChange = (event: any) => {
         const spec = event.target.value;
         const filteredSlots = allTimeSlots.filter(slot => 
