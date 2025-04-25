@@ -66,6 +66,17 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
         fetchData();
     }, [selectedDate]);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (open) setOpen(false);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [open]);
+
     const handleSpecialistChange = (event: any) => {
         const spec = event.target.value;
         const filteredSlots = allTimeSlots.filter(slot => 
