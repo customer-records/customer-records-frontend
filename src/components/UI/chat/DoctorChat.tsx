@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Avatar,
   Box,
@@ -13,6 +13,8 @@ import {
 import SendIcon from '@mui/icons-material/Send';
 
 const DoctorChat: React.FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const theme = createTheme({
     breakpoints: {
       values: {
@@ -26,6 +28,30 @@ const DoctorChat: React.FC = () => {
   });
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+
+  useEffect(() => {
+    const onFocus = () => {
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    };
+
+    const onBlur = () => {
+      document.body.style.overflow = '';
+    };
+
+    const input = inputRef.current;
+    if (input) {
+      input.addEventListener('focus', onFocus);
+      input.addEventListener('blur', onBlur);
+    }
+
+    return () => {
+      if (input) {
+        input.removeEventListener('focus', onFocus);
+        input.removeEventListener('blur', onBlur);
+      }
+    };
+  }, []);
 
   const doctor = {
     name: 'Ринат Леонидович',
@@ -41,30 +67,6 @@ const DoctorChat: React.FC = () => {
       ],
     },
   };
-
-  useEffect(() => {
-    const onFocus = () => {
-      window.scrollTo(0, 0);
-      document.body.style.overflow = 'hidden';
-    };
-
-    const onBlur = () => {
-      document.body.style.overflow = '';
-    };
-
-    const input = document.querySelector('input');
-    if (input) {
-      input.addEventListener('focus', onFocus);
-      input.addEventListener('blur', onBlur);
-    }
-
-    return () => {
-      if (input) {
-        input.removeEventListener('focus', onFocus);
-        input.removeEventListener('blur', onBlur);
-      }
-    };
-  }, []);
 
   return (
     <Box
@@ -87,18 +89,13 @@ const DoctorChat: React.FC = () => {
         <Avatar src={doctor.avatarUrl} sx={{ mr: 1 }} />
         <Box>
           <Typography
-            sx={{
-              fontSize: isDesktop ? '14px' : '11px',
-              color: '#000000DE',
-            }}
+            sx={{ fontSize: isDesktop ? '14px' : '11px', color: '#000000DE' }}
             variant="subtitle2"
             fontWeight="bold"
           >
             {doctor.name}{' '}
             <Typography
-              sx={{
-                fontSize: isDesktop ? '14px' : '11px',
-              }}
+              sx={{ fontSize: isDesktop ? '14px' : '11px' }}
               component="span"
               color="primary"
             >
@@ -122,41 +119,21 @@ const DoctorChat: React.FC = () => {
           borderRadius: 2,
         }}
       >
-        <Typography
-          sx={{
-            fontSize: isDesktop ? '13px' : '10px',
-          }}
-          fontWeight="bold"
-          gutterBottom
-        >
+        <Typography sx={{ fontSize: isDesktop ? '13px' : '10px' }} fontWeight="bold" gutterBottom>
           {doctor.message.title}
         </Typography>
         <ul style={{ paddingLeft: '1.2em', margin: 0 }}>
           {doctor.message.list.map((item, idx) => (
             <li key={idx}>
-              <Typography
-                sx={{
-                  fontSize: isDesktop ? '11px' : '9.5px',
-                }}
-              >
-                {item}
-              </Typography>
+              <Typography sx={{ fontSize: isDesktop ? '11px' : '9.5px' }}>{item}</Typography>
             </li>
           ))}
         </ul>
       </Paper>
 
-      <Box
-        sx={{
-          mt: 'auto',
-          display: 'flex',
-          borderTop: '1px solid #ddd',
-          px: 1,
-          py: 0.5,
-          alignItems: 'center',
-        }}
-      >
+      <Box sx={{ mt: 'auto', display: 'flex', borderTop: '1px solid #ddd', px: 1, py: 0.5, alignItems: 'center' }}>
         <TextField
+          inputRef={inputRef}
           placeholder="Напишите нам свой вопрос"
           variant="standard"
           fullWidth

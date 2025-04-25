@@ -3,7 +3,6 @@ import { Box, createTheme, CssBaseline, useMediaQuery } from "@mui/material";
 import DoctorChat from "./DoctorChat";
 import Header from "../header";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 export default function Chat(){
     const navigate = useNavigate()
     const theme = createTheme({
@@ -18,7 +17,6 @@ export default function Chat(){
         },
     });
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-    const [scroll, SetScroll] = useState('auto')
     return(
         <>
         <Box
@@ -33,7 +31,7 @@ export default function Chat(){
                 alignItems:'center',
                 gap:'20px',
                 height: '100dvh', 
-                overflowY: scroll, 
+                overflowY: 'auto', 
                 paddingBottom: 'env(safe-area-inset-bottom)' 
               }}
         >
@@ -45,7 +43,7 @@ export default function Chat(){
                 </div>
                 <div className="divider" style={{marginTop:'20px'}}></div>
             </div>
-            <DoctorChat/>
+            <DoctorChat />
             <div className="divider" style={{marginTop:'20px'}}></div>
             <Box sx={{width:'100%', display:'flex', justifyContent:'center', pb:2.5}}>
             <button className="login-button" onClick={()=>navigate('./login')}>Войти в личный кабинет</button>
