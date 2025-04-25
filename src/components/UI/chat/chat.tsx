@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import DoctorChat from './DoctorChat';
-import Header from './Header';
+import Header from '../header';
 import { useNavigate } from 'react-router-dom';
 
 const Chat = () => {
