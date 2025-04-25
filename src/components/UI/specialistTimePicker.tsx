@@ -67,18 +67,29 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
     }, [selectedDate]);
 
     useEffect(() => {
-        const handleInteraction = () => {
-            if (open) setOpen(false);
+        const handleInteraction = (event: TouchEvent | MouseEvent) => {
+          const target = event.target as Node;
+      
+          // Не закрываем, если клик был внутри Select или его меню
+          if (
+            containerRef.current &&
+            containerRef.current.contains(target)
+          ) {
+            return;
+          }
+      
+          if (open) setOpen(false);
         };
-    
+      
         document.addEventListener('touchstart', handleInteraction);
         document.addEventListener('mousedown', handleInteraction);
-    
+      
         return () => {
-            document.removeEventListener('touchstart', handleInteraction);
-            document.removeEventListener('mousedown', handleInteraction);
+          document.removeEventListener('touchstart', handleInteraction);
+          document.removeEventListener('mousedown', handleInteraction);
         };
-    }, [open]);
+      }, [open]);
+      
     
     const handleSpecialistChange = (event: any) => {
         const spec = event.target.value;
