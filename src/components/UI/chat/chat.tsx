@@ -59,7 +59,7 @@ const Chat = () => {
         <div className="divider" style={{ marginTop: '20px' }}></div>
 
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', pb: 2.5 }}>
-          <button className="login-button" onClick={() => navigate('./login')}>
+          <button className="login-button" onClick={() => navigate('/client/login')}>
             Войти в личный кабинет
           </button>
         </Box>

@@ -9,7 +9,6 @@ import {
   Box,
   CircularProgress
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -29,6 +28,7 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
 
     const containerRef = useRef<HTMLDivElement>(null);
     const selectRef = useRef<HTMLDivElement>(null);
+    const menuRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -69,26 +69,39 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
 
     useEffect(() => {
         if (open) {
-            // Фиксируем положение при открытии меню
             document.body.style.overflow = 'hidden';
             
-            const handleScroll = () => {
-                if (open && selectRef.current) {
+            const updateMenuPosition = () => {
+                if (selectRef.current && menuRef.current) {
                     const selectRect = selectRef.current.getBoundingClientRect();
-                    const menu = document.querySelector('.MuiMenu-paper') as HTMLElement;
-                    if (menu) {
-                        menu.style.position = 'fixed';
-                        menu.style.top = `${selectRect.bottom}px`;
-                        menu.style.left = `${selectRect.left}px`;
-                        menu.style.width = `${selectRect.width}px`;
-                    }
+                    const containerRect = containerRef.current?.getBoundingClientRect() || { left: 0 };
+                    
+                    menuRef.current.style.position = 'absolute';
+                    menuRef.current.style.top = `${selectRect.bottom - (containerRect?.top || 0)}px`;
+                    menuRef.current.style.left = `${selectRect.left - (containerRect?.left || 0)}px`;
+                    menuRef.current.style.width = `${selectRect.width}px`;
+                    menuRef.current.style.minWidth = 'unset';
                 }
             };
 
-            window.addEventListener('scroll', handleScroll, true);
+            // Небольшая задержка для гарантированного появления меню в DOM
+            const timer = setTimeout(() => {
+                menuRef.current = document.querySelector('.MuiMenu-paper') as HTMLElement;
+                if (menuRef.current) {
+                    menuRef.current.style.position = 'absolute';
+                    updateMenuPosition();
+                }
+            }, 10);
+
+            const handleScroll = () => {
+                updateMenuPosition();
+            };
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
             return () => {
+                clearTimeout(timer);
                 document.body.style.overflow = '';
-                window.removeEventListener('scroll', handleScroll, true);
+                window.removeEventListener('scroll', handleScroll);
             };
         }
     }, [open]);
@@ -143,7 +156,7 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
     }
 
     return (
-        <Box ref={containerRef} sx={{ width: '100%' }}>
+        <Box ref={containerRef} sx={{ width: '100%', position: 'relative' }}>
             <Box sx={{ margin: '16px auto', position: 'relative' }}>
                 <Select
                     ref={selectRef}
@@ -156,21 +169,27 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
                     IconComponent={() => null}
                     MenuProps={{
                         disablePortal: true,
+                        container: containerRef.current,
                         style: {
-                            position: 'fixed', // Используем fixed вместо absolute
+                            position: 'absolute',
                         },
                         PaperProps: {
                             sx: {
-                                width: '33%',
+                                width: '100%',
                                 maxHeight: 300,
                                 boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
                                 marginTop: '4px',
-                                overflowY: 'auto'
+                                overflowY: 'auto',
+                                position: 'absolute',
+                                left: '0 !important',
+                                top: 'unset !important',
+                                transform: 'none !important'
                             }
-                        }
+                        },
+                        disableScrollLock: true
                     }}
                     sx={{
-                        width: '100%',
+                        width: '107%',
                         boxShadow: '0px -1px 0px 0px #0000001F inset',
                         border: 'none',
                         '& .MuiSelect-select': {
@@ -355,6 +374,5 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
         </Box>
     );
 };
-
 
 export default SpecialistSelector;

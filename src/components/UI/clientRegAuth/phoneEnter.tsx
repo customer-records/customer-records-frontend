@@ -41,26 +41,45 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
   }, [phone, phoneError, validateForm, isValid, submitForm]);
 
   useEffect(() => {
-    const onFocus = () => {
-      window.scrollTo(0, 0);
-      document.body.style.overflow = 'hidden';
+    const preventScroll = (e: TouchEvent) => {
+      if (document.activeElement?.tagName === 'INPUT') {
+        e.preventDefault();
+      }
     };
 
-    const onBlur = () => {
+    const handleFocus = () => {
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.addEventListener('touchmove', preventScroll, { passive: false });
+
+      // Прокрутка к полю ввода для мобильных устройств
+      setTimeout(() => {
+        const input = document.querySelector('input');
+        if (input) {
+          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    };
+
+    const handleBlur = () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.body.removeEventListener('touchmove', preventScroll);
     };
 
     const input = document.querySelector('input');
     if (input) {
-      input.addEventListener('focus', onFocus);
-      input.addEventListener('blur', onBlur);
+      input.addEventListener('focus', handleFocus);
+      input.addEventListener('blur', handleBlur);
     }
 
     return () => {
       if (input) {
-        input.removeEventListener('focus', onFocus);
-        input.removeEventListener('blur', onBlur);
+        input.removeEventListener('focus', handleFocus);
+        input.removeEventListener('blur', handleBlur);
       }
+      document.body.removeEventListener('touchmove', preventScroll);
     };
   }, []);
 
