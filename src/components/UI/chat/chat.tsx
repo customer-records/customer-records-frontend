@@ -21,6 +21,8 @@ const Chat = () => {
         flexDirection: 'column',
         height: '100dvh',
         paddingBottom: 'env(safe-area-inset-bottom)',
+        overscrollBehavior: 'none',
+        WebkitOverflowScrolling: 'auto',
       }}
     >
       <Header />

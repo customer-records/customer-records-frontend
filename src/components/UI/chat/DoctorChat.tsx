@@ -46,11 +46,17 @@ const DoctorChat: React.FC = () => {
     const input = document.querySelector('input');
     if (!input) return;
 
+    const preventScroll = (e: TouchEvent) => {
+      e.preventDefault();
+    };
+
     const handleFocus = () => {
       window.scrollTo(0, 0);
-      document.body.style.overflow = 'hidden';
 
-      // Прокрутка к input для iOS
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.addEventListener('touchmove', preventScroll, { passive: false });
+
       setTimeout(() => {
         input.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 300);
@@ -58,6 +64,8 @@ const DoctorChat: React.FC = () => {
 
     const handleBlur = () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.body.removeEventListener('touchmove', preventScroll);
     };
 
     input.addEventListener('focus', handleFocus);
@@ -66,6 +74,7 @@ const DoctorChat: React.FC = () => {
     return () => {
       input.removeEventListener('focus', handleFocus);
       input.removeEventListener('blur', handleBlur);
+      document.body.removeEventListener('touchmove', preventScroll);
     };
   }, []);
 
