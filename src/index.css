@@ -90,3 +90,20 @@ body, html {
     background-color: #f9f9f9;
   }
 }
+/* Фикс для скролла на iOS */
+@media (pointer: coarse) {
+  html {
+    overflow: hidden;
+    height: 100%;
+  }
+  body {
+    overflow: auto;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Фикс для фокуса на текстовом поле */
+textarea:focus, input:focus {
+  transform: translateZ(0);
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Avatar,
   Box,
@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
-const DoctorChat: React.FC = () => {
+const DoctorChat: React.FC = ({onBlur, onFocus}:any) => {
   const theme = createTheme({
       breakpoints: {
           values: {
@@ -25,7 +25,6 @@ const DoctorChat: React.FC = () => {
       },
   });
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-  const [isInputFocused, setIsInputFocused] = useState(false);
   const doctor = {
     name: 'Ринат Леонидович',
     status: 'ОНЛАЙН',
@@ -44,20 +43,21 @@ const DoctorChat: React.FC = () => {
   return (
 
     <Box
-      sx={{
-        width: '80%',
-        height: isInputFocused ? '70dvh' : { xs: '60dvh', md: '55dvh' },
-        minHeight: 300, // минимальная высота
-        border: '1px solid #c6d2f0',
-        borderRadius: 3,
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        fontFamily: 'Arial',
-        background:'#F1F1F1',
-        flexShrink: 0, // предотвращает сжатие
-        position: 'relative'
-      }}
+    sx={{
+      width: '80%',
+      height: { xs: '60dvh', md: '55dvh' },
+      minHeight: 300, // минимальная высота
+      border: '1px solid #c6d2f0',
+      borderRadius: 3,
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
+      fontFamily: 'Arial',
+      background:'#F1F1F1',
+      // Добавьте:
+      flexShrink: 0, // предотвращает сжатие
+      position: 'relative'
+    }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
         <Avatar src={doctor.avatarUrl} sx={{ mr: 1 }} />
@@ -105,12 +105,10 @@ const DoctorChat: React.FC = () => {
           ))}
         </ul>
       </Paper>
-
-      {/* Input */}
       <Box sx={{ mt: 'auto', display: 'flex', borderTop: '1px solid #ddd', px: 1, py: 0.5, alignItems:'center' }}>
         <TextField
-          onFocus={() => setIsInputFocused(true)}
-          onBlur={() => setIsInputFocused(false)}
+          onFocus={onFocus}
+          onBlur={onBlur}
           placeholder="Напишите нам свой вопрос"
           variant="standard"
           fullWidth

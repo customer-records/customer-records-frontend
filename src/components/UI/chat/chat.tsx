@@ -3,6 +3,7 @@ import { Box, createTheme, CssBaseline, useMediaQuery } from "@mui/material";
 import DoctorChat from "./DoctorChat";
 import Header from "../header";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 export default function Chat(){
     const navigate = useNavigate()
     const theme = createTheme({
@@ -17,33 +18,24 @@ export default function Chat(){
         },
     });
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-
+    const [scroll, SetScroll] = useState('auto')
     return(
         <>
         <Box
-        sx={{
-            width: isDesktop ? '50vh' : '100vw',
-            maxWidth: 800,
-            margin: '0 auto',
-            boxSizing: 'border-box',
-            background:'white',
-            display:'flex',
-            flexDirection:'column',
-            alignItems:'center',
-            gap:'20px',
-            height: '100dvh',
-            overflowY: 'auto',
-            paddingBottom: 'env(safe-area-inset-bottom)',
-            WebkitOverflowScrolling: 'touch', 
-            position: 'fixed', 
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            '&::-webkit-scrollbar': {
-            display: 'none'
-            }
-        }}
+            sx={{
+                width: isDesktop ? '50vh' : '100vw',
+                maxWidth: 800,
+                margin: '0 auto',
+                boxSizing: 'border-box',
+                background:'white',
+                display:'flex',
+                flexDirection:'column',
+                alignItems:'center',
+                gap:'20px',
+                height: '100dvh', 
+                overflowY: scroll, 
+                paddingBottom: 'env(safe-area-inset-bottom)' 
+              }}
         >
             <Header/>
             <div className="header-text" style={{marginTop:'20px'}}>
@@ -53,7 +45,7 @@ export default function Chat(){
                 </div>
                 <div className="divider" style={{marginTop:'20px'}}></div>
             </div>
-            <DoctorChat />
+            <DoctorChat onBlur={()=>SetScroll('auto')} onFocus={()=>SetScroll('hidden')}/>
             <div className="divider" style={{marginTop:'20px'}}></div>
             <Box sx={{width:'100%', display:'flex', justifyContent:'center', pb:2.5}}>
             <button className="login-button" onClick={()=>navigate('./login')}>Войти в личный кабинет</button>
