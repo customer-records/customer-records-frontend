@@ -12,24 +12,26 @@ import {
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
-const DoctorChat: React.FC = ({onBlur, onFocus}:any) => {
+const DoctorChat: React.FC = () => {
   const theme = createTheme({
-      breakpoints: {
-          values: {
-            xs: 0,
-            sm: 300,  
-            md: 450,   
-            lg: 1200,
-            xl: 1600,
-          },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 300,
+        md: 450,
+        lg: 1200,
+        xl: 1600,
       },
+    },
   });
+
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+
   const doctor = {
     name: 'Ринат Леонидович',
     status: 'ОНЛАЙН',
     role: 'Врач терапевт',
-    avatarUrl: 'https://via.placeholder.com/40', 
+    avatarUrl: 'https://via.placeholder.com/40',
     message: {
       title: 'ПРОСТО НАПИШИТЕ В ЧАТ — И Я ПОМОГУ!',
       list: [
@@ -40,39 +42,70 @@ const DoctorChat: React.FC = ({onBlur, onFocus}:any) => {
     },
   };
 
-  return (
+  useEffect(() => {
+    const onFocus = () => {
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    };
 
+    const onBlur = () => {
+      document.body.style.overflow = '';
+    };
+
+    const input = document.querySelector('input');
+    if (input) {
+      input.addEventListener('focus', onFocus);
+      input.addEventListener('blur', onBlur);
+    }
+
+    return () => {
+      if (input) {
+        input.removeEventListener('focus', onFocus);
+        input.removeEventListener('blur', onBlur);
+      }
+    };
+  }, []);
+
+  return (
     <Box
-    sx={{
-      width: '80%',
-      height: { xs: '60dvh', md: '55dvh' },
-      minHeight: 300, // минимальная высота
-      border: '1px solid #c6d2f0',
-      borderRadius: 3,
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'hidden',
-      fontFamily: 'Arial',
-      background:'#F1F1F1',
-      // Добавьте:
-      flexShrink: 0, // предотвращает сжатие
-      position: 'relative'
-    }}
+      sx={{
+        width: '80%',
+        height: { xs: '60dvh', md: '55dvh' },
+        minHeight: 300,
+        border: '1px solid #c6d2f0',
+        borderRadius: 3,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        fontFamily: 'Arial',
+        background: '#F1F1F1',
+        flexShrink: 0,
+        position: 'relative',
+      }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
         <Avatar src={doctor.avatarUrl} sx={{ mr: 1 }} />
         <Box>
-          <Typography sx={{
-            fontSize: isDesktop ? "14px" : '11px',
-            color:'#000000DE'
-          }} variant="subtitle2" fontWeight="bold">
-            {doctor.name} <Typography
+          <Typography
             sx={{
-              fontSize: isDesktop ? "14px" : '11px',
+              fontSize: isDesktop ? '14px' : '11px',
+              color: '#000000DE',
             }}
-            component="span" color="primary">| {doctor.status}</Typography>
+            variant="subtitle2"
+            fontWeight="bold"
+          >
+            {doctor.name}{' '}
+            <Typography
+              sx={{
+                fontSize: isDesktop ? '14px' : '11px',
+              }}
+              component="span"
+              color="primary"
+            >
+              | {doctor.status}
+            </Typography>
           </Typography>
-          <Typography  variant="caption" color="text.secondary">
+          <Typography variant="caption" color="text.secondary">
             {doctor.role}
           </Typography>
         </Box>
@@ -80,7 +113,6 @@ const DoctorChat: React.FC = ({onBlur, onFocus}:any) => {
 
       <Divider />
 
-      {/* Message */}
       <Paper
         elevation={0}
         sx={{
@@ -90,25 +122,41 @@ const DoctorChat: React.FC = ({onBlur, onFocus}:any) => {
           borderRadius: 2,
         }}
       >
-        <Typography sx={{
-          fontSize: isDesktop ? '13px' : '10px'
-        }} fontWeight="bold" gutterBottom>
+        <Typography
+          sx={{
+            fontSize: isDesktop ? '13px' : '10px',
+          }}
+          fontWeight="bold"
+          gutterBottom
+        >
           {doctor.message.title}
         </Typography>
         <ul style={{ paddingLeft: '1.2em', margin: 0 }}>
           {doctor.message.list.map((item, idx) => (
             <li key={idx}>
-              <Typography sx={{
-                fontSize: isDesktop ? "11px" : '9.5px'
-              }}>{item}</Typography>
+              <Typography
+                sx={{
+                  fontSize: isDesktop ? '11px' : '9.5px',
+                }}
+              >
+                {item}
+              </Typography>
             </li>
           ))}
         </ul>
       </Paper>
-      <Box sx={{ mt: 'auto', display: 'flex', borderTop: '1px solid #ddd', px: 1, py: 0.5, alignItems:'center' }}>
+
+      <Box
+        sx={{
+          mt: 'auto',
+          display: 'flex',
+          borderTop: '1px solid #ddd',
+          px: 1,
+          py: 0.5,
+          alignItems: 'center',
+        }}
+      >
         <TextField
-          onFocus={onFocus}
-          onBlur={onBlur}
           placeholder="Напишите нам свой вопрос"
           variant="standard"
           fullWidth

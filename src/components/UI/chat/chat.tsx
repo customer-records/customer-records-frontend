@@ -45,7 +45,7 @@ export default function Chat(){
                 </div>
                 <div className="divider" style={{marginTop:'20px'}}></div>
             </div>
-            <DoctorChat onBlur={()=>SetScroll('auto')} onFocus={()=>SetScroll('hidden')}/>
+            <DoctorChat/>
             <div className="divider" style={{marginTop:'20px'}}></div>
             <Box sx={{width:'100%', display:'flex', justifyContent:'center', pb:2.5}}>
             <button className="login-button" onClick={()=>navigate('./login')}>Войти в личный кабинет</button>
