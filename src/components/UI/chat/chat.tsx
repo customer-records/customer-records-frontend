@@ -1,11 +1,20 @@
-import React from 'react';
-import { Box, useMediaQuery, useTheme } from '@mui/material';
+import { Box, createTheme, useMediaQuery, useTheme } from '@mui/material';
 import DoctorChat from './DoctorChat';
 import Header from '../header';
 import { useNavigate } from 'react-router-dom';
 
 const Chat = () => {
-  const theme = useTheme();
+    const theme = createTheme({
+        breakpoints: {
+          values: {
+            xs: 0,
+            sm: 300,
+            md: 450,
+            lg: 1200,
+            xl: 1600,
+          },
+        },
+  });
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const navigate = useNavigate();
 
