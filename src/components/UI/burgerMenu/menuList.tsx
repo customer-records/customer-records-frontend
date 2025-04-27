@@ -25,7 +25,15 @@ export default function MenuList({ specialist, services, currentId, onClose, set
       default: return AdressMenu;
     }
   };
-
+  const returnAtrLink = (indx: number) => {
+    switch (indx) {
+      case 0: return 'tel:+79178585217';
+      case 1: return 'https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0';
+      case 2: return 'https://t.me/denta_rell';
+      case 3: return '/client/contacts'
+      default: return '/client';
+    }
+  };
   const returnLink = (indx: number) => {
     switch (indx) {
       case 0: return '/client/date';
@@ -128,13 +136,25 @@ export default function MenuList({ specialist, services, currentId, onClose, set
                 {specialist.name === 'Контакты' && (
                   <img src={returnIcon(indx)} alt="icon" />
                 )}
-                <Link
-                  onClick={onClose}
-                  style={{ color: '#000000DE', fontSize: '14px' }}
-                  to={currentId === 1 ? returnLink(indx) : '/client'}
-                >
-                  {service}
-                </Link>
+                {specialist.name === 'Контакты' ? (
+                  <Link
+                    onClick={onClose}
+                    style={{ color: '#000000DE', fontSize: '14px' }}
+                    target={indx < 3 ? "_blank" : undefined}
+                    rel={indx < 3 ? "noopener noreferrer" : undefined}
+                    to={returnAtrLink(indx)}
+                  >
+                    {service}
+                  </Link>
+                ) : (
+                  <Link
+                    onClick={onClose}
+                    style={{ color: '#000000DE', fontSize: '14px' }}
+                    to={currentId === 1 ? returnLink(indx) : '/client'}
+                  >
+                    {service}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

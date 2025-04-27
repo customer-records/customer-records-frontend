@@ -311,16 +311,20 @@ button:active {
     cursor: pointer;
     margin-left: auto; /* Выравниваем справа */
     display: flex;
-    align-items: center; /* Центрируем текст по вертикали */
-    justify-content: center; /* Центрируем текст по горизонтали */
+    align-items: center; 
+    justify-content: center; 
+  }
+  .write-button:disabled {
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed;
   }
   
-  /* Кнопка "Войти в личный кабинет" */
   .login-button {
     width: 350px;
     height: 40px;
-    padding: 0 14px; /* padding-right и padding-left */
-    margin-top: 10px; /* Отступ сверху */
+    padding: 0 14px; 
+    margin-top: 10px;
     border: none;
     border-radius: 20px;
     background-color: #0077FF; /* Цвет фона */
@@ -333,6 +337,11 @@ button:active {
     align-items: center;
     justify-content: center;
     gap: 13px; /* Отступ между иконкой и текстом (если будет иконка) */
+  }
+  .login-button:disabled{
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed;
   }
   .MuiDateCalendar-root {
   width: 100%;

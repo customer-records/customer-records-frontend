@@ -24,8 +24,8 @@ export default function OnFastRecord() {
     const totalSteps = 3;
 
     useEffect(()=>{
-        console.log(selectedDate, selectedTime, clientData)
-    },[selectedDate, selectedTime, clientData])
+        console.log(selectedTime)
+    },[selectedTime])
     const getCompanyId = async () => {
         const result = await fetch(`${apiUrl}/calendar/company/`)
         const data = await result.json()
@@ -164,7 +164,7 @@ export default function OnFastRecord() {
     };
 
     const isNextDisabled = () => {
-        if (step === 1) return !selectedDate;
+        if (step === 1) return !selectedTime;
         if (step === 2) return !selectedTime;
         if (step === 3) return !isFormValid;
         return false;
