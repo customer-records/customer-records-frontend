@@ -36,7 +36,7 @@ export default function RegistrationClient() {
             values: {
               xs: 0,
               sm: 300,  
-              md: 450,   
+              md: 500,   
               lg: 1200,
               xl: 1600,
         },
@@ -588,10 +588,11 @@ export default function RegistrationClient() {
     return (
         <Box
             sx={{
-                width: isDesktop ? '50vh' : '100vw',
+                width: isDesktop ? '50dvh' : '100vw',
                 maxWidth: 800,
+                minWidth: 300,
                 margin: '0 auto',
-                height:'auto',
+                minHeight: '100dvh',
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: '#fff',

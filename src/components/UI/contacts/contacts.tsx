@@ -8,6 +8,7 @@ import ButtonMap from "./buttonMap";
 import YandexMap from "./YandexMap";
 import Header from "../header";
 import { useNavigate } from "react-router-dom";
+///1
 const menuItems:any = [
     {
       id: 4,
@@ -61,7 +62,7 @@ export default function Contacts (){
         
         <Box
         sx={{
-            width: isDesktop ? '50vh' : '100vw',
+            width: isDesktop ? '50dvh' : '100vw',
             maxWidth: 800,
             margin: '0 auto',
             boxSizing: 'border-box',

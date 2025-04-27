@@ -274,11 +274,11 @@ export default function AuthWorker() {
     return (
         <Box
             sx={{
-                width: isDesktop ? '50vh' : '100vw',
+                width: isDesktop ? '50dvh' : '100vw',
                 maxWidth: 800,
                 margin: '0 auto',
-                minHeight: '100vh',
-                height:'100vh',
+                minHeight: '100dvh',
+                height:'100dvh',
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',

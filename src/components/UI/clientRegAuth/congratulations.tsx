@@ -9,7 +9,7 @@ export default function Congratulations({name}:any){
         justifyContent: 'center',
         width: '100%', 
         alignItems: 'center',
-        height: '20vh'
+        height: '20dvh'
         }}>
         <Box sx={{
             fontFamily: 'Roboto',

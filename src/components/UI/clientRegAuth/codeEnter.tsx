@@ -27,7 +27,7 @@ export default function CodeEnter({ onSubmit, initialData = { code: '' },type }:
   }, [code, isValid, onSubmit]);
 
   const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, ''); // Фильтруем только цифры
+    const value = e.target.value.replace(/\D/g, ''); 
     if (value.length <= 4) {
       setCode(value);
     }
@@ -41,7 +41,8 @@ export default function CodeEnter({ onSubmit, initialData = { code: '' },type }:
       justifyContent: 'center',
       width: '100%', 
       alignItems: 'center',
-      height: '20vh'
+      height: '20dvh',
+      minHeight:'200px'
     }}>
       <Box sx={{
         display: 'flex',
@@ -79,7 +80,7 @@ export default function CodeEnter({ onSubmit, initialData = { code: '' },type }:
               fontSize: '24px'
             }
           }}
-          FormHelperTextProps={{ style: { display: 'none' }}} // Скрываем helperText
+          FormHelperTextProps={{ style: { display: 'none' }}} 
         />
       </Box>
     </Box>

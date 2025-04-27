@@ -70,14 +70,10 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-/* Общие стили для страницы */
 body, html {
   margin: 0;
   padding: 0;
-  /* overflow-x: hidden;  */
 }
-
-/* Остальные стили (оставьте их без изменений) */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -90,7 +86,7 @@ body, html {
     background-color: #f9f9f9;
   }
 }
-/* Фикс для скролла на iOS */
+
 @media (pointer: coarse) {
   html {
     overflow: hidden;
@@ -103,7 +99,6 @@ body, html {
   }
 }
 
-/* Фикс для фокуса на текстовом поле */
 textarea:focus, input:focus {
   transform: translateZ(0);
 }

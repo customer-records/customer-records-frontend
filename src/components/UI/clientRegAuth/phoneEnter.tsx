@@ -52,8 +52,6 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
       document.body.addEventListener('touchmove', preventScroll, { passive: false });
-
-      // Прокрутка к полю ввода для мобильных устройств
       setTimeout(() => {
         const input = document.querySelector('input');
         if (input) {
@@ -124,6 +122,7 @@ export default function PhoneEnter({ onSubmit, initialData = { phone: '' } }: an
       width: '100%', 
       alignItems: 'center',
       height: '25dvh',
+      minHeight:'200px',
       mb: 4,
       mt: isDesktop ? 3 : '10vw',
     }}>
@@ -278,15 +277,7 @@ const StyledTextField = styled(TextField)({
       caretColor: 'black',
     },
   },
-  [`@media (max-height: 720px)`]: {
-    '& .MuiOutlinedInput-root': {
-      width: 280,
-      height: 50,
-    },
-    '& .MuiInputLabel-root': {
-      fontSize: '14px',
-    }
-  },
+
   [`@media (max-width: 360px)`]: {
     '& .MuiOutlinedInput-root': {
       width: 280,

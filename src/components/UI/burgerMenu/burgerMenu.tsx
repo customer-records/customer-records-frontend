@@ -83,7 +83,7 @@ export default function BurgerMenu({ onClose }:any) {
     >
       <Box
         sx={{
-          width: isDesktop ? '50vh' : '100vw',
+          width: isDesktop ? '50dvh' : '100vw',
           maxWidth: 800,
           display: 'flex',
           flexDirection: 'column',

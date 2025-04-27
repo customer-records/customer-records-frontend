@@ -18,7 +18,7 @@ export default function CustomerRecord() {
         values: {
           xs: 0,
           sm: 300,  
-          md: 450,   
+          md: 500,   
           lg: 1200,
           xl: 1600,
         },
@@ -52,7 +52,7 @@ export default function CustomerRecord() {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Box
         sx={{
-          width: isDesktop ? '50vh' : '100vw',
+          width: isDesktop ? '50dvh' : '100vw',
           height:'100dvh',
           maxWidth: 800,
           margin: '0 auto',

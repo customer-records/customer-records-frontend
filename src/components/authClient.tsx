@@ -26,7 +26,7 @@ export default function AuthClient() {
         values: {
           xs: 0,
           sm: 300,  
-          md: 450,   
+          md: 500,   
           lg: 1200,
           xl: 1600,
         },
@@ -242,7 +242,7 @@ export default function AuthClient() {
     return (
         <Box
             sx={{
-                width: isDesktop ? '50vh' : '100vw',
+                width: isDesktop ? '50dvh' : '100vw',
                 maxWidth: 800,
                 margin: '0 auto',
                 minHeight: '100dvh',
@@ -265,6 +265,7 @@ export default function AuthClient() {
                     padding: '0 16px',
                     position: 'relative',
                     justifyContent:'center',
+                    backgroundColor: '#ffff'
                 }}
             >
                 {renderStepContent()}

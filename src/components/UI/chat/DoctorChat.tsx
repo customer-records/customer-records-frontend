@@ -83,7 +83,7 @@ const DoctorChat: React.FC = () => {
       sx={{
         width: '80%',
         maxHeight: { xs: '60dvh', md: '55dvh' },
-        minHeight: 300,
+        minHeight: 400,
         border: '1px solid #c6d2f0',
         borderRadius: 3,
         display: 'flex',

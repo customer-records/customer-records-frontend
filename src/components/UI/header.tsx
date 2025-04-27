@@ -4,8 +4,9 @@ import BurgerMenu from "./burgerMenu/burgerMenu";
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const [display, SetDisplay] = useState('flex')
-    const [height, SetHeight] = useState('30vh')
-    const [MinHeight, SetMinHeight] = useState('25vh')
+    const [height, SetHeight] = useState('30dvh')
+    const [MinHeight, SetMinHeight] = useState('25dvh')
+    const [jusContent, SetJusContent] = useState('space-between')
     const switchText = () => {
         let path = window.location.pathname;
         if(path.startsWith('/admin')){
@@ -20,16 +21,18 @@ export default function Header() {
         if(path !== '/client' && path !== '/client/') {
             SetDisplay('none')
             SetHeight('auto')
-            SetMinHeight('15dvh')
+            SetMinHeight('100px')
+            SetJusContent('center')
         }else{
             SetDisplay('flex')
             SetHeight('30dvh')
             SetMinHeight('25dvh')
+            SetJusContent('space-between')
         }
     },[])
     return (
         <>
-            <header style={{height:height, minHeight:MinHeight}} className="header">
+            <header style={{height:height, minHeight:MinHeight, justifyContent: jusContent}} className="header">
                 <div className="header-background"></div>
                 <div className="header-top">
                     <button 
