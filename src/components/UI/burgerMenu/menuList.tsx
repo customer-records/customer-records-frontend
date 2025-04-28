@@ -38,7 +38,8 @@ export default function MenuList({ specialist, services, currentId, onClose, set
     switch (indx) {
       case 0: return '/client/date';
       case 1: return '/client/specialist';
-      default: return '/client/service';
+      case 2: return '/client/service';
+      default: return '/client/fastreacord'
     }
   };
 

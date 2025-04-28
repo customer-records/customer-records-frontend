@@ -8,7 +8,7 @@ import ButtonMap from "./buttonMap";
 import YandexMap from "./YandexMap";
 import Header from "../header";
 import { useNavigate } from "react-router-dom";
-///1
+
 const menuItems:any = [
     {
       id: 4,
