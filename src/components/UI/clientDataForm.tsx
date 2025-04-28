@@ -1,4 +1,3 @@
-// ClientDataForm.tsx (оптимизированная версия)
 import React, { useState, useEffect, useCallback } from 'react';
 import { Box, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -28,6 +27,47 @@ const ClientDataForm: React.FC<ClientDataFormProps> = ({ onSubmit, initialData =
     onSubmit({ name, phone: rawPhone, isValid: formIsValid });
   }, [name, phone, phoneError, validateForm, onSubmit]);
 
+  useEffect(() => {
+    const preventScroll = (e: TouchEvent) => {
+      if (document.activeElement?.tagName === 'INPUT') {
+        e.preventDefault();
+      }
+    };
+
+    const handleFocus = () => {
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.addEventListener('touchmove', preventScroll, { passive: false });
+      setTimeout(() => {
+        const activeElement = document.activeElement as HTMLElement;
+        if (activeElement) {
+          activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    };
+
+    const handleBlur = () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.body.removeEventListener('touchmove', preventScroll);
+    };
+
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('focus', handleFocus);
+      input.addEventListener('blur', handleBlur);
+    });
+
+    return () => {
+      inputs.forEach(input => {
+        input.removeEventListener('focus', handleFocus);
+        input.removeEventListener('blur', handleBlur);
+      });
+      document.body.removeEventListener('touchmove', preventScroll);
+    };
+  }, []);
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let input = e.target.value;
     
@@ -54,7 +94,6 @@ const ClientDataForm: React.FC<ClientDataFormProps> = ({ onSubmit, initialData =
     const isValid = digits.length === 11;
     setPhoneError(!isValid && digits.length > 1 ? 'Введите 10 цифр номера' : '');
   };
-  
   
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
@@ -83,7 +122,6 @@ const ClientDataForm: React.FC<ClientDataFormProps> = ({ onSubmit, initialData =
   );
 };
 
-
 const StyledTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     width: 350,
@@ -100,7 +138,7 @@ const StyledTextField = styled(TextField)({
       height: '100%',
       display: 'flex',
       alignItems: 'center',
-      caretColor: 'black', // цвет курсора по умолчанию
+      caretColor: 'black',
       animationName: 'onAutoFillStart',
       animationDuration: '0.01s',
       animationFillMode: 'both',
