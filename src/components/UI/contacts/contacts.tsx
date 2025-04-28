@@ -129,7 +129,7 @@ export default function Contacts (){
             alignItems:'center'
         }}
         >
-        {mapButton.map((elem,indx)=><ButtonMap key={indx} name={elem.name} img={elem.img}/>)}
+        {mapButton.map((elem,indx)=><ButtonMap key={indx} type={indx === 0 ? 'YA' : '2GIS'} name={elem.name} img={elem.img}/>)}
         
         </Box>
         {menuItems.map((item: { specialist: any; id: number; services: string[]; }, index: number) => (
