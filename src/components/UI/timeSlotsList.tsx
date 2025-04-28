@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { keyframes } from '@emotion/react';
 
@@ -57,20 +57,60 @@ const TimeText = styled(Typography)({
   width: '100%'
 });
 
+const PaginationContainer = styled(Box)({
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
+  maxWidth: 400,
+  margin: '10px auto 0',
+  padding: '0 16px',
+  boxSizing: 'border-box'
+});
+
+const PaginationButton = styled(Button)({
+  minWidth: '80px',
+  textTransform: 'none',
+  fontWeight: 500,
+});
+
 interface TimeSlotListProps {
   onSelect: (time: string | null) => void;
-  TimeSlots:any[]
+  TimeSlots: any[];
 }
 
 const TimeSlotList = ({ onSelect, TimeSlots }: TimeSlotListProps) => {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const slotsPerPage = 15;
 
-  const handleTimeSelect = (time:any) => {
+  const handleTimeSelect = (time: any) => {
     const newSelectedTime = time['id'] === selectedTime ? null : time['id'];
     setSelectedTime(newSelectedTime);
     onSelect(time);
   };
-  useEffect(()=>{console.log(TimeSlots)},[])
+
+  const totalPages = Math.ceil(TimeSlots.length / slotsPerPage);
+  const startIndex = currentPage * slotsPerPage;
+  const endIndex = startIndex + slotsPerPage;
+  const visibleSlots = TimeSlots.slice(startIndex, endIndex);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  useEffect(() => {
+    // Сбрасываем текущую страницу при изменении списка слотов
+    setCurrentPage(0);
+  }, [TimeSlots]);
+
   return (
     <Box sx={{ 
       width: '100%',
@@ -81,7 +121,7 @@ const TimeSlotList = ({ onSelect, TimeSlots }: TimeSlotListProps) => {
       <TimeHeader>Время</TimeHeader>
       
       <Box sx={{ width: '100%' }}>
-        {TimeSlots.map((time) => (
+        {visibleSlots.map((time) => (
           <TimeSlotItem 
             key={time['id']}
             isSelected={time['id'] === selectedTime}
@@ -91,6 +131,28 @@ const TimeSlotList = ({ onSelect, TimeSlots }: TimeSlotListProps) => {
           </TimeSlotItem>
         ))}
       </Box>
+
+      {TimeSlots.length > slotsPerPage && (
+        <PaginationContainer>
+          <PaginationButton 
+            variant="outlined" 
+            onClick={handlePrevPage}
+            disabled={currentPage === 0}
+          >
+            Назад
+          </PaginationButton>
+          <Typography>
+            {currentPage + 1} / {totalPages}
+          </Typography>
+          <PaginationButton 
+            variant="outlined" 
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages - 1}
+          >
+            Вперед
+          </PaginationButton>
+        </PaginationContainer>
+      )}
     </Box>
   );
 };
