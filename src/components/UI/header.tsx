@@ -29,20 +29,6 @@ export default function Header() {
             SetMinHeight('25dvh')
             SetJusContent('space-between')
         }
-        fetch('http://localhost:5000/send-appointment', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              client_name: "Иван Петров",
-              phone: "+79123456789",
-              appointment_time: "2023-12-25 14:00"
-            })
-          })
-          .then(res => res.json())
-          .then(data => console.log(data))
-          .catch(err => console.error('Error:', err));
     },[])
     return (
         <>

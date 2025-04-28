@@ -22,7 +22,7 @@ const menuItems:any = [
   ];
 const secMenuItem = [
     {
-        id: 4,
+        id: 1,
         specialist: 'Онлайн запись ',
         services: [
           'На определённую дату',
