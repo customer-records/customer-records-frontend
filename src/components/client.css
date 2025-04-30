@@ -16,7 +16,19 @@ button:active {
   z-index: 999;
   padding: 16px;
 }
-
+.home{
+  width: 40px;
+  height: 40px;
+  background-color: #0077FF;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home img {
+  width: 22px;
+  height: 22px;
+}
 /* хедер */
 .header {
     height: 30vh; /* 30% высоты экрана */
