@@ -85,7 +85,7 @@ export default function OnSpecialist() {
         getCompanyId()
     },[])
     // Обработчик изменения даты
-    const handleDateChange = useCallback((date: Date | null) => {
+    const handleDateChange = (date: Date | null) => {
         if (date) {
             setSelectedDate(date);
             // Сбрасываем выбор специалиста и времени при изменении даты
@@ -94,10 +94,10 @@ export default function OnSpecialist() {
             setShowAlert(false);
             console.log('Выбранная дата:', date.toLocaleDateString('ru-RU'));
         }
-    }, []);
+    };
 
     // Обработчик выбора специалиста и времени
-    const handleSpecialistTimeSelect = useCallback((specialist: Specialist | null, time: any | null) => {
+    const handleSpecialistTimeSelect = (specialist: Specialist | null, time: any | null) => {
         setSelectedSpecialist(specialist);
         setSelectedTime({
             name: time.specialist_name.split(' ')[0],
@@ -109,7 +109,7 @@ export default function OnSpecialist() {
         if (specialist && time) {
             console.log('Выбран специалист:', `${specialist.name} ${specialist.surname}`, 'на время:', time);
         }
-    }, []);
+    };
 
     // Обработчик данных формы
     const handleFormSubmit = useCallback((data: { name: string; phone: string, isValid: boolean }) => {

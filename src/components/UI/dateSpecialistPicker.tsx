@@ -34,12 +34,11 @@ export default function DateSpecialistPicker({
       maxWidth: 400,
       margin: '0 auto'
     }}>
-      <SpecialistSelector 
+      <SpecialistSelector
         selectedDate={selectedDate.toISOString().split('T')[0]}
         onSelect={onSelect}
         serviceId={serviceId}
       />
-      {/* Календарь - передаем текущую дату и обработчик изменения */}
       <Calendare 
         selectedDate={selectedDate} 
         onDateChange={onDateChange} 
