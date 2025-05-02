@@ -5,7 +5,7 @@ import AdressMenu from '../../../../src/assets/AdressMenu.svg'
 import phoneMenu from '../../../../src/assets/phoneMenu.svg'
 import TGmenu from '../../../../src/assets/TGmenu.svg'
 import WAmenu from '../../../../src/assets/WAmenu.svg'
-import { Link } from 'react-router-dom';  
+import { Link, useNavigate } from 'react-router-dom';  
 import { Typography } from '@mui/material';
 
 interface ServiceListProps {
@@ -17,6 +17,7 @@ interface ServiceListProps {
 }
 
 export default function MenuList({ specialist, services, currentId, onClose, setSyncedHeight }: ServiceListProps) {
+  const navigate = useNavigate();
   const returnIcon = (indx: number) => {
     switch (indx) {
       case 0: return phoneMenu;
@@ -47,7 +48,17 @@ export default function MenuList({ specialist, services, currentId, onClose, set
   const contentRef = useRef<HTMLDivElement>(null);
 
   const toggleList = () => {
-    setIsOpen(!isOpen);
+    if (services.length > 0) {
+      setIsOpen(!isOpen);
+    }
+  };
+
+  // Функция для обработки клика по ссылке
+  const handleLinkClick = (onClick?: () => void, to?: string) => {
+    if (onClose) onClose();
+    if (to) {
+      navigate(to);
+    }
   };
 
   useLayoutEffect(() => {
@@ -66,100 +77,131 @@ export default function MenuList({ specialist, services, currentId, onClose, set
           onClick={toggleList}
         >
           {specialist.name == 'Онлайн запись' && (
-              <Link
-                to={'/client/'}
+              <div
                 style={{
+                  fontWeight: '700',
+                  color: '#0077FF',
+                  fontSize: '14px',
+                  lineHeight: '20px',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer'
+                }}
+                className="specialist-name"
+                onClick={() => handleLinkClick(onClose, '/client/')}
+              >
+                {specialist.name}
+              </div>
+          )}
+          {specialist.name == 'Контакты' && (
+              <div
+                style={{
+                  fontWeight: '700',
+                  color: '#0077FF',
+                  fontSize: '14px',
+                  lineHeight: '20px',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer'
+                }}
+                className="specialist-name"
+                onClick={() => handleLinkClick(onClose, '/client/contacts')}
+              >
+                {specialist.name}
+              </div>
+          )}
+          {specialist.name == 'Акции' && (
+              <div
+                style={{
+                  fontWeight: '700',
+                  color: '#0077FF',
+                  fontSize: '14px',
+                  lineHeight: '20px',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer'
+                }}
+                className="specialist-name"
+                onClick={() => handleLinkClick(onClose, '/client/stocks')}
+              >
+                {specialist.name}
+              </div>
+          )}
+          {(specialist.name !== 'Онлайн запись' && specialist.name !== 'Контакты' && specialist.name !== 'Акции') && (
+            <Typography
+              style={{
                 fontWeight: '700',
                 color: '#0077FF',
                 fontSize: '14px',
                 lineHeight: '20px',
                 textTransform: 'uppercase'
-                }}
-                className="specialist-name"
-                >
-                  {specialist.name}
-              </Link>
+              }}
+              className="specialist-name"
+            >
+              {specialist.name}
+            </Typography>
           )}
-          {specialist.name == 'Контакты' && (
-              <Link
-                  to={'/client/contacts'}
-                  style={{
-                  fontWeight: '700',
-                  color: '#0077FF',
-                  fontSize: '14px',
-                  lineHeight: '20px',
-                  textTransform: 'uppercase'
-                  }}
-                  className="specialist-name"
-                >
-                {specialist.name}
-              </Link>
-          )}
-          {(specialist.name !== 'Онлайн запись' && specialist.name !== 'Контакты') && (
-                  <Typography
-                      style={{
-                        fontWeight: '700',
-                        color: '#0077FF',
-                        fontSize: '14px',
-                        lineHeight: '20px',
-                        textTransform: 'uppercase'
-                      }}
-                      className="specialist-name"
-                    >
-                      {specialist.name}
-                    </Typography>
-          )}
-          <img src={arrowDown} className={`arrow-icon ${isOpen ? 'open' : ''}`} />
+          {services.length > 0 && <img src={arrowDown} className={`arrow-icon ${isOpen ? 'open' : ''}`} />}
         </div>
 
-        <div
-          className={`services-content ${isOpen ? 'open' : ''}`}
-          ref={contentRef}
-          style={{
-            height: isOpen ? `${contentRef.current?.scrollHeight}px` : '0px',
-            overflow: 'hidden',
-            transition: 'height 0.3s ease'
-          }}
-        >
-          <ul className="services-list">
-            {services.map((service, indx) => (
-              <li
-                key={indx}
-                className="service-item"
-                style={{
-                  userSelect: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  padding: '12px 23px'
-                }}
-              >
-                {specialist.name === 'Контакты' && (
-                  <img src={returnIcon(indx)} alt="icon" />
-                )}
-                {specialist.name === 'Контакты' ? (
-                  <Link
-                    onClick={onClose}
-                    style={{ color: '#000000DE', fontSize: '14px' }}
-                    target={indx < 3 ? "_blank" : undefined}
-                    rel={indx < 3 ? "noopener noreferrer" : undefined}
-                    to={returnAtrLink(indx)}
-                  >
-                    {service}
-                  </Link>
-                ) : (
-                  <Link
-                    onClick={onClose}
-                    style={{ color: '#000000DE', fontSize: '14px' }}
-                    to={currentId === 1 ? returnLink(indx) : '/client'}
-                  >
-                    {service}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {services.length > 0 && (
+          <div
+            className={`services-content ${isOpen ? 'open' : ''}`}
+            ref={contentRef}
+            style={{
+              height: isOpen ? `${contentRef.current?.scrollHeight}px` : '0px',
+              overflow: 'hidden',
+              transition: 'height 0.3s ease'
+            }}
+          >
+            <ul className="services-list">
+              {services.map((service, indx) => (
+                <li
+                  key={indx}
+                  className="service-item"
+                  style={{
+                    userSelect: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '12px 23px'
+                  }}
+                >
+                  {specialist.name === 'Контакты' && (
+                    <img src={returnIcon(indx)} alt="icon" />
+                  )}
+                  {specialist.name === 'Контакты' ? (
+                    <div
+                      onClick={() => {
+                        if (onClose) onClose();
+                        if (indx < 3) {
+                          window.open(returnAtrLink(indx), '_blank');
+                        } else {
+                          navigate(returnAtrLink(indx));
+                        }
+                      }}
+                      style={{ 
+                        color: '#000000DE', 
+                        fontSize: '14px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {service}
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => handleLinkClick(onClose, currentId === 1 ? returnLink(indx) : '/client')}
+                      style={{ 
+                        color: '#000000DE', 
+                        fontSize: '14px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {service}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

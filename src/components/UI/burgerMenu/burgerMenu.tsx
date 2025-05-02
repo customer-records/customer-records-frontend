@@ -46,6 +46,13 @@ const menuItems = [
       'Проспект победы 356',
     ],
   },
+  {
+    id: 5,
+    specialist: 'Акции',
+    services: [
+
+    ],
+  },
 ];
 
 export default function BurgerMenu({ onClose }:any) {

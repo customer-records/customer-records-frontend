@@ -1,6 +1,8 @@
 import './App.css';
 import { useState, useEffect, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import 'normalize.css';
+import { Box } from '@mui/material';
 import ClientPage from './components/clientPage';
 import CustomerRecord from './components/customerRecord';
 const RegistrationClient = lazy(() => import('./components/registrationClient'));
@@ -8,10 +10,9 @@ const AuthClient = lazy(() => import('./components/authClient'));
 const RegistrationWorker = lazy(() => import('./components/registrationWorker'));
 const AuthWorker = lazy(() => import('./components/authWorker'));
 const AdminPanel = lazy(() => import('./components/adminPanel'));
-import 'normalize.css';
-import Contacts from './components/UI/contacts/contacts';
-import { Box } from '@mui/material';
-import Chat from './components/UI/chat/chat';
+const Contacts = lazy(() => (import('./components/UI/contacts/contacts')))
+const Chat  = lazy(() => import('./components/UI/chat/chat'))
+const Stocks = lazy(() => import('./components/UI/stocks/stocks'))
 function App() {
   const [type, setType] = useState('auth');
   const [user, setUser] = useState(() => {
@@ -80,7 +81,8 @@ function App() {
                 )
               }
             />
-            <Route path='/client/chat' element={<Chat/>}/>
+            <Route path="/client/stocks" element={<Stocks/>}/>
+            <Route path="/client/chat" element={<Chat/>}/>
             <Route path="/client/contacts" element={<Contacts/>} />
             <Route path="/client/login" element={<AuthClient/>} />
             <Route path="/client/registration" element={<RegistrationClient/>} />
