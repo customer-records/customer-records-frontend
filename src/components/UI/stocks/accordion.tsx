@@ -46,7 +46,8 @@ export default function Accordion({ title, children }: any) {
           fontWeight="medium"
           color="text.primary"
           sx={{
-            fontWeight:'600'
+            fontWeight:'600',
+            fontSize:'15px'
           }}
         >
           {title}

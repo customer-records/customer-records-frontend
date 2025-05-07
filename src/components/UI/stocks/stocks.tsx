@@ -37,40 +37,7 @@ export default function Stocks (){
         }}
         >   
             <Header />
-            <Box sx={{
-                backgroundColor:'#61617b',
-                display:'flex',
-                justifyContent:'center',
-                padding:'40px 20px',
-                borderRadius:'20px',
-                mt:.5
-            }}>
-            <Box sx={{
-                width:'80%'
-            }}>
-            <Typography sx={{
-                fontFamily: 'Roboto',
-                fontWeight: 700,
-                fontSize: '27px',
-                lineHeight: '100%',
-                letterSpacing: '0%',
-                mb: 3,
-                textTransform:'uppercase'
-            }}>
-               Акции
-            </Typography>
-            <Typography
-            sx={{
-                fontFamily: 'Roboto',
-                fontWeight:400,
-                fontSize:'17px'
-            }}  
-            > 
-                Специальные предложения для вашей улыбки:
-                акции и скидки от Denta Rell
-            </Typography>
-            </Box>
-            </Box>
+
             <Box 
             sx={{
                 margin:'10px',
@@ -96,7 +63,7 @@ export default function Stocks (){
                     }}>
                         <Typography sx={{
                             color:'black',
-                            fontSize:'30px',
+                            fontSize:'27px',
                             fontWeight:'700'
                             }}>ПОДРОБНОСТИ</Typography>
                         <Box sx={{

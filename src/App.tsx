@@ -2,19 +2,21 @@ import './App.css';
 import { useState, useEffect, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import 'normalize.css';
-import { Box } from '@mui/material';
+import { Box, createTheme, useMediaQuery } from '@mui/material';
+import back from './assets/back.jpg';
 import ClientPage from './components/clientPage';
 import CustomerRecord from './components/customerRecord';
+import logoBack from './assets/logoBack.svg'
 const RegistrationClient = lazy(() => import('./components/registrationClient'));
 const AuthClient = lazy(() => import('./components/authClient'));
 const RegistrationWorker = lazy(() => import('./components/registrationWorker'));
 const AuthWorker = lazy(() => import('./components/authWorker'));
 const AdminPanel = lazy(() => import('./components/adminPanel'));
-const Contacts = lazy(() => (import('./components/UI/contacts/contacts')))
-const Chat  = lazy(() => import('./components/UI/chat/chat'))
-const Stocks = lazy(() => import('./components/UI/stocks/stocks'))
+const Contacts = lazy(() => import('./components/UI/contacts/contacts'));
+const Chat = lazy(() => import('./components/UI/chat/chat'));
+const Stocks = lazy(() => import('./components/UI/stocks/stocks'));
+
 function App() {
-  const [type, setType] = useState('auth');
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('user');
     return savedUser ? JSON.parse(savedUser) : null;
@@ -30,27 +32,53 @@ function App() {
     }
   }, [user]);
 
-  const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-  };
+  const theme = createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 300,
+        md: 500,
+        lg: 1200,
+        xl: 1600,
+      },
+    },
+  });
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <Router>
-      <Box sx={{
-        height: '100dvh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}>
-        <Box sx={{
-          flex: 1,
-          overflowY: 'auto',
+      {isDesktop && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 0,
+            background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${back}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'right bottom',
+            backgroundRepeat: 'no-repeat',
+
+          }}
+        />
+      )}
+
+      {/* Контентный блок */}
+      <Box
+        sx={{
+          minHeight: '100vh',
           display: 'flex',
-          flexDirection: 'column'
-        }}>
+          flexDirection: 'column',
+          position: 'relative',
+          zIndex: 0, // выше фона
+        }}
+      >
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Routes>
-            <Route path="/admin/registration" element={<RegistrationWorker/>} />
-            <Route path="/admin/login" element={<AuthWorker/>} />
+            <Route path="/admin/registration" element={<RegistrationWorker />} />
+            <Route path="/admin/login" element={<AuthWorker />} />
             <Route
               path="/admin/login"
               element={
@@ -73,26 +101,21 @@ function App() {
             />
             <Route
               path="/"
-              element={
-                isAuthenticated ? (
-                  <Navigate to="/client" replace />
-                ) : (
-                  <Navigate to="/client" replace />
-                )
-              }
+              element={<Navigate to="/client" replace />}
             />
-            <Route path="/client/stocks" element={<Stocks/>}/>
-            <Route path="/client/chat" element={<Chat/>}/>
-            <Route path="/client/contacts" element={<Contacts/>} />
-            <Route path="/client/login" element={<AuthClient/>} />
-            <Route path="/client/registration" element={<RegistrationClient/>} />
+            <Route path="/client/stocks" element={<Stocks />} />
+            <Route path="/client/chat" element={<Chat />} />
+            <Route path="/client/contacts" element={<Contacts />} />
+            <Route path="/client/login" element={<AuthClient />} />
+            <Route path="/client/registration" element={<RegistrationClient />} />
             <Route path="/client" element={<ClientPage />} />
-            <Route path="/client/:step" element={<CustomerRecord/>} />
+            <Route path="/client/:step" element={<CustomerRecord />} />
           </Routes>
         </Box>
       </Box>
     </Router>
   );
+  
 }
 
 export default App;

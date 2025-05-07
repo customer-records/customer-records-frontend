@@ -7,7 +7,8 @@ import {
   Select,
   Typography,
   Box,
-  CircularProgress
+  CircularProgress,
+  Button
 } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 
@@ -25,7 +26,8 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    const [currentPage, setCurrentPage] = useState(0);
+    const slotsPerPage = 10;
     const containerRef = useRef<HTMLDivElement>(null);
     const selectRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLElement | null>(null);
@@ -84,7 +86,6 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
                 }
             };
 
-            // Небольшая задержка для гарантированного появления меню в DOM
             const timer = setTimeout(() => {
                 menuRef.current = document.querySelector('.MuiMenu-paper') as HTMLElement;
                 if (menuRef.current) {
@@ -119,6 +120,7 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
         
         setSelectedSpecialist(updatedSpecialist);
         setSelectedTimeSlot(null);
+        setCurrentPage(0); // Сброс пагинации при смене специалиста
         setOpen(false); 
         onSelect(null, null);
     };
@@ -138,6 +140,18 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
         setOpen(true);
     };
 
+    const handleNextPage = () => {
+        if (currentPage < totalPages - 1) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     if (loading) {
         return (
             <Box sx={{
@@ -154,6 +168,12 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
     if (error) {
         return <Typography color="error">{error}</Typography>;
     }
+
+    // Пагинация для временных слотов
+    const totalPages = selectedSpecialist ? Math.ceil(selectedSpecialist.slots.length / slotsPerPage) : 0;
+    const startIndex = currentPage * slotsPerPage;
+    const endIndex = startIndex + slotsPerPage;
+    const visibleSlots = selectedSpecialist ? selectedSpecialist.slots.slice(startIndex, endIndex) : [];
 
     return (
         <Box ref={containerRef} sx={{ width: '100%', position: 'relative' }}>
@@ -250,126 +270,170 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
             </Box>
 
             {selectedSpecialist && (
-                <List sx={{ width: '100%' }}>
-                    <ListItem sx={{ padding: 0, minHeight: '48px' }}>
+                <Box>
+                    <List sx={{ width: '100%' }}>
+                        <ListItem sx={{ padding: 0, minHeight: '48px' }}>
+                            <Box sx={{ 
+                                display: 'flex', 
+                                width: '100%',
+                                borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
+                            }}>
+                                <Box sx={{ width: '50%' }}>
+                                    <Typography sx={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: 12,
+                                        lineHeight: '24px',
+                                        letterSpacing: '0.4px',
+                                        verticalAlign: 'middle',
+                                        color: '#757575',
+                                        padding: '10px 16px',
+                                        fontWeight: 400
+                                    }}>Специалист</Typography>
+                                </Box>
+                                <Box sx={{ width: '50%' }}>
+                                    <Typography sx={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: 12,
+                                        lineHeight: '24px',
+                                        letterSpacing: '0.4px',
+                                        verticalAlign: 'middle',
+                                        color: '#757575',
+                                        padding: '10px 16px',
+                                        fontWeight: 700
+                                    }}>Время</Typography>
+                                </Box>
+                            </Box>
+                        </ListItem>
+                        
+                        {visibleSlots.length > 0 ? (
+                            visibleSlots.map((slot: any) => (
+                                <ListItem 
+                                    key={slot.id}
+                                    sx={{ 
+                                        padding: 0,
+                                        minHeight: '56px',
+                                        backgroundColor: selectedTimeSlot?.id === slot.id ? '#E3F2FD' : 'inherit',
+                                        cursor: 'pointer',
+                                    }}
+                                    onClick={() => handleTimeSelect(slot)}
+                                >
+                                    <Box sx={{ 
+                                        display: 'flex', 
+                                        width: '100%',
+                                        alignItems: 'center',
+                                        minHeight: '56px',
+                                        boxShadow: '0px -1px 0px 0px #0000001F inset',
+                                        '&:hover': {
+                                          backgroundColor: '#F5F5F5'
+                                        }
+                                    }}>
+                                        <Box sx={{ 
+                                            width: '50%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            paddingLeft: '16px'
+                                        }}>
+                                            <Avatar sx={{
+                                                width: 36,
+                                                height: 36,
+                                                marginRight: '16px',
+                                                backgroundColor: '#e0e0e0',
+                                                color: '#424242',
+                                                fontSize: '14px',
+                                                fontWeight: 500
+                                            }}>
+                                                {getInitials(selectedSpecialist.name, selectedSpecialist.surname)}
+                                            </Avatar>
+                                            <Typography sx={{
+                                                fontFamily: 'Roboto',
+                                                fontWeight: 400,
+                                                fontSize: 14,
+                                                lineHeight: '24px',
+                                                letterSpacing: '0.25px',
+                                                verticalAlign: 'middle',
+                                                color: '#000000DE',
+                                                padding: '14px 16px'
+                                            }}>
+                                                {`${selectedSpecialist.name} ${selectedSpecialist.surname}`}
+                                            </Typography>
+                                        </Box>
+                                        <Box sx={{ width: '50%' }}>
+                                            <Typography sx={{
+                                                fontFamily: 'Roboto',
+                                                fontWeight: 400,
+                                                fontSize: 14,
+                                                lineHeight: '24px',
+                                                letterSpacing: '0.25px',
+                                                verticalAlign: 'middle',
+                                                color: '#000000DE',
+                                                padding: '14px 16px'
+                                            }}>
+                                                {slot.time_start} - {slot.time_end}
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                </ListItem>
+                            ))
+                        ) : (
+                            <ListItem>
+                                <Typography sx={{
+                                    fontFamily: 'Roboto',
+                                    fontWeight: 400,
+                                    fontSize: 14,
+                                    lineHeight: '24px',
+                                    letterSpacing: '0.25px',
+                                    verticalAlign: 'middle',
+                                    color: '#000000DE',
+                                    padding: '14px 16px'
+                                }}>
+                                    Нет доступных слотов для записи
+                                </Typography>
+                            </ListItem>
+                        )}
+                    </List>
+
+                    {selectedSpecialist.slots.length > slotsPerPage && (
                         <Box sx={{ 
                             display: 'flex', 
-                            width: '100%',
-                            borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
+                            justifyContent: 'space-between', 
+                            alignItems: 'center',
+                            padding: '10px 16px',
+                            borderTop: '1px solid rgba(0, 0, 0, 0.12)'
                         }}>
-                            <Box sx={{ width: '50%' }}>
-                                <Typography sx={{
-                                    fontFamily: 'Roboto',
-                                    fontSize: 12,
-                                    lineHeight: '24px',
-                                    letterSpacing: '0.4px',
-                                    verticalAlign: 'middle',
-                                    color: '#757575',
-                                    padding: '10px 16px',
-                                    fontWeight: 400
-                                }}>Специалист</Typography>
-                            </Box>
-                            <Box sx={{ width: '50%' }}>
-                                <Typography sx={{
-                                    fontFamily: 'Roboto',
-                                    fontSize: 12,
-                                    lineHeight: '24px',
-                                    letterSpacing: '0.4px',
-                                    verticalAlign: 'middle',
-                                    color: '#757575',
-                                    padding: '10px 16px',
-                                    fontWeight: 700
-                                }}>Время</Typography>
-                            </Box>
-                        </Box>
-                    </ListItem>
-                    
-                    {selectedSpecialist.slots.length > 0 ? (
-                        selectedSpecialist.slots.map((slot: any) => (
-                            <ListItem 
-                                key={slot.id}
-                                sx={{ 
-                                    padding: 0,
-                                    minHeight: '56px',
-                                    backgroundColor: selectedTimeSlot?.id === slot.id ? '#E3F2FD' : 'inherit',
-                                    cursor: 'pointer',
+                            <Button 
+                                variant="outlined" 
+                                onClick={handlePrevPage}
+                                disabled={currentPage === 0}
+                                sx={{
+                                    minWidth: '80px',
+                                    textTransform: 'none',
+                                    fontWeight: 500,
                                 }}
-                                onClick={() => handleTimeSelect(slot)}
                             >
-                                <Box sx={{ 
-                                    display: 'flex', 
-                                    width: '100%',
-                                    alignItems: 'center',
-                                    minHeight: '56px',
-                                    boxShadow: '0px -1px 0px 0px #0000001F inset',
-                                    '&:hover': {
-                                      backgroundColor: '#F5F5F5'
-                                    }
-                                }}>
-                                    <Box sx={{ 
-                                        width: '50%',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        paddingLeft: '16px'
-                                    }}>
-                                        <Avatar sx={{
-                                            width: 36,
-                                            height: 36,
-                                            marginRight: '16px',
-                                            backgroundColor: '#e0e0e0',
-                                            color: '#424242',
-                                            fontSize: '14px',
-                                            fontWeight: 500
-                                        }}>
-                                            {getInitials(selectedSpecialist.name, selectedSpecialist.surname)}
-                                        </Avatar>
-                                        <Typography sx={{
-                                            fontFamily: 'Roboto',
-                                            fontWeight: 400,
-                                            fontSize: 14,
-                                            lineHeight: '24px',
-                                            letterSpacing: '0.25px',
-                                            verticalAlign: 'middle',
-                                            color: '#000000DE',
-                                            padding: '14px 16px'
-                                        }}>
-                                            {`${selectedSpecialist.name} ${selectedSpecialist.surname}`}
-                                        </Typography>
-                                    </Box>
-                                    <Box sx={{ width: '50%' }}>
-                                        <Typography sx={{
-                                            fontFamily: 'Roboto',
-                                            fontWeight: 400,
-                                            fontSize: 14,
-                                            lineHeight: '24px',
-                                            letterSpacing: '0.25px',
-                                            verticalAlign: 'middle',
-                                            color: '#000000DE',
-                                            padding: '14px 16px'
-                                        }}>
-                                            {slot.time_start} - {slot.time_end}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                            </ListItem>
-                        ))
-                    ) : (
-                        <ListItem>
-                            <Typography sx={{
-                                fontFamily: 'Roboto',
-                                fontWeight: 400,
-                                fontSize: 14,
-                                lineHeight: '24px',
-                                letterSpacing: '0.25px',
-                                verticalAlign: 'middle',
-                                color: '#000000DE',
-                                padding: '14px 16px'
-                            }}>
-                                Нет доступных слотов для записи
+                                Назад
+                            </Button>
+                            <Typography
+                                sx={{
+                                    color:'black'
+                                }}
+                            >
+                                {currentPage + 1} / {totalPages}
                             </Typography>
-                        </ListItem>
+                            <Button 
+                                variant="outlined" 
+                                onClick={handleNextPage}
+                                disabled={currentPage === totalPages - 1}
+                                sx={{
+                                    minWidth: '80px',
+                                    textTransform: 'none',
+                                    fontWeight: 500,
+                                }}
+                            >
+                                Вперед
+                            </Button>
+                        </Box>
                     )}
-                </List>
+                </Box>
             )}
         </Box>
     );

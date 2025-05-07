@@ -32,7 +32,6 @@ export default function OnDate() {
     const totalSteps = 5;
     /// selectedTime.id - id временного слота
     /// selectedSpecialist.id - id сотрудника 
-
     /// selectedServiceId - id выбранного сервиса
     async function createUser(name:string, phone_number:string){
         try{
@@ -111,9 +110,6 @@ export default function OnDate() {
         }));
     };
     useEffect(()=>{console.log(transformServicesData())},[servicesData])
-    const handleClick = (route: string) => {
-        navigate(route);
-    }
 
     const handleNext = async () => {
         if (step === 2 && !selectedServiceName) {

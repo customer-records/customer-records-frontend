@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import Calendare from './calendare';
 import SpecialistSelector from './specialistTimePicker';
@@ -14,7 +14,7 @@ interface DateSpecialistPickerProps {
   selectedDate: Date;
   onDateChange: (date: Date) => void;
   onSelect: (specialist: Specialist | null, time: string | null) => void;
-  serviceId:any
+  serviceId: any;
 }
 
 export default function DateSpecialistPicker({
@@ -23,9 +23,17 @@ export default function DateSpecialistPicker({
   onSelect,
   serviceId
 }: DateSpecialistPickerProps) {
-  useEffect(()=>{
-    console.log(selectedDate)
-  },[])
+  const [currentDate, setCurrentDate] = useState<Date>(selectedDate);
+
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      setCurrentDate(date);
+      onDateChange(date);
+      // Принудительно сбрасываем выбор при изменении даты
+      onSelect(null, null);
+    }
+  };
+
   return (
     <Box sx={{
       display: 'flex',
@@ -35,14 +43,14 @@ export default function DateSpecialistPicker({
       margin: '0 auto'
     }}>
       <SpecialistSelector 
-        selectedDate={selectedDate.toISOString().split('T')[0]}
+        selectedDate={currentDate.toISOString().split('T')[0]}
         onSelect={onSelect}
         serviceId={serviceId}
+        key={currentDate.toISOString()} // Принудительный ререндер при смене даты
       />
-      {/* Календарь - передаем текущую дату и обработчик изменения */}
       <Calendare 
-        selectedDate={selectedDate} 
-        onDateChange={onDateChange} 
+        selectedDate={currentDate} 
+        onDateChange={handleDateChange} 
       />
       <Box sx={{
         width: 176,
