@@ -21,6 +21,8 @@ export default function OnFastRecord() {
     const [showAlert, setShowAlert] = useState(false);
     const [companyId, SetCompanyId] = useState<number | any>(null)
     const [clientId, SetClientId] = useState<null | number>(null)
+    const [icsContent, setIcsContent] = useState<string | null>(null);
+
     const totalSteps = 3;
 
     useEffect(()=>{
@@ -31,27 +33,35 @@ export default function OnFastRecord() {
         const data = await result.json()
         SetCompanyId(data.id)
     }
-    async function bookingTime(time_slot_id:any, client_id:any, company_id:any, employer_id:any){
-        try{
-            const result = await fetch(`${apiUrl}/calendar/bookings/`,{
-                method:'POST',
+    async function bookingTime(time_slot_id: any, client_id: any, company_id: any, employer_id: any) {
+        try {
+            const result = await fetch(`${apiUrl}/calendar/bookings/`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    time_slot_id: time_slot_id,
-                    client_id: client_id,
-                    company_id: company_id,
-                    employer_id: employer_id
-                  })
-            })
-            if(!result.ok)throw new Error(`HTTP error! status: ${result.status}`);
-            const data = await result.json();
-            console.log('Бронирование создано:', data);
-        }catch(e){
-            throw new Error(`HTTP error! status: ${e}`);
+                },
+                body: JSON.stringify({
+                    time_slot_id,
+                    client_id,
+                    company_id,
+                    employer_id
+                })
+            });
+    
+            if (!result.ok) throw new Error(`HTTP error! status: ${result.status}`);
+    
+            const blob = await result.blob();
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const text = reader.result as string;
+                setIcsContent(text);
+            };
+            reader.readAsText(blob);
+        } catch (e) {
+            console.error('Ошибка при бронировании и получении ICS файла:', e);
         }
     }
+    
     async function createUser(name:string, phone_number:string){
         try{
             const response = await fetch(`${apiUrl}/auth/client/create`,{
@@ -220,7 +230,7 @@ export default function OnFastRecord() {
                         <FinalStep 
                             date={selectedDate}
                             time={getTimeSlotData()}
-                            
+                            ics={icsContent}
                         />
                     </>
                 );

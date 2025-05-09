@@ -64,15 +64,22 @@ function App() {
           }}
         />
       )}
-
-      {/* Контентный блок */}
+        {isDesktop && (
+          <Box
+            sx={{
+              width: '50%',
+              height: '100%',
+              
+            }}
+          />
+      )}
       <Box
         sx={{
           minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
-          zIndex: 0, // выше фона
+          zIndex: 0,
         }}
       >
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
