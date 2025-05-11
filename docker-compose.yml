@@ -1,8 +1,9 @@
-version: '3.8'
-services:
-  frontend:
-    build: .
+  # Тестовый стенд
+  frontend_test:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8080:80"                 # вот тут другой внешний порт
     environment:
-      - VITE_API_URL=http://localhost:4000
+      - VITE_API_URL=http://localhost:4001  # тестовый бэкенд
