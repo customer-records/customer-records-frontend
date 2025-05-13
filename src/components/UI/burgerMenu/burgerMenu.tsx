@@ -5,12 +5,8 @@ import { useNavigate } from "react-router-dom";
 const menuItems = [
   {
     id: 1,
-    specialist: 'Онлайн запись',
-    services: [
-      'На определённую дату',
-      'К специалисту',
-      'На услугу',
-    ],
+    specialist: "Онлайн запись",
+    services: ["На определённую дату", "К специалисту", "На услугу"],
   },
   // {
   //   id: 2,
@@ -38,94 +34,94 @@ const menuItems = [
   // },
   {
     id: 4,
-    specialist: 'Контакты',
+    specialist: "Контакты",
     services: [
-      '+7 (917) 858 – 52 – 17',
-      '+7 (917) 858 – 52 – 17',
-      '+7 (917) 858 – 52 – 17',
-      'Проспект победы 356',
+      "+7 (917) 858 – 52 – 17",
+      "+7 (917) 858 – 52 – 17",
+      "+7 (917) 858 – 52 – 17",
+      "Проспект победы 356",
     ],
   },
   {
     id: 5,
-    specialist: 'Акции',
-    services: [
-
-    ],
+    specialist: "Акции",
+    services: [],
   },
 ];
 
-export default function BurgerMenu({ onClose }:any) {
+export default function BurgerMenu({ onClose }: any) {
   const theme = createTheme({
     breakpoints: {
       values: {
         xs: 0,
         sm: 300,
-        md: 450,   
+        md: 450,
         lg: 1200,
         xl: 1600,
       },
     },
   });
-  
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const navigate = useNavigate();
 
   return (
     <Box
       sx={{
-        position: 'fixed',
+        position: "fixed",
         top: 0,
-        left: isDesktop ? '-18px' : '0',
+        left: isDesktop ? "-18px" : "0",
         right: 0,
         bottom: 0,
-        display: 'flex',
-        justifyContent: isDesktop ? 'center' : 'flex-start',
-        alignItems: 'flex-start',
-        overflowY: 'auto',
-        backgroundColor: '#f5f5f5',
-        minHeight: '100dvh',
-        zIndex: 1300
+        display: "flex",
+        justifyContent: isDesktop ? "center" : "flex-start",
+        alignItems: "flex-start",
+        overflowY: "auto",
+        backgroundColor: "#f5f5f5",
+        minHeight: "100dvh",
+        zIndex: 1300,
       }}
     >
       <Box
         sx={{
-          width: isDesktop ? '50dvh' : '100vw',
+          width: isDesktop ? "50dvh" : "100vw",
           maxWidth: 800,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          boxShadow: isDesktop ? '0 0 20px rgba(0,0,0,0.1)' : 'none',
-          position: 'relative',
-          minHeight: '100dvh',
-          backgroundColor: '#FFFFFF',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          boxShadow: isDesktop ? "0 0 20px rgba(0,0,0,0.1)" : "none",
+          position: "relative",
+          minHeight: "100dvh",
+          backgroundColor: "#FFFFFF",
         }}
       >
-        <button 
+        <button
           className="on-close-burger"
           onClick={onClose}
           style={{
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            padding:isDesktop? '40px 40px' :'20px 20px',
-            background: 'none',
-            border: 'none',
-            fontSize: '34px',
-            cursor: 'pointer',
+            position: "absolute",
+            top: "0",
+            left: "0",
+            padding: isDesktop ? "40px 40px" : "20px 20px",
+            background: "none",
+            border: "none",
+            fontSize: "34px",
+            cursor: "pointer",
             zIndex: 1000,
-            color:'#0077FF',
-            outline:'none'
+            color: "#0077FF",
+            outline: "none",
           }}
         >
           ×
         </button>
 
-        <Box sx={{
-          width: '100%',
-          padding: isDesktop ? '24px 5%' : '16px 5%',
-          boxSizing: 'border-box',
-        }}>
+        <Box
+          sx={{
+            width: "100%",
+            padding: isDesktop ? "24px 5%" : "16px 5%",
+            boxSizing: "border-box",
+          }}
+        >
           <div className="header-text">
             <div>
               <span className="zapisites">Выберите </span>
@@ -135,12 +131,14 @@ export default function BurgerMenu({ onClose }:any) {
           </div>
         </Box>
 
-        <Box sx={{
-          width: '90%',
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
+        <Box
+          sx={{
+            width: "90%",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           {menuItems.map((item, index) => (
             <MenuList
               key={index}
@@ -152,22 +150,47 @@ export default function BurgerMenu({ onClose }:any) {
           ))}
         </Box>
 
-        <Box sx={{
-          width: '100%',
-          padding: '20px 5%',
-          marginTop: 'auto',
-          boxSizing: 'border-box',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
-        }}>
-          <div className="divider" style={{marginTop: "0px"}}></div>
+        <Box
+          sx={{
+            width: "100%",
+            padding: "20px 5%",
+            marginTop: "auto",
+            boxSizing: "border-box",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div className="divider" style={{ marginTop: "0px" }}></div>
           <div className="buttons-block">
-            <button className="round-button" onClick={() => window.open('https://t.me/denta_rell', '_blank')}></button>
-            <button className="round-button" onClick={() => window.open('https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0', '_blank')}></button>
-            <button className="write-button" disabled={true} onClick={()=>navigate('/client/chat')}>НАПИСАТЬ</button>
+            <button
+              className="round-button"
+              onClick={() => window.open("https://t.me/denta_rell", "_blank")}
+            ></button>
+            <button
+              className="round-button"
+              onClick={() =>
+                window.open(
+                  "https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0",
+                  "_blank"
+                )
+              }
+            ></button>
+            <button
+              className="write-button"
+              disabled={true}
+              onClick={() => navigate("/client/chat")}
+            >
+              НАПИСАТЬ
+            </button>
           </div>
-          <button className="login-button" disabled={true} onClick={() => navigate('/client/login')}>Войти в личный кабинет</button>
+          <button
+            className="login-button"
+            disabled={true}
+            onClick={() => navigate("/client/login")}
+          >
+            Войти в личный кабинет
+          </button>
         </Box>
       </Box>
     </Box>
