@@ -240,13 +240,13 @@ const StyledTextField = styled(TextField)({
       animationFillMode: 'both',
     },
     '& fieldset': {
-      border: '1px solid #0077FF',
+      border: '1px solid #9C07FF',
     },
     '&:hover fieldset': {
-      border: '1px solid #0077FF',
+      border: '1px solid #9C07FF',
     },
     '&.Mui-focused fieldset': {
-      border: '1px solid #0077FF',
+      border: '1px solid #9C07FF',
     },
   },
   '& .MuiInputLabel-root': {
@@ -257,7 +257,7 @@ const StyledTextField = styled(TextField)({
     textTransform: 'uppercase',
     color: '#000000',
     '&.Mui-focused': {
-      color: '#0077FF',
+      color: '#9C07FF',
     },
   },
   '& input:-webkit-autofill': {
@@ -293,16 +293,16 @@ const RoundCheckbox = styled(Checkbox)(({ theme }) => ({
   width: 24,
   height: 24,
   borderRadius: '50%',
-  border: '2px solid #0077FF',
+  border: '2px solid #9C07FF',
   backgroundColor: 'transparent',
   '&:hover': {
     backgroundColor: 'rgba(0, 119, 255, 0.04)',
   },
   '&.Mui-checked': {
     color: 'white',
-    backgroundColor: '#0077FF',
+    backgroundColor: '#9C07FF',
     '&:hover': {
-      backgroundColor: '#0077FF',
+      backgroundColor: '#9C07FF',
     },
   },
 }));

@@ -56,22 +56,13 @@ function App() {
             width: '100%',
             height: '100%',
             zIndex: 0,
-            background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${back}')`,
+            background: `linear-gradient(rgba(191, 189, 189, 0.5), rgba(191, 189, 189, 0.5))`,
             backgroundSize: 'cover',
             backgroundPosition: 'right bottom',
             backgroundRepeat: 'no-repeat',
 
           }}
         />
-      )}
-        {isDesktop && (
-          <Box
-            sx={{
-              width: '50%',
-              height: '100%',
-              
-            }}
-          />
       )}
       <Box
         sx={{

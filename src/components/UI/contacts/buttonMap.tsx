@@ -10,7 +10,7 @@ return (
     <Button                
     sx={{ 
         ...buttonStyle,  
-        border: '1px solid #0077FF', 
+        border: '1px solid #9C07FF', 
         color: '#FFFFFF',
         fontWeight:'700',
         fontSize:'14px',
@@ -30,7 +30,7 @@ const buttonStyle = {
     borderRadius: '20px',
     gap: '7px',
     borderWidth: '2px',
-    backgroundColor: '#0077FF',
+    backgroundColor: '#9C07FF',
     color: 'white',
     textTransform: 'uppercase',
     fontFamily: 'Roboto',

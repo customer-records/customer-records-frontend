@@ -63,7 +63,7 @@ export default function CodeEnter({ onSubmit, initialData = { code: '' },type }:
           maxWidth: '402px',
           color:'#000000'
         }}>
-          Мы отправили проверочный код в <span style={{ color: '#0077FF' }}>{type == 'TG' ? 'Telegram' : 'WhatsApp'}</span> введите:
+          Мы отправили проверочный код в <span style={{ color: '#9C07FF' }}>{type == 'TG' ? 'Telegram' : 'WhatsApp'}</span> введите:
         </Box>
         
         <StyledTextField
@@ -106,13 +106,13 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
       height: '100%',
     },
     '& fieldset': {
-      border: '1px solid #0077FF',
+      border: '1px solid #9C07FF',
     },
     '&:hover fieldset': {
-      border: '1px solid #0077FF',
+      border: '1px solid #9C07FF',
     },
     '&.Mui-focused fieldset': {
-      border: '1px solid #0077FF',
+      border: '1px solid #9C07FF',
     },
   },
 }));

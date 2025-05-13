@@ -144,13 +144,13 @@ const StyledTextField = styled(TextField)({
       animationFillMode: 'both',
     },
     '& fieldset': {
-      border: '1px solid #0077FF',
+      border: '1px solid #9C07FF',
     },
     '&:hover fieldset': {
-      border: '1px solid #0077FF',
+      border: '1px solid #9C07FF',
     },
     '&.Mui-focused fieldset': {
-      border: '1px solid #0077FF',
+      border: '1px solid #9C07FF',
     },
   },
   '& .MuiInputLabel-root': {
@@ -161,7 +161,7 @@ const StyledTextField = styled(TextField)({
     textTransform: 'uppercase',
     color: '#000000',
     '&.Mui-focused': {
-      color: '#0077FF',
+      color: '#9C07FF',
     },
   },
   '& .MuiFormHelperText-root': {

@@ -318,8 +318,8 @@ export default function OnSpecialist() {
                             sx={{ 
                                 ...buttonStyle, 
                                 backgroundColor: 'white', 
-                                border:'1px solid #0077FF', 
-                                color:'#0077FF'
+                                border:'1px solid #9C07FF', 
+                                color:'#9C07FF'
                             }}
                             onClick={handleBack}
                         >
@@ -352,7 +352,7 @@ const buttonStyle = {
     borderWidth: '2px',
     paddingRight: '14px',
     paddingLeft: '14px',
-    backgroundColor: '#0077FF',
+    backgroundColor: '#9C07FF',
     color: 'white',
     textTransform: 'uppercase',
     fontFamily: 'Roboto',

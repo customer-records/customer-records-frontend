@@ -32,7 +32,7 @@ export default function TelegramRedir() {
             sx={{
                 fontFamily: 'Roboto',
                 fontWeight: 700,
-                color:'#0077FF',
+                color:'#9C07FF',
                 fontSize: '24px', 
                 textTransform:'uppercase',
             }}

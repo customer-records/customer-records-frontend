@@ -25,9 +25,9 @@ const secMenuItem = [
         id: 1,
         specialist: 'Онлайн запись ',
         services: [
-          'На определённую дату',
-          'К специалисту ',
-          'На услугу',
+          'Для двоих',
+          'от 4 до 6 гостей ',
+          'Xbox: от 4 до 6 гостей',
           'Быстрая запись'
         ],
       },
@@ -163,7 +163,7 @@ export default function Contacts (){
           <div className="divider" style={{marginTop: "0px"}}></div>
           <div className="buttons-block">
             <button className="round-button" onClick={() => window.open('https://t.me/denta_rell', '_blank')}></button>
-            <button className="round-button" onClick={() => window.open('https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0', '_blank')}></button>
+            
             <button className="write-button" disabled={true} onClick={()=>navigate('/client/chat')}>НАПИСАТЬ</button>
           </div>
           <button className="login-button" disabled={true} onClick={() => navigate('/client/login')}>Войти в личный кабинет</button>

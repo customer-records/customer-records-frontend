@@ -21,7 +21,7 @@ export default function YandexMap() {
         flexShrink: 0,
         overflow: 'hidden',
         borderRadius: '12px',
-        border: '1px solid #0077FF'
+        border: '1px solid #9C07FF'
       }}
     >
       <iframe

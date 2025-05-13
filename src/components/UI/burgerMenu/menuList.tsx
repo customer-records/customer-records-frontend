@@ -21,17 +21,13 @@ export default function MenuList({ specialist, services, currentId, onClose, set
   const returnIcon = (indx: number) => {
     switch (indx) {
       case 0: return phoneMenu;
-      case 1: return WAmenu;
-      case 2: return TGmenu;
       default: return AdressMenu;
     }
   };
   const returnAtrLink = (indx: number) => {
     switch (indx) {
-      case 0: return 'tel:+79178585217';
-      case 1: return 'https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0';
-      case 2: return 'https://t.me/denta_rell';
-      case 3: return '/client/contacts'
+      case 0: return 'tel:+79950075175';
+      case 1: return 'https://yandex.ru/maps/43/kazan/house/ulitsa_khusaina_mavlyutova_46/YEAYdw9oS0AOQFtvfXt1dntnbA%3D%3D/';
       default: return '/client';
     }
   };
@@ -80,7 +76,7 @@ export default function MenuList({ specialist, services, currentId, onClose, set
               <div
                 style={{
                   fontWeight: '700',
-                  color: '#0077FF',
+                  color: '#9C07FF',
                   fontSize: '14px',
                   lineHeight: '20px',
                   textTransform: 'uppercase',
@@ -96,7 +92,7 @@ export default function MenuList({ specialist, services, currentId, onClose, set
               <div
                 style={{
                   fontWeight: '700',
-                  color: '#0077FF',
+                  color: '#9C07FF',
                   fontSize: '14px',
                   lineHeight: '20px',
                   textTransform: 'uppercase',
@@ -112,7 +108,7 @@ export default function MenuList({ specialist, services, currentId, onClose, set
               <div
                 style={{
                   fontWeight: '700',
-                  color: '#0077FF',
+                  color: '#9C07FF',
                   fontSize: '14px',
                   lineHeight: '20px',
                   textTransform: 'uppercase',
@@ -128,7 +124,7 @@ export default function MenuList({ specialist, services, currentId, onClose, set
             <Typography
               style={{
                 fontWeight: '700',
-                color: '#0077FF',
+                color: '#9C07FF',
                 fontSize: '14px',
                 lineHeight: '20px',
                 textTransform: 'uppercase'
@@ -171,11 +167,7 @@ export default function MenuList({ specialist, services, currentId, onClose, set
                     <div
                       onClick={() => {
                         if (onClose) onClose();
-                        if (indx < 3) {
                           window.open(returnAtrLink(indx), '_blank');
-                        } else {
-                          navigate(returnAtrLink(indx));
-                        }
                       }}
                       style={{ 
                         color: '#000000DE', 

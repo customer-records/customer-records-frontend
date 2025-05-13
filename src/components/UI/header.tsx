@@ -68,8 +68,8 @@ export default function Header() {
                 </div>
                 <div className="headWrap" style={{display:display}}>
                     <div className="header-bottom">
-                        <h1 className="service-name">Стоматология</h1>
-                        <p className="company-name">Denta - rell</p>
+                        <h1 className="service-name">Кальянная</h1>
+                        <p className="company-name">BEERLOGA</p>
                     </div>
                     <div className="roundLogo"></div>
                 </div>

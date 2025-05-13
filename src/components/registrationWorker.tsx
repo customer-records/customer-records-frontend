@@ -424,8 +424,8 @@ export default function RegistrationWorker() {
                                 sx={{ 
                                     ...buttonStyle, 
                                     backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
-                                    color: '#0077FF' 
+                                    border: '1px solid #9C07FF', 
+                                    color: '#9C07FF' 
                                 }}
                                 onClick={handleBack}
                             >
@@ -450,8 +450,8 @@ export default function RegistrationWorker() {
                                 sx={{ 
                                     ...buttonStyle, 
                                     backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
-                                    color: '#0077FF' 
+                                    border: '1px solid #9C07FF', 
+                                    color: '#9C07FF' 
                                 }}
                                 onClick={handleBack}
                             >
@@ -474,8 +474,8 @@ export default function RegistrationWorker() {
                                 sx={{ 
                                     ...buttonStyle, 
                                     backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
-                                    color: '#0077FF' 
+                                    border: '1px solid #9C07FF', 
+                                    color: '#9C07FF' 
                                 }}
                                 onClick={handleBack}
                             >
@@ -527,8 +527,8 @@ export default function RegistrationWorker() {
                             sx={{ 
                                 ...buttonStyle, 
                                 backgroundColor: 'white', 
-                                border: '1px solid #0077FF', 
-                                color: '#0077FF' 
+                                border: '1px solid #9C07FF', 
+                                color: '#9C07FF' 
                             }}
                             onClick={handleBack}
                         >
@@ -552,8 +552,8 @@ export default function RegistrationWorker() {
                             sx={{ 
                                 ...buttonStyle, 
                                 backgroundColor: 'white', 
-                                border: '1px solid #0077FF', 
-                                color: '#0077FF' 
+                                border: '1px solid #9C07FF', 
+                                color: '#9C07FF' 
                             }}
                             onClick={handleBack}
                         >
@@ -578,8 +578,8 @@ export default function RegistrationWorker() {
                             sx={{ 
                                 ...buttonStyle, 
                                 backgroundColor: 'white', 
-                                border: '1px solid #0077FF', 
-                                color: '#0077FF' 
+                                border: '1px solid #9C07FF', 
+                                color: '#9C07FF' 
                             }}
                             onClick={handleBack}
                         >
@@ -602,8 +602,8 @@ export default function RegistrationWorker() {
                             sx={{ 
                                 ...buttonStyle, 
                                 backgroundColor: 'white', 
-                                border: '1px solid #0077FF', 
-                                color: '#0077FF' 
+                                border: '1px solid #9C07FF', 
+                                color: '#9C07FF' 
                             }}
                             onClick={handleBack}
                         >
@@ -701,7 +701,7 @@ export default function RegistrationWorker() {
                     gap: '10px',
                 }}>
                     <button className="round-button" onClick={() => window.open('https://t.me/denta_rell', '_blank')}></button>
-                    <button className="round-button" onClick={() => window.open('https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0', '_blank')}></button>
+                    
                     <button className="write-button" disabled={true} onClick={()=>navigate('/client/chat')}>НАПИСАТЬ</button>
                 </Box>
             </Box>
@@ -740,7 +740,7 @@ const buttonStyle = {
     borderWidth: '2px',
     paddingRight: '14px',
     paddingLeft: '14px',
-    backgroundColor: '#0077FF',
+    backgroundColor: '#9C07FF',
     color: 'white',
     textTransform: 'uppercase',
     fontFamily: 'Roboto',

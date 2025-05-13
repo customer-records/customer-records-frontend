@@ -22,16 +22,16 @@ const RoundCheckbox = styled(Checkbox)(({ theme }) => ({
   width: 24,
   height: 24,
   borderRadius: '50%',
-  border: '2px solid #0077FF',
+  border: '2px solid #9C07FF',
   backgroundColor: 'transparent',
   '&:hover': {
     backgroundColor: 'rgba(0, 119, 255, 0.04)',
   },
   '&.Mui-checked': {
     color: 'white',
-    backgroundColor: '#0077FF',
+    backgroundColor: '#9C07FF',
     '&:hover': {
-      backgroundColor: '#0077FF',
+      backgroundColor: '#9C07FF',
     },
   },
 }));

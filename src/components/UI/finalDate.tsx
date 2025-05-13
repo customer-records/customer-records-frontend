@@ -83,7 +83,7 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
           fontSize: '24px',
           lineHeight: '100%',
           letterSpacing: '0%',
-          color: '#0077FF',
+          color: '#9C07FF',
           mb: 3,
         }}
       >
@@ -253,8 +253,8 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
         sx={{
           width: '176px',
           height: '1px',
-          border: '1px solid #0077FF',
-          backgroundColor: '#0077FF',
+          border: '1px solid #9C07FF',
+          backgroundColor: '#9C07FF',
           mx: 'auto',
           my: 3,
           mb: 6,
@@ -336,8 +336,8 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
             gap: '13px',
             borderRadius: '20px',
             borderWidth: '2px',
-            background: '#0077FF',
-            border: '2px solid #0077FF',
+            background: '#9C07FF',
+            border: '2px solid #9C07FF',
             mb: 1,
             display: 'flex',
             alignItems: 'center',

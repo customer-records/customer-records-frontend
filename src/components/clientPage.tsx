@@ -5,7 +5,7 @@ import './client.css';
 import calendarIcon from '../assets/calendar.svg';
 import chelikIcon from '../assets/chelik.svg';
 import teethIcon from '../assets/teeth.svg';
-import zipIcon from '../assets/zip.svg';
+import hookan from '../assets/hokah.svg'
 import { useNavigate } from "react-router-dom";
 import Header from './UI/header';
 export default function ClientPage() {
@@ -41,38 +41,41 @@ export default function ClientPage() {
       <section className="section">
         <div className="header-text">
           <div>
-            <span className="zapisites">ЗАПИШИТЕСЬ</span>
-            <span className="na-priem"> НА ПРИЕМ</span>
+            <span className="zapisites">Забронируй</span>
+            <span className="na-priem"> Столик</span>
           </div>
         </div>
 
         <div className="buttons-container">
           <button onClick={()=>handleClick('/client/date')} className="custom-button">
             <span className="button-icon">
-              <img loading="eager" fetchPriority="high" src={calendarIcon} alt="Календарь" />
+              <img loading="eager" fetchPriority="high" src={hookan} alt="Календарь" />
             </span>
-            <span className="button-text">На определённую дату</span>
+            <span className="button-text">Для двоих</span>
           </button>
           <button onClick={()=>handleClick('/client/specialist')} className="custom-button">
             <span className="button-icon">
-              <img loading="eager" fetchPriority="high" src={chelikIcon} alt="Специалист" />
+              <img loading="eager" fetchPriority="high" src={hookan} alt="Специалист" />
             </span>
-            <span className="button-text">К специалисту</span>
+            <span className="button-text">от 4 до 6 гостей</span>
           </button>
           <button onClick={()=>handleClick('/client/service')} className="custom-button">
             <span className="button-icon">
-              <img loading="eager" fetchPriority="high" src={teethIcon} alt="Услуга" />
+              <img loading="eager" fetchPriority="high" src={hookan} alt="Услуга" />
             </span>
-            <span className="button-text">На услугу</span>
+            <span className="button-text">Xbox: от 4 до 6 гостей</span>
           </button>
-        </div>
-
-        <div className="additional-button-container">
-          <button onClick={()=>handleClick('/client/fastreacord')} className="custom-button fast">
+          <button onClick={()=>handleClick('/client/service')} className="custom-button">
             <span className="button-icon">
-              <img loading="eager" fetchPriority="high" src={zipIcon} alt="Быстрая запись" />
+              <img loading="eager" fetchPriority="high" src={hookan} alt="Услуга" />
             </span>
-            <span className="button-text">Быстрая запись</span>
+            <span className="button-text">play station: от 4 до 6 </span>
+          </button>
+          <button onClick={()=>handleClick('/client/service')} className="custom-button">
+            <span className="button-icon">
+              <img loading="eager" fetchPriority="high" src={hookan} alt="Услуга" />
+            </span>
+            <span className="button-text">VIP комната: от 4 до 6 </span>
           </button>
         </div>
 
@@ -80,7 +83,7 @@ export default function ClientPage() {
 
         <div className="buttons-block">
           <button className="round-button" onClick={() => window.open('https://t.me/denta_rell', '_blank')}></button>
-          <button className="round-button" onClick={() => window.open('https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0', '_blank')}></button>
+          
           <button className="write-button" disabled={true} onClick={()=>navigate('/client/chat')}>НАПИСАТЬ</button>
         </div>
 
