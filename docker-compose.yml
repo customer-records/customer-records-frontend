@@ -6,12 +6,19 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      # теперь все запросы к API идут по относительному пути /api
+      # относительный путь, чтобы всё шло через Nginx
       - VITE_API_URL=/api
+    extra_hosts:
+      # добавляем алиас host.docker.internal → IP хоста на Linux
+      - "host.docker.internal:host-gateway"
     volumes:
-      # собственный конфиг nginx
+      # ваш конфиг nginx
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
-      # сертификаты от Let's Encrypt
+      # SSL-сертификаты
       - /etc/letsencrypt/live/app.denta-rell.ru/fullchain.pem:/etc/nginx/certs/fullchain.pem:ro
       - /etc/letsencrypt/live/app.denta-rell.ru/privkey.pem:/etc/nginx/certs/privkey.pem:ro
+
+volumes:
+  postgres_data:
+  whatsapp-session:
