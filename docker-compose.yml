@@ -6,7 +6,8 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - VITE_API_URL=http://localhost:4000
+      # теперь все запросы к API идут по относительному пути /api
+      - VITE_API_URL=/api
     volumes:
       # собственный конфиг nginx
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
