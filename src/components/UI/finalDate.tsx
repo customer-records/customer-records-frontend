@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { Box, Typography, Avatar, Button } from '@mui/material';
-import save from '../../assets/save.png';
+import React, { useEffect } from "react";
+import { Box, Typography, Avatar, Button } from "@mui/material";
+import save from "../../assets/save.png";
 
 // Импорт аватаров из папки ../../assets/avatars
-import RG from '../../assets/avatars/RG.png';
-import RS from '../../assets/avatars/RS.png';
-import BS from '../../assets/avatars/BS.png';
-import SA from '../../assets/avatars/SA.png';
+import RG from "../../assets/avatars/RG.png";
+import RS from "../../assets/avatars/RS.png";
+import BS from "../../assets/avatars/BS.png";
+import SA from "../../assets/avatars/SA.png";
 
 interface TimeSlotDetail {
   date: string;
@@ -24,32 +24,32 @@ interface FinalStepProps {
 }
 
 const nameToAvatar: Record<string, string> = {
-    'Ренат Гадисов': RG,
-    'Ринат Сергеев': RS,
-    'Светлана Бареева': BS,
-    'Альфия Шарипова': SA,
+  "Ренат Гадисов": RG,
+  "Ринат Сергеев": RS,
+  "Светлана Бареева": BS,
+  "Альфия Шарипова": SA,
 };
 
 const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
   // Для отладки
   useEffect(() => {
-    if (time && typeof time !== 'string') {
-      console.log('Specialist:', time.name, time.surname);
+    if (time && typeof time !== "string") {
+      console.log("Specialist:", time.name, time.surname);
     }
-    console.log(time)
+    console.log(time);
   }, [time]);
 
   const formatDate = (d: Date) =>
-    d.toLocaleDateString('ru-RU', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
+    d.toLocaleDateString("ru-RU", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
     });
 
   // Получаем [name, surname] или null
   const getNameSurname = (): [string, string] | null => {
-    console.log(time.name, time.surname)
-    if (!time || typeof time === 'string') return null;
+    console.log(time.name, time.surname);
+    if (!time || typeof time === "string") return null;
     return [time.name, time.surname];
   };
 
@@ -57,7 +57,7 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
     `${name.charAt(0)}${surname.charAt(0)}`.toUpperCase();
 
   const getTimeString = () => {
-    if (!time || typeof time === 'string') return null;
+    if (!time || typeof time === "string") return null;
     return `${time.time_start} - ${time.time_end}`;
   };
 
@@ -67,23 +67,23 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
   };
 
   const avatarSrc = () => {
-    if (!time || typeof time === 'string') return undefined;
+    if (!time || typeof time === "string") return undefined;
     const full = `${time.name} ${time.surname}`;
-    console.log(full === 'Ринат Сергеев', nameToAvatar[full])
+    console.log(full === "Ринат Сергеев", nameToAvatar[full]);
     return nameToAvatar[full];
   };
 
   return (
-    <Box sx={{ width: '90%', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ width: "90%", display: "flex", flexDirection: "column" }}>
       {/* Заголовок */}
       <Typography
         sx={{
-          fontFamily: 'Roboto',
+          fontFamily: "Roboto",
           fontWeight: 500,
-          fontSize: '24px',
-          lineHeight: '100%',
-          letterSpacing: '0%',
-          color: '#9C07FF',
+          fontSize: "24px",
+          lineHeight: "100%",
+          letterSpacing: "0%",
+          color: "#9C07FF",
           mb: 3,
         }}
       >
@@ -95,12 +95,12 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
         <Typography
           component="span"
           sx={{
-            fontFamily: 'Roboto',
+            fontFamily: "Roboto",
             fontWeight: 700,
-            fontSize: '14px',
-            lineHeight: '100%',
-            letterSpacing: '0%',
-            color: '#000000',
+            fontSize: "14px",
+            lineHeight: "100%",
+            letterSpacing: "0%",
+            color: "#000000",
             mr: 1,
           }}
         >
@@ -109,12 +109,12 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
         <Typography
           component="span"
           sx={{
-            fontFamily: 'Roboto',
+            fontFamily: "Roboto",
             fontWeight: 400,
-            fontSize: '14px',
-            lineHeight: '100%',
-            letterSpacing: '0%',
-            color: '#000000',
+            fontSize: "14px",
+            lineHeight: "100%",
+            letterSpacing: "0%",
+            color: "#000000",
           }}
         >
           {formatDate(date)}
@@ -127,12 +127,12 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
           <Typography
             component="span"
             sx={{
-              fontFamily: 'Roboto',
+              fontFamily: "Roboto",
               fontWeight: 700,
-              fontSize: '14px',
-              lineHeight: '100%',
-              letterSpacing: '0%',
-              color: '#000000',
+              fontSize: "14px",
+              lineHeight: "100%",
+              letterSpacing: "0%",
+              color: "#000000",
               mr: 1,
             }}
           >
@@ -141,12 +141,12 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
           <Typography
             component="span"
             sx={{
-              fontFamily: 'Roboto',
+              fontFamily: "Roboto",
               fontWeight: 400,
-              fontSize: '14px',
-              lineHeight: '100%',
-              letterSpacing: '0%',
-              color: '#000000',
+              fontSize: "14px",
+              lineHeight: "100%",
+              letterSpacing: "0%",
+              color: "#000000",
             }}
           >
             {getTimeString()}
@@ -159,12 +159,12 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
         <Typography
           component="span"
           sx={{
-            fontFamily: 'Roboto',
+            fontFamily: "Roboto",
             fontWeight: 700,
-            fontSize: '14px',
-            lineHeight: '100%',
-            letterSpacing: '0%',
-            color: '#000000',
+            fontSize: "14px",
+            lineHeight: "100%",
+            letterSpacing: "0%",
+            color: "#000000",
             mr: 1,
           }}
         >
@@ -173,30 +173,30 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
         <Typography
           component="span"
           sx={{
-            fontFamily: 'Roboto',
+            fontFamily: "Roboto",
             fontWeight: 400,
-            fontSize: '14px',
-            lineHeight: '100%',
-            letterSpacing: '0%',
-            color: '#000000',
+            fontSize: "14px",
+            lineHeight: "100%",
+            letterSpacing: "0%",
+            color: "#000000",
           }}
         >
-          Проспект Победы 35б
+          Мавлютого 46 ,вход со стороны Яндекс Лавки
         </Typography>
       </Box>
 
       {/* Специалист */}
       {getSpecialistName() && (
-        <Box sx={{ width: '90%', mb: 4 }}>
+        <Box sx={{ width: "90%", mb: 4 }}>
           <Typography
             sx={{
-              fontFamily: 'Roboto',
+              fontFamily: "Roboto",
               fontWeight: 400,
-              fontSize: '12px',
-              lineHeight: '20px',
-              letterSpacing: '0.4px',
-              verticalAlign: 'middle',
-              color: '#757575',
+              fontSize: "12px",
+              lineHeight: "20px",
+              letterSpacing: "0.4px",
+              verticalAlign: "middle",
+              color: "#757575",
               mb: 1,
             }}
           >
@@ -205,44 +205,46 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
 
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
+              display: "flex",
+              alignItems: "center",
               p: 2,
               boxShadow:
-                '0px -1px 0px 0px #0000001F inset, 0px 1px 0px 0px #0000001F inset',
+                "0px -1px 0px 0px #0000001F inset, 0px 1px 0px 0px #0000001F inset",
             }}
           >
             <Avatar
               src={avatarSrc()}
               alt={getSpecialistName() || undefined}
               sx={{
-                bgcolor: '#e0e0e0',
-                color: '#424242',
+                bgcolor: "#e0e0e0",
+                color: "#424242",
                 width: 40,
                 height: 40,
                 mr: 2,
-                fontSize: '16px',
+                fontSize: "16px",
                 fontWeight: 500,
               }}
             >
               {(() => {
                 const ns = getNameSurname();
-                return ns ? getInitials(ns[0], ns[1]) : '';
+                return ns ? getInitials(ns[0], ns[1]) : "";
               })()}
             </Avatar>
             <Typography
               sx={{
-                fontFamily: 'Roboto',
+                fontFamily: "Roboto",
                 fontWeight: 400,
-                fontSize: '14px',
-                lineHeight: '20px',
-                letterSpacing: '0.25px',
-                verticalAlign: 'middle',
-                color: '#000000DE',
+                fontSize: "14px",
+                lineHeight: "20px",
+                letterSpacing: "0.25px",
+                verticalAlign: "middle",
+                color: "#000000DE",
               }}
             >
               {getSpecialistName()}
-              {typeof time !== 'string' && time.category && ` (${time.category})`}
+              {typeof time !== "string" &&
+                time.category &&
+                ` (${time.category})`}
             </Typography>
           </Box>
         </Box>
@@ -251,11 +253,11 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
       {/* Разделитель */}
       <Box
         sx={{
-          width: '176px',
-          height: '1px',
-          border: '1px solid #9C07FF',
-          backgroundColor: '#9C07FF',
-          mx: 'auto',
+          width: "176px",
+          height: "1px",
+          border: "1px solid #9C07FF",
+          backgroundColor: "#9C07FF",
+          mx: "auto",
           my: 3,
           mb: 6,
         }}
@@ -265,12 +267,12 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
       <Box sx={{ mb: 3 }}>
         <Typography
           sx={{
-            fontFamily: 'Roboto',
+            fontFamily: "Roboto",
             fontWeight: 700,
-            fontSize: '14px',
-            lineHeight: '100%',
-            letterSpacing: '0%',
-            color: '#000000',
+            fontSize: "14px",
+            lineHeight: "100%",
+            letterSpacing: "0%",
+            color: "#000000",
             mb: 1,
           }}
         >
@@ -282,20 +284,20 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
           sx={{
             pl: 2,
             mb: 3,
-            '& li': {
-              fontFamily: 'Roboto',
+            "& li": {
+              fontFamily: "Roboto",
               fontWeight: 400,
-              fontSize: '14px',
-              lineHeight: '100%',
-              letterSpacing: '0%',
-              color: '#000000',
+              fontSize: "14px",
+              lineHeight: "100%",
+              letterSpacing: "0%",
+              color: "#000000",
               mb: 1,
-              position: 'relative',
-              '&:before': {
+              position: "relative",
+              "&:before": {
                 content: '"•"',
-                position: 'absolute',
-                left: '-15px',
-                color: '#000000',
+                position: "absolute",
+                left: "-15px",
+                color: "#000000",
               },
             },
           }}
@@ -307,12 +309,12 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
 
         <Typography
           sx={{
-            fontFamily: 'Roboto',
+            fontFamily: "Roboto",
             fontWeight: 700,
-            fontSize: '14px',
-            lineHeight: '100%',
-            letterSpacing: '0%',
-            color: '#000000',
+            fontSize: "14px",
+            lineHeight: "100%",
+            letterSpacing: "0%",
+            color: "#000000",
             mb: 2,
           }}
         >
@@ -321,58 +323,70 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
       </Box>
 
       {/* Кнопка календаря */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
         <Button
           onClick={() => {
             if (!ics) return;
-            const blob = new Blob([ics], { type: 'text/calendar' });
+            const blob = new Blob([ics], { type: "text/calendar" });
             const url = window.URL.createObjectURL(blob);
-            window.open(url, '_blank'); // сразу открываем
+            window.open(url, "_blank"); // сразу открываем
           }}
           sx={{
             width: 352,
             height: 40,
             padding: 0,
-            gap: '13px',
-            borderRadius: '20px',
-            borderWidth: '2px',
-            background: '#9C07FF',
-            border: '2px solid #9C07FF',
+            gap: "13px",
+            borderRadius: "20px",
+            borderWidth: "2px",
+            background: "#9C07FF",
+            border: "2px solid #9C07FF",
             mb: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            whiteSpace: 'nowrap',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            whiteSpace: "nowrap",
           }}
         >
           <Typography
             sx={{
-              fontFamily: 'Roboto',
+              fontFamily: "Roboto",
               fontWeight: 700,
-              fontSize: '17px',
-              lineHeight: '100%',
-              letterSpacing: '0%',
-              textAlign: 'center',
-              textTransform: 'uppercase',
-              color: '#FFFFFF',
+              fontSize: "17px",
+              lineHeight: "100%",
+              letterSpacing: "0%",
+              textAlign: "center",
+              textTransform: "uppercase",
+              color: "#FFFFFF",
               padding: 0,
-              whiteSpace: 'nowrap',
+              whiteSpace: "nowrap",
             }}
           >
             Напоминание для календаря
           </Typography>
-          <img loading="eager" fetchPriority="high" src={save} alt="Save icon" />
+          <img
+            loading="eager"
+            fetchPriority="high"
+            src={save}
+            alt="Save icon"
+          />
         </Button>
         <Typography
           sx={{
-            fontFamily: 'Roboto',
+            fontFamily: "Roboto",
             fontWeight: 600,
-            fontSize: '13px',
-            lineHeight: '100%',
-            letterSpacing: '0%',
-            textAlign: 'center',
-            textTransform: 'uppercase',
-            color: '#000000',
+            fontSize: "13px",
+            lineHeight: "100%",
+            letterSpacing: "0%",
+            textAlign: "center",
+            textTransform: "uppercase",
+            color: "#000000",
           }}
         >
           Скачать файл записи для календаря
