@@ -178,7 +178,6 @@ export default function BurgerMenu({ onClose }: any) {
             ></button>
             <button
               className="write-button"
-              disabled={true}
               onClick={() => navigate("/client/chat")}
             >
               НАПИСАТЬ
@@ -186,7 +185,6 @@ export default function BurgerMenu({ onClose }: any) {
           </div>
           <button
             className="login-button"
-            disabled={true}
             onClick={() => navigate("/client/login")}
           >
             Войти в личный кабинет
