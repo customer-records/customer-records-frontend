@@ -24,6 +24,8 @@ export default function MenuList({
   setSyncedHeight,
 }: ServiceListProps) {
   const navigate = useNavigate();
+
+  // Иконки для раздела "Контакты"
   const returnIcon = (indx: number) => {
     switch (indx) {
       case 0:
@@ -36,6 +38,8 @@ export default function MenuList({
         return AdressMenu;
     }
   };
+
+  // Ссылки для раздела "Контакты" (атрибут href или роут)
   const returnAtrLink = (indx: number) => {
     switch (indx) {
       case 0:
@@ -50,6 +54,8 @@ export default function MenuList({
         return "/client";
     }
   };
+
+  // Ссылки для раздела "Онлайн запись"
   const returnLink = (indx: number) => {
     switch (indx) {
       case 0:
@@ -63,6 +69,15 @@ export default function MenuList({
     }
   };
 
+  // Новая мапа ссылок для раздела "Личный кабинет"
+  const personalLinks: Record<string, string> = {
+    "Ваш чат с доктором": "/client/chat",
+    "Ваши записи": "/client/records",
+    "Ваш план лечения": "/client/treatmentPlan",
+    "Рекомендации специалиста": "/client/recommendations",
+    "Ваши финансы": "/client/finance",
+    "Ваши справки": "/client/references",
+  };
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -72,8 +87,7 @@ export default function MenuList({
     }
   };
 
-  // Функция для обработки клика по ссылке
-  const handleLinkClick = (onClick?: () => void, to?: string) => {
+  const handleLinkClick = (to?: string) => {
     if (onClose) onClose();
     if (to) {
       navigate(to);
@@ -95,7 +109,7 @@ export default function MenuList({
           className="dropdown-header"
           onClick={toggleList}
         >
-          {specialist.name == "Онлайн запись" && (
+          {specialist.name === "Онлайн запись" && (
             <div
               style={{
                 fontWeight: "700",
@@ -106,12 +120,12 @@ export default function MenuList({
                 cursor: "pointer",
               }}
               className="specialist-name"
-              onClick={() => handleLinkClick(onClose, "/client/")}
+              onClick={() => handleLinkClick("/client/")}
             >
               {specialist.name}
             </div>
           )}
-          {specialist.name == "Контакты" && (
+          {specialist.name === "Контакты" && (
             <div
               style={{
                 fontWeight: "700",
@@ -122,12 +136,12 @@ export default function MenuList({
                 cursor: "pointer",
               }}
               className="specialist-name"
-              onClick={() => handleLinkClick(onClose, "/client/contacts")}
+              onClick={() => handleLinkClick("/client/contacts")}
             >
               {specialist.name}
             </div>
           )}
-          {specialist.name == "Акции" && (
+          {specialist.name === "Акции" && (
             <div
               style={{
                 fontWeight: "700",
@@ -138,7 +152,7 @@ export default function MenuList({
                 cursor: "pointer",
               }}
               className="specialist-name"
-              onClick={() => handleLinkClick(onClose, "/client/stocks")}
+              onClick={() => handleLinkClick("/client/stocks")}
             >
               {specialist.name}
             </div>
@@ -178,58 +192,66 @@ export default function MenuList({
             }}
           >
             <ul className="services-list">
-              {services.map((service, indx) => (
-                <li
-                  key={indx}
-                  className="service-item"
-                  style={{
-                    userSelect: "none",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "12px 23px",
-                  }}
-                >
-                  {specialist.name === "Контакты" && (
-                    <img src={returnIcon(indx)} alt="icon" />
-                  )}
-                  {specialist.name === "Контакты" ? (
-                    <div
-                      onClick={() => {
-                        if (onClose) onClose();
-                        if (indx < 3) {
-                          window.open(returnAtrLink(indx), "_blank");
-                        } else {
-                          navigate(returnAtrLink(indx));
-                        }
-                      }}
-                      style={{
-                        color: "#000000DE",
-                        fontSize: "14px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {service}
-                    </div>
-                  ) : (
-                    <div
-                      onClick={() =>
-                        handleLinkClick(
-                          onClose,
-                          currentId === 1 ? returnLink(indx) : "/client"
-                        )
-                      }
-                      style={{
-                        color: "#000000DE",
-                        fontSize: "14px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {service}
-                    </div>
-                  )}
-                </li>
-              ))}
+              {services.map((service, indx) => {
+                let to: string | undefined;
+                if (specialist.name === "Контакты") {
+                  to = undefined;
+                } else if (specialist.name === "Онлайн запись") {
+                  to = returnLink(indx);
+                } else if (specialist.name === "Личный кабинет") {
+                  to = personalLinks[service] || "/client";
+                } else {
+                  to = "/client";
+                }
+
+                return (
+                  <li
+                    key={indx}
+                    className="service-item"
+                    style={{
+                      userSelect: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      padding: "12px 23px",
+                    }}
+                  >
+                    {specialist.name === "Контакты" && (
+                      <img src={returnIcon(indx)} alt="icon" />
+                    )}
+                    {specialist.name === "Контакты" ? (
+                      <div
+                        onClick={() => {
+                          if (onClose) onClose();
+                          if (indx < 3) {
+                            window.open(returnAtrLink(indx), "_blank");
+                          } else {
+                            navigate(returnAtrLink(indx));
+                          }
+                        }}
+                        style={{
+                          color: "#000000DE",
+                          fontSize: "14px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {service}
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => handleLinkClick(to)}
+                        style={{
+                          color: "#000000DE",
+                          fontSize: "14px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {service}
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         )}
