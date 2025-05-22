@@ -1,4 +1,4 @@
-# Используем официальный образ Node.js 18
+# Используем официальный образ Node.js 20
 FROM node:20 AS build
 
 # Устанавливаем рабочую директорию
@@ -10,10 +10,14 @@ COPY package*.json ./
 # Устанавливаем зависимости
 RUN npm install --legacy-peer-deps
 
-# Копируем исходный код
+# Копируем исходный код (включая .env с VITE_API_URL)
 COPY . .
 
-# Собираем приложение
+# Принимаем аргумент из docker-compose и экспортируем его в ENV для Vite
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
+
+# Собираем приложение (Vite подхватит VITE_API_URL из окружения)
 RUN npm run build
 
 # Используем легковесный образ Nginx для раздачи статики
@@ -22,7 +26,8 @@ FROM nginx:alpine
 # Копируем собранные файлы в Nginx
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Подключаем ваш nginx-конфиг
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Открываем порт 80
 EXPOSE 80
