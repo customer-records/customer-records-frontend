@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
       historyApiFallback: true,
       proxy: {
         '/api': {
-          target: env.VITE_API_URL || 'http://localhost:4000',
+          target: env.VITE_API_URL || 'http://localhost:4002',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },

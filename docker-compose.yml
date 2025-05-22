@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: "/api"
+        VITE_API_URL: "http://app.denta-rell.ru:4002"
     ports:
       - "8081:80"
     extra_hosts:

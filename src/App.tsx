@@ -44,7 +44,9 @@ function App() {
       localStorage.removeItem("user");
     }
   }, [user]);
-
+  useEffect(() => {
+    console.log(import.meta.env.VITE_API_URL);
+  }, []);
   const theme = createTheme({
     breakpoints: {
       values: {
