@@ -12,8 +12,10 @@ interface TimeSlotDetail {
   date: string;
   time_start: string;
   time_end: string;
-  name: string;
-  surname: string;
+  // либо эти поля придут из OnDate, либо будем парсить specialist_name
+  name?: string;
+  surname?: string;
+  specialist_name?: string;
   category?: string;
 }
 
@@ -33,10 +35,7 @@ const nameToAvatar: Record<string, string> = {
 const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
   // Для отладки
   useEffect(() => {
-    if (time && typeof time !== "string") {
-      console.log("Specialist:", time.name, time.surname);
-    }
-    console.log(time);
+    console.log("FinalStep time:", time);
   }, [time]);
 
   const formatDate = (d: Date) =>
@@ -48,9 +47,22 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
 
   // Получаем [name, surname] или null
   const getNameSurname = (): [string, string] | null => {
-    console.log(time.name, time.surname);
     if (!time || typeof time === "string") return null;
-    return [time.name, time.surname];
+
+    // если уже есть поля name/surname — берем их
+    if (time.name && time.surname) {
+      return [time.name, time.surname];
+    }
+
+    // иначе пытаемся разбить specialist_name
+    if (time.specialist_name) {
+      const parts = time.specialist_name.split(" ");
+      if (parts.length >= 2) {
+        return [parts[0], parts[1]];
+      }
+    }
+
+    return null;
   };
 
   const getInitials = (name: string, surname: string) =>
@@ -68,9 +80,8 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
 
   const avatarSrc = () => {
     if (!time || typeof time === "string") return undefined;
-    const full = `${time.name} ${time.surname}`;
-    console.log(full === "Ринат Сергеев", nameToAvatar[full]);
-    return nameToAvatar[full];
+    const full = getSpecialistName();
+    return full ? nameToAvatar[full] : undefined;
   };
 
   return (
@@ -336,7 +347,7 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
             if (!ics) return;
             const blob = new Blob([ics], { type: "text/calendar" });
             const url = window.URL.createObjectURL(blob);
-            window.open(url, "_blank"); // сразу открываем
+            window.open(url, "_blank");
           }}
           sx={{
             width: 352,

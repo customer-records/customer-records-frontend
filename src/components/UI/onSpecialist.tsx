@@ -1,366 +1,294 @@
-import { useState, useCallback, useEffect } from 'react';
-import { Box, Button, Snackbar, Alert } from '@mui/material';
-import { useNavigate } from "react-router-dom";
-import '../client.css';
-import arrow from '../../assets/arrow.svg';
-import arrowRight from '../../assets/arrow-right.svg';
-import ClientDataForm from './clientDataForm';
-import FinalStep from './finalDate';
-import DateSpecialistPicker from './dateSpecialistPicker';
-const apiUrl = import.meta.env.VITE_API_URL;
-interface Specialist {
-  id: number;
-  name: string;
-  surname: string;
-  slots: string[];
-}
+import { useState, useEffect, useCallback } from "react";
+import { Box, Typography, Button, Snackbar, Alert } from "@mui/material";
+import "../client.css";
+import Calendare from "./calendare";
+import arrow from "../../assets/arrow.svg";
+import arrowRight from "../../assets/arrow-right.svg";
+import SpecialistSelector from "./specialistTimePicker";
+import ClientDataForm from "./clientDataForm";
+import FinalStep from "./finalDate";
 
-interface ClientData {
-  name: string;
-  phone: string;
-}
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function OnSpecialist() {
-    const navigate = useNavigate();
-    const [isFormValid, setIsFormValid] = useState(false);
-    const [step, setStep] = useState(1);
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-    const [selectedSpecialist, setSelectedSpecialist] = useState<Specialist | null>(null);
-    const [selectedTime, setSelectedTime] = useState<string | null>(null);
-    const [clientData, setClientData] = useState<ClientData>({ name: '', phone: '+7 ' });
-    const [showAlert, setShowAlert] = useState(false);
-    const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null)
-    const [companyId, SetCompanyId] = useState<number | any>(null)
-    const [clientId, SetClientId] = useState<null | number>(null)
-    const [icsContent, setIcsContent] = useState<string | null>(null);
-    
-    const totalSteps = 3;
-    const getCompanyId = async () => {
-        const result = await fetch(`${apiUrl}/calendar/company/`)
-        const data = await result.json()
-        SetCompanyId(data.id)
+  const [step, setStep] = useState(1);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [dateForPicker, setDateForPicker] = useState<string>(
+    selectedDate.toISOString().split("T")[0]
+  );
+  const [selectedSpecialist, setSelectedSpecialist] = useState<any | null>(
+    null
+  );
+  const [selectedTime, setSelectedTime] = useState<any | null>(null);
+  const [clientData, setClientData] = useState<{ name: string; phone: string }>(
+    {
+      name: "",
+      phone: "+7 ",
     }
-    async function bookingTime(time_slot_id: any, client_id: any, company_id: any, employer_id: any) {
-        try {
-            const result = await fetch(`${apiUrl}/calendar/bookings/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    time_slot_id,
-                    client_id,
-                    company_id,
-                    employer_id
-                })
-            });
-    
-            if (!result.ok) throw new Error(`HTTP error! status: ${result.status}`);
-    
-            const blob = await result.blob();
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const text = reader.result as string;
-                setIcsContent(text);
-            };
-            reader.readAsText(blob);
-        } catch (e) {
-            console.error('Ошибка при бронировании и получении ICS файла:', e);
-        }
+  );
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [companyId, SetCompanyId] = useState<number | null>(null);
+  const [clientId, SetClientId] = useState<number | null>(null);
+  const [icsContent, setIcsContent] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const totalSteps = 4;
+
+  useEffect(() => {
+    // получить companyId
+    fetch(`${apiUrl}/calendar/company/`)
+      .then((res) => res.json())
+      .then((data) => SetCompanyId(data.id))
+      .catch(console.error);
+  }, []);
+
+  async function createUser(name: string, phone_number: string) {
+    const res = await fetch(`${apiUrl}/auth/client/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, phone_number }),
+    });
+    if (!res.ok) throw new Error(`status: ${res.status}`);
+    const data = await res.json();
+    SetClientId(data.client.id);
+    return data.client.id;
+  }
+
+  async function bookingTime(
+    slotId: number,
+    client_id: number,
+    company_id: number,
+    employer_id: number
+  ) {
+    const res = await fetch(`${apiUrl}/calendar/bookings/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        time_slot_id: slotId,
+        client_id,
+        company_id,
+        employer_id,
+      }),
+    });
+    if (!res.ok) throw new Error(`status: ${res.status}`);
+    const text = await res.text();
+    setIcsContent(text);
+  }
+
+  const handleNext = async () => {
+    // в шаге 2 — проверка выбора специалиста/времени
+    if (step === 2 && (!selectedSpecialist || !selectedTime)) {
+      setShowAlert(true);
+      return;
     }
-    async function createUser(name:string, phone_number:string){
-        try{
-            const response = await fetch(`${apiUrl}/auth/client/create`,{
-                method:"POST",
-                headers: {
-                'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: name,
-                    phone_number:phone_number 
-                })
-            })
-            if(!response.ok)throw new Error(`HTTP error! status: ${response.status}`);
-            const data = await response.json();
-            console.log('Клиент создан', data);
-            SetClientId(data.client.id)
-            return data.client.id
-        }
-        catch(e){
-            throw new Error(`ошибка:${e}`)
-        }
+    // в шаге 3 — создание клиента и бронирование
+    if (step === 3) {
+      const cid = await createUser(clientData.name, clientData.phone);
+      if (cid && companyId && selectedSpecialist) {
+        bookingTime(selectedTime.id, cid, companyId, selectedSpecialist.id);
+      }
     }
-    useEffect(()=>{
-        getCompanyId()
-    },[])
-    // Обработчик изменения даты
-    const handleDateChange = useCallback((date: Date | null) => {
-        if (date) {
-            setSelectedDate(date);
-            // Сбрасываем выбор специалиста и времени при изменении даты
-            setSelectedSpecialist(null);
-            setSelectedTime(null);
-            setShowAlert(false);
-            console.log('Выбранная дата:', date.toLocaleDateString('ru-RU'));
-        }
-    }, []);
+    if (step < totalSteps) setStep(step + 1);
+  };
 
-    // Обработчик выбора специалиста и времени
-    const handleSpecialistTimeSelect = useCallback((specialist: Specialist | null, time: any | null) => {
-        setSelectedSpecialist(specialist);
-        setSelectedTime({
-            name: time.specialist_name.split(' ')[0],
-            surname: time.specialist_name.split(' ')[1],
-            category:time.service_name,
-            ...time
-        });
-        setShowAlert(false);
-        if (specialist && time) {
-            console.log('Выбран специалист:', `${specialist.name} ${specialist.surname}`, 'на время:', time);
-        }
-    }, []);
+  const handleBack = () => {
+    if (step > 1) setStep(step - 1);
+  };
 
-    // Обработчик данных формы
-    const handleFormSubmit = useCallback((data: { name: string; phone: string, isValid: boolean }) => {
-        console.log('Получены данные формы:', {
-            name: data.name,
-            phone: data.phone,
-            isValid: data.isValid
-        });
-        
-        setClientData({
-            name: data.name,
-            phone: data.phone
-        });
-        setIsFormValid(data.isValid);
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      setSelectedDate(date);
+      setDateForPicker(date.toISOString().split("T")[0]);
+    }
+  };
 
-        if (data.isValid) {
-            console.log('Форма валидна, можно продолжить');
-        }
-    }, []);
+  const handleSpecialistTimeSelect = (spec: any | null, time: any | null) => {
+    setSelectedSpecialist(spec);
+    setSelectedTime(time);
+    setShowAlert(false);
+  };
 
-    const handleNext = async () => {
-        if (step === 1 && (!selectedSpecialist || !selectedTime)) {
-            setShowAlert(true);
-            return;
-        }
+  const handleFormSubmit = useCallback(
+    (data: { name: string; phone: string; isValid: boolean }) => {
+      setClientData({ name: data.name, phone: data.phone });
+      setIsFormValid(data.isValid);
+    },
+    []
+  );
 
-        if (step === 2 && !isFormValid) {
-            setShowAlert(true);
-            return;
-        }
-        if(step === 2){
-            console.log('запрос')
-            const res = await createUser(clientData.name, clientData.phone)
-            /// selectedTime.id - id временного слота+
-            /// selectedSpecialist.id - id сотрудника +
-            /// companyId +
-            ///clientId - id созданного клиента +
-            if(res){
-                console.log(selectedTime.id, res, companyId, selectedSpecialist.id)
-                bookingTime(selectedTime.id, res, companyId, selectedSpecialist.id)
-                console.log('запрос')
-            }
-        }
-        if (step === totalSteps) {
-            logAllData();
-        }
+  const isNextDisabled = () => {
+    if (step === 2) return !selectedSpecialist || !selectedTime;
+    if (step === 3) return !isFormValid;
+    return false;
+  };
 
-        if (step < totalSteps) {
-            setStep(step + 1);
-        }
-    };
+  const getButtonText = () => {
+    return step === 3 ? "ЗАПИСАТЬСЯ" : "ДАЛЕЕ";
+  };
 
-    const logAllData = () => {
-        const completeData = {
-            date: selectedDate.toLocaleDateString('ru-RU'),
-            specialist: selectedSpecialist 
-                ? `${selectedSpecialist.name} ${selectedSpecialist.surname}` 
-                : 'Не выбрано',
-            time: selectedTime || 'Не выбрано',
-            client: {
-                name: clientData.name || 'Не указано',
-                phone: clientData.phone || 'Не указан'
-            },
-            timestamp: new Date().toISOString()
-        };
-        
-        console.log('Все данные для записи:', completeData);
-    };
+  const getAlertMessage = () => {
+    if (step === 2) {
+      if (!selectedSpecialist) return "Пожалуйста, выберите специалиста";
+      if (!selectedTime) return "Пожалуйста, выберите время";
+    }
+    return "";
+  };
 
-    const handleBack = () => {
-        if (step > 1) {
-            setStep(step - 1);
-        }
-    };
+  const renderStepContent = () => {
+    switch (step) {
+      case 1:
+        return (
+          <>
+            <div className="header-text">
+              <div>
+                <span className="zapisites">Выберите </span>
+                <span className="na-priem"> дату</span>
+              </div>
+              <div className="divider"></div>
+            </div>
+            <Calendare
+              selectedDate={selectedDate}
+              onDateChange={handleDateChange}
+            />
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <div className="header-text">
+              <div>
+                <span className="zapisites">Выберите </span>
+                <span className="na-priem"> специалиста</span>
+              </div>
+              <div className="divider"></div>
+            </div>
+            <SpecialistSelector
+              onSelect={handleSpecialistTimeSelect}
+              selectedDate={dateForPicker}
+            />
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <div className="header-text">
+              <div>
+                <span className="zapisites">Укажите </span>
+                <span className="na-priem"> данные</span>
+              </div>
+              <div className="divider"></div>
+            </div>
+            <ClientDataForm onSubmit={handleFormSubmit} />
+          </>
+        );
+      case 4:
+        return (
+          <>
+            <div className="header-text">
+              <div>
+                <span className="zapisites">Спасибо, вы записались</span>
+              </div>
+              <div className="divider"></div>
+            </div>
+            <FinalStep
+              date={selectedDate}
+              time={selectedTime}
+              ics={icsContent}
+            />
+          </>
+        );
+      default:
+        return null;
+    }
+  };
 
-    const handleClick = (route: string) => {
-        navigate(route);
-    };
+  return (
+    <Box
+      sx={{
+        margin: "40px auto",
+        boxSizing: "border-box",
+        width: "100%",
+        maxWidth: 800,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      {renderStepContent()}
 
-    const isNextDisabled = () => {
-        if (step === 1) return !selectedSpecialist || !selectedTime;
-        if (step === 2) return !isFormValid;
-        return false;
-    };
-
-    const getButtonText = () => {
-        if (step === 2) return 'ЗАПИСАТЬСЯ';
-        else if (step === 1) return 'ДАЛЕЕ';
-    };
-
-    const getAlertMessage = () => {
-        if (step === 1) {
-            if (!selectedSpecialist) return "Пожалуйста, выберите специалиста";
-            if (!selectedTime) return "Пожалуйста, выберите время";
-        }
-        if (step === 2) return "Пожалуйста, заполните все обязательные поля";
-        return "";
-    };
-    const getTimeSlotData = () => {
-        if (!selectedTime) return null;
-        return {
-            date: selectedDate?.toISOString() || new Date().toISOString(),
-            time_start: selectedTime['time_start'],
-            time_end: selectedTime['time_end'],
-            name: `${selectedTime['specialist_name'].split(' ')[0]}`,
-            surname:`${selectedTime['specialist_name'].split(' ')[1]}`,
-            category: selectedTime['service_name']
-        };
-    };
-    const renderStepContent = () => {
-        switch (step) {
-            case 1:
-                return (
-                    <>
-                        <div className="header-text">
-                            <div>
-                                <span className="zapisites">Выберите </span>
-                                <span className="na-priem"> специалиста </span>
-                            </div>
-                            <div className="divider"></div>
-                        </div>
-                        <DateSpecialistPicker
-                            selectedDate={selectedDate}
-                            onDateChange={handleDateChange}
-                            onSelect={handleSpecialistTimeSelect}
-                            serviceId={selectedServiceId}
-                        />
-                    </>
-                );
-            case 2:
-                return (
-                    <>
-                        <div className="header-text">
-                            <div>
-                                <span className="zapisites">Укажите </span>
-                                <span className="na-priem"> данные</span>
-                            </div>
-                            <div className="divider"></div>
-                        </div>
-                        <ClientDataForm 
-                            onSubmit={handleFormSubmit}
-                            initialData={clientData}
-                        />
-                    </>
-                );
-                case 3:
-                    return (
-                        <>
-                            <div className="header-text">
-                                <div>
-                                    <span className="zapisites">Спасибо, вы записались </span>
-                                </div>
-                                <div className="divider"></div>
-                            </div>
-                            <FinalStep 
-                                date={selectedDate}
-                                time={getTimeSlotData()}
-                                ics={icsContent}
-                            />
-                        </>
-                    );
-            default:
-                return null;
-        }
-    };
-
-    return (
-        <Box sx={{ 
-            margin: '40px auto', 
-            boxSizing: 'border-box',
-            width: '100%',
-            maxWidth: 800,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems:'center',
-        }}>
-            {renderStepContent()}
-
-            {step <= totalSteps-1 && (
-                <Box sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'center', 
-                    mt: 3, 
-                    gap: 2, 
-                    flexDirection:'column' 
-                }}>
-                    <Button 
-                        sx={buttonStyle} 
-                        onClick={handleNext}
-                        disabled={isNextDisabled()}
-                    >
-                        {getButtonText()}
-                        <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
-                    </Button>
-                    {step > 1 && (
-                        <Button 
-                            sx={{ 
-                                ...buttonStyle, 
-                                backgroundColor: 'white', 
-                                border:'1px solid #9C07FF', 
-                                color:'#9C07FF'
-                            }}
-                            onClick={handleBack}
-                        >
-                            <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад'></img>
-                            НАЗАД
-                        </Button>
-                    )}
-                </Box>
-            )}
-
-            <Snackbar
-                open={showAlert}
-                autoHideDuration={6000}
-                onClose={() => setShowAlert(false)}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      {step < totalSteps && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            mt: 3,
+            gap: 2,
+            flexDirection: "column",
+          }}
+        >
+          <Button
+            onClick={handleNext}
+            disabled={isNextDisabled()}
+            sx={buttonStyle}
+          >
+            {getButtonText()}
+            <img loading="eager" fetchPriority="high" src={arrow} alt="далее" />
+          </Button>
+          {step > 1 && (
+            <Button
+              onClick={handleBack}
+              sx={{
+                ...buttonStyle,
+                backgroundColor: "white",
+                border: "1px solid #9C07FF",
+                color: "#9C07FF",
+              }}
             >
-                <Alert severity="warning" sx={{ width: '100%' }}>
-                    {getAlertMessage()}
-                </Alert>
-            </Snackbar>
+              <img
+                loading="eager"
+                fetchPriority="high"
+                src={arrowRight}
+                alt="назад"
+              />
+              НАЗАД
+            </Button>
+          )}
         </Box>
-    );
+      )}
+
+      <Snackbar
+        open={showAlert}
+        autoHideDuration={6000}
+        onClose={() => setShowAlert(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="warning" sx={{ width: "100%" }}>
+          {getAlertMessage()}
+        </Alert>
+      </Snackbar>
+    </Box>
+  );
 }
 
 const buttonStyle = {
-    width: 350,
-    height: 40,
-    borderRadius: '20px',
-    gap: '13px',
-    borderWidth: '2px',
-    paddingRight: '14px',
-    paddingLeft: '14px',
-    backgroundColor: '#9C07FF',
-    color: 'white',
-    textTransform: 'uppercase',
-    fontFamily: 'Roboto',
-    fontWeight: 700,
-    fontSize: '18px',
-    lineHeight: '32px',
-    '&:disabled': {
-        backgroundColor: '#cccccc',
-        color: '#666666'
-    }
+  width: 350,
+  height: 40,
+  borderRadius: "20px",
+  gap: "13px",
+  borderWidth: "2px",
+  paddingRight: "14px",
+  paddingLeft: "14px",
+  backgroundColor: "#9C07FF",
+  color: "white",
+  textTransform: "uppercase",
+  fontFamily: "Roboto",
+  fontWeight: 700,
+  fontSize: "18px",
+  lineHeight: "32px",
+  "&:disabled": {
+    backgroundColor: "#cccccc",
+    color: "#666666",
+  },
 };

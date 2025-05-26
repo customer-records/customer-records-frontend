@@ -36,19 +36,13 @@ export default function CustomerRecord() {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   // Функция для определения, какой компонент отображать
+  // /client/table_for_two
+  // /client/from_four_to_six
+  // /client/xbox_from_four_to_six
+  // /client/ps_from_four_to_six
+  // /client/vip
   const renderContent = () => {
-    switch (location.pathname) {
-      case "/client/date":
-        return <OnDate />;
-      case "/client/specialist":
-        return <OnSpecialist />;
-      case "/client/service":
-        return <OnService />;
-      case "/client/fastreacord":
-        return <OnFastRecord />;
-      default:
-        return <OnDate />; // Компонент по умолчанию
-    }
+    return <OnDate />;
   };
 
   useEffect(() => {

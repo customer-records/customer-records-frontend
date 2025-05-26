@@ -1,10 +1,10 @@
-  # Тестовый стенд
-  services:
-    frontend_test:
-      build:
-        context: .
-        dockerfile: Dockerfile
-      ports:
-        - "8080:80"                 # вот тут другой внешний порт
-      environment:
-        - VITE_API_URL=http://localhost:4001  # тестовый бэкенд
+# Тестовый стенд
+services:
+  frontend_test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80" # вот тут другой внешний порт
+    environment:
+      - VITE_API_URL=http://94.228.120.140:4004 # тестовый бэкенд

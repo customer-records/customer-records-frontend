@@ -44,7 +44,7 @@ export default function ClientPage() {
 
         <div className="buttons-container">
           <button
-            onClick={() => handleClick("/client/date")}
+            onClick={() => handleClick("/client/table_for_two")}
             className="custom-button"
           >
             <span className="button-icon">
@@ -58,7 +58,7 @@ export default function ClientPage() {
             <span className="button-text">Для двоих</span>
           </button>
           <button
-            onClick={() => handleClick("/client/specialist")}
+            onClick={() => handleClick("/client/from_four_to_six")}
             className="custom-button"
           >
             <span className="button-icon">
@@ -72,7 +72,7 @@ export default function ClientPage() {
             <span className="button-text">от 4 до 6 гостей</span>
           </button>
           <button
-            onClick={() => handleClick("/client/service")}
+            onClick={() => handleClick("/client/xbox_from_four_to_six")}
             className="custom-button"
           >
             <span className="button-icon">
@@ -86,7 +86,7 @@ export default function ClientPage() {
             <span className="button-text">Xbox: от 4 до 6 гостей</span>
           </button>
           <button
-            onClick={() => handleClick("/client/service")}
+            onClick={() => handleClick("/client/ps_from_four_to_six")}
             className="custom-button"
           >
             <span className="button-icon">
@@ -100,7 +100,7 @@ export default function ClientPage() {
             <span className="button-text">play station: от 4 до 6 </span>
           </button>
           <button
-            onClick={() => handleClick("/client/service")}
+            onClick={() => handleClick("/client/vip")}
             className="custom-button"
           >
             <span className="button-icon">
