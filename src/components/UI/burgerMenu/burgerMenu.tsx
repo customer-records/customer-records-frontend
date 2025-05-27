@@ -6,12 +6,12 @@ const menuItems = [
   {
     id: 1,
     specialist: "Онлайн запись",
-    services: ["Для двоих", "от 4 до 6 гостей", "Xbox: от 4 до 6 гостей"],
+    services: ["ON line - консультация", "OFF line - консультация", "На услугу"],
   },
   {
     id: 4,
     specialist: "Контакты",
-    services: ["+7 (995) - 007 - 51 - 75", "Хусаина Мавлютовва 46"],
+    services: ["+7 (995) - 007 - 51 - 75", "Проспект победы 35б"],
   },
   {
     id: 5,
@@ -79,7 +79,7 @@ export default function BurgerMenu({ onClose }: any) {
             fontSize: "34px",
             cursor: "pointer",
             zIndex: 1000,
-            color: "#9C07FF",
+            color: "#07B0FF",
             outline: "none",
           }}
         >
@@ -136,9 +136,9 @@ export default function BurgerMenu({ onClose }: any) {
           <div className="buttons-block">
             <button
               className="round-button"
-              onClick={() =>
-                window.open("https://t.me/+4TGijmHMFOkwNTBi", "_blank")
-              }
+            // onClick={() =>
+            //   window.open("https://t.me/+4TGijmHMFOkwNTBi", "_blank")
+            // }
             ></button>
 
             <button

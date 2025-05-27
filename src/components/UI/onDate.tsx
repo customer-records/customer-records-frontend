@@ -242,8 +242,8 @@ export default function OnDate() {
               sx={{
                 ...buttonStyle,
                 backgroundColor: "white",
-                border: "1px solid #9C07FF",
-                color: "#9C07FF",
+                border: "1px solid #07B0FF",
+                color: "#07B0FF",
               }}
             >
               <img
@@ -280,7 +280,7 @@ const buttonStyle = {
   borderWidth: "2px",
   paddingRight: "14px",
   paddingLeft: "14px",
-  backgroundColor: "#9C07FF",
+  backgroundColor: "#07B0FF",
   color: "white",
   textTransform: "uppercase",
   fontFamily: "Roboto",

@@ -37,35 +37,27 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
   useEffect(() => {
     const path = window.location.pathname;
     const pathMap: Record<string, { categoryId: number; serviceName: string }> =
-      {
-        "/client/table_for_two": {
-          categoryId: 1,
-          serviceName: "Столик для двоих",
-        },
-        "/client/from_four_to_six": {
-          categoryId: 2,
-          serviceName: "Столик от 4 до 6 гостей",
-        },
-        "/client/xbox_from_four_to_six": {
-          categoryId: 3,
-          serviceName: "Столик от 4 до 6 гостей с Xbox",
-        },
-        "/client/ps_from_four_to_six": {
-          categoryId: 4,
-          serviceName: "Столик от 4 до 6 гостей с PlayStation",
-        },
-        "/client/vip": {
-          categoryId: 5,
-          serviceName: "VIP комната от 4 до 6 гостей",
-        },
-      };
+    {
+      "/client/initial_online_consultation": {
+        categoryId: 1,
+        serviceName: "Первичная онлайн консультация",
+      },
+      "/client/standard_online_consultation": {
+        categoryId: 2,
+        serviceName: "Стандартная онлайн консультация",
+      },
+      "/client/standard_offline_consultation": {
+        categoryId: 3,
+        serviceName: "Стандартная офлайн консультация",
+      },
+    };
 
     const mapping = pathMap[path];
     const categoryParam = mapping
       ? mapping.categoryId
       : serviceId
-      ? serviceId
-      : null;
+        ? serviceId
+        : null;
     const specialistsUrl = categoryParam
       ? `${apiUrl}/calendar/specialists/?category_id=${categoryParam}`
       : `${apiUrl}/calendar/specialists/`;
@@ -141,12 +133,10 @@ const SpecialistSelector = ({ onSelect, selectedDate, serviceId }: any) => {
               top: 0,
             };
           menuRef.current.style.position = "absolute";
-          menuRef.current.style.top = `${
-            selectRect.bottom - containerRect.top
-          }px`;
-          menuRef.current.style.left = `${
-            selectRect.left - containerRect.left
-          }px`;
+          menuRef.current.style.top = `${selectRect.bottom - containerRect.top
+            }px`;
+          menuRef.current.style.left = `${selectRect.left - containerRect.left
+            }px`;
           menuRef.current.style.width = `${selectRect.width}px`;
           menuRef.current.style.minWidth = "unset";
         }

@@ -269,7 +269,7 @@ export default function OnFastRecord() {
                     </Button>
                     {step > 1 && step < 3 && (
                         <Button 
-                            sx={{ ...buttonStyle, backgroundColor: 'white', border:'1px solid #9C07FF', color:'#9C07FF'}}
+                            sx={{ ...buttonStyle, backgroundColor: 'white', border:'1px solid #07B0FF', color:'#07B0FF'}}
                             onClick={handleBack}
                         >
                             <img src={arrowRight} alt='назад' loading="eager" fetchPriority="high"></img>
@@ -301,7 +301,7 @@ const buttonStyle = {
     borderWidth: '2px',
     paddingRight: '14px',
     paddingLeft: '14px',
-    backgroundColor: '#9C07FF',
+    backgroundColor: '#07B0FF',
     color: 'white',
     textTransform: 'uppercase',
     fontFamily: 'Roboto',

@@ -1,7 +1,7 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import "./client.css";
-import hookan from "../assets/hokah.svg";
+import calendar from "../assets/calendar.svg";
 import { useNavigate } from "react-router-dom";
 import Header from "./UI/header";
 export default function ClientPage() {
@@ -37,82 +37,80 @@ export default function ClientPage() {
       <section className="section">
         <div className="header-text">
           <div>
-            <span className="zapisites">Забронируй</span>
-            <span className="na-priem"> Столик</span>
+            <span className="zapisites">Запись</span>
+            <span className="na-priem"> на консультацию</span>
           </div>
+          <div className="divider" ></div>
         </div>
-
         <div className="buttons-container">
-          <button
-            onClick={() => handleClick("/client/table_for_two")}
-            className="custom-button"
-          >
-            <span className="button-icon">
-              <img
-                loading="eager"
-                fetchPriority="high"
-                src={hookan}
-                alt="Календарь"
-              />
-            </span>
-            <span className="button-text">Для двоих</span>
-          </button>
-          <button
-            onClick={() => handleClick("/client/from_four_to_six")}
-            className="custom-button"
-          >
-            <span className="button-icon">
-              <img
-                loading="eager"
-                fetchPriority="high"
-                src={hookan}
-                alt="Специалист"
-              />
-            </span>
-            <span className="button-text">от 4 до 6 гостей</span>
-          </button>
-          <button
-            onClick={() => handleClick("/client/xbox_from_four_to_six")}
-            className="custom-button"
-          >
-            <span className="button-icon">
-              <img
-                loading="eager"
-                fetchPriority="high"
-                src={hookan}
-                alt="Услуга"
-              />
-            </span>
-            <span className="button-text">Xbox: от 4 до 6 гостей</span>
-          </button>
-          <button
-            onClick={() => handleClick("/client/ps_from_four_to_six")}
-            className="custom-button"
-          >
-            <span className="button-icon">
-              <img
-                loading="eager"
-                fetchPriority="high"
-                src={hookan}
-                alt="Услуга"
-              />
-            </span>
-            <span className="button-text">play station: от 4 до 6 </span>
-          </button>
-          <button
-            onClick={() => handleClick("/client/vip")}
-            className="custom-button"
-          >
-            <span className="button-icon">
-              <img
-                loading="eager"
-                fetchPriority="high"
-                src={hookan}
-                alt="Услуга"
-              />
-            </span>
-            <span className="button-text">VIP комната: от 4 до 6 </span>
-          </button>
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '20px'
+          }}>
+            <div>
+              <span className="zapisites">On</span>
+              <span className="na-priem"> line</span>
+            </div>
+            <button
+              onClick={() => handleClick("/client/initial_online_consultation")}
+              className="custom-button"
+            >
+              <span className="button-icon">
+                <img
+                  loading="eager"
+                  fetchPriority="high"
+                  src={calendar}
+                  alt="Календарь"
+                />
+              </span>
+              <span className="button-text">Первая консультация</span>
+            </button>
+            <button
+              onClick={() => handleClick("/client/standard_online_consultation")}
+              className="custom-button"
+            >
+              <span className="button-icon">
+                <img
+                  loading="eager"
+                  fetchPriority="high"
+                  src={calendar}
+                  alt="Специалист"
+                />
+              </span>
+              <span className="button-text">станд. консультация</span>
+            </button>
+            <div className="divider" ></div>
+          </Box>
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '20px'
+          }}>
+            <div>
+              <span className="zapisites">Off</span>
+              <span className="na-priem"> line</span>
+            </div>
+            <button
+              onClick={() => handleClick("/client/standard_offline_consultation")}
+              className="custom-button"
+            >
+              <span className="button-icon">
+                <img
+                  loading="eager"
+                  fetchPriority="high"
+                  src={calendar}
+                  alt="Услуга"
+                />
+              </span>
+              <span className="button-text">станд. консультация</span>
+            </button>
+          </Box>
+
         </div>
 
         <div className="divider"></div>
@@ -120,9 +118,9 @@ export default function ClientPage() {
         <div className="buttons-block">
           <button
             className="round-button"
-            onClick={() =>
-              window.open("https://t.me/+4TGijmHMFOkwNTBi", "_blank")
-            }
+          // onClick={() =>
+          //   window.open("https://t.me/+4TGijmHMFOkwNTBi", "_blank")
+          // }
           ></button>
 
           <button

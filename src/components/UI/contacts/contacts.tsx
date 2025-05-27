@@ -107,7 +107,7 @@ export default function Contacts() {
                 fontWeight: "400",
               }}
             >
-              Мавлютого 46 ,вход со стороны Яндекс Лавки
+              Мавлютого 46
             </Typography>
             <Typography
               sx={{
@@ -184,9 +184,9 @@ export default function Contacts() {
           <div className="buttons-block">
             <button
               className="round-button"
-              onClick={() =>
-                window.open("https://t.me/+4TGijmHMFOkwNTBi", "_blank")
-              }
+            // onClick={() =>
+            //   window.open("https://t.me/+4TGijmHMFOkwNTBi", "_blank")
+            // }
             ></button>
 
             <button

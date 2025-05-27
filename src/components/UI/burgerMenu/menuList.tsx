@@ -5,7 +5,7 @@ import AdressMenu from '../../../../src/assets/AdressMenu.svg'
 import phoneMenu from '../../../../src/assets/phoneMenu.svg'
 import TGmenu from '../../../../src/assets/TGmenu.svg'
 import WAmenu from '../../../../src/assets/WAmenu.svg'
-import { Link, useNavigate } from 'react-router-dom';  
+import { Link, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 
 interface ServiceListProps {
@@ -33,10 +33,10 @@ export default function MenuList({ specialist, services, currentId, onClose, set
   };
   const returnLink = (indx: number) => {
     switch (indx) {
-      case 0: return '/client/date';
-      case 1: return '/client/specialist';
-      case 2: return '/client/service';
-      default: return '/client/fastreacord'
+      case 0: return '/client/initial_online_consultation';
+      case 1: return '/client/standard_online_consultation';
+      case 2: return '/client//standard_offline_consultation';
+      default: return '/client//standard_offline_consultation'
     }
   };
 
@@ -73,58 +73,58 @@ export default function MenuList({ specialist, services, currentId, onClose, set
           onClick={toggleList}
         >
           {specialist.name == 'Онлайн запись' && (
-              <div
-                style={{
-                  fontWeight: '700',
-                  color: '#9C07FF',
-                  fontSize: '14px',
-                  lineHeight: '20px',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer'
-                }}
-                className="specialist-name"
-                onClick={() => handleLinkClick(onClose, '/client/')}
-              >
-                {specialist.name}
-              </div>
+            <div
+              style={{
+                fontWeight: '700',
+                color: '#07B0FF',
+                fontSize: '14px',
+                lineHeight: '20px',
+                textTransform: 'uppercase',
+                cursor: 'pointer'
+              }}
+              className="specialist-name"
+              onClick={() => handleLinkClick(onClose, '/client/')}
+            >
+              {specialist.name}
+            </div>
           )}
           {specialist.name == 'Контакты' && (
-              <div
-                style={{
-                  fontWeight: '700',
-                  color: '#9C07FF',
-                  fontSize: '14px',
-                  lineHeight: '20px',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer'
-                }}
-                className="specialist-name"
-                onClick={() => handleLinkClick(onClose, '/client/contacts')}
-              >
-                {specialist.name}
-              </div>
+            <div
+              style={{
+                fontWeight: '700',
+                color: '#07B0FF',
+                fontSize: '14px',
+                lineHeight: '20px',
+                textTransform: 'uppercase',
+                cursor: 'pointer'
+              }}
+              className="specialist-name"
+              onClick={() => handleLinkClick(onClose, '/client/contacts')}
+            >
+              {specialist.name}
+            </div>
           )}
           {specialist.name == 'Акции' && (
-              <div
-                style={{
-                  fontWeight: '700',
-                  color: '#9C07FF',
-                  fontSize: '14px',
-                  lineHeight: '20px',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer'
-                }}
-                className="specialist-name"
-                onClick={() => handleLinkClick(onClose, '/client/stocks')}
-              >
-                {specialist.name}
-              </div>
+            <div
+              style={{
+                fontWeight: '700',
+                color: '#07B0FF',
+                fontSize: '14px',
+                lineHeight: '20px',
+                textTransform: 'uppercase',
+                cursor: 'pointer'
+              }}
+              className="specialist-name"
+              onClick={() => handleLinkClick(onClose, '/client/stocks')}
+            >
+              {specialist.name}
+            </div>
           )}
           {(specialist.name !== 'Онлайн запись' && specialist.name !== 'Контакты' && specialist.name !== 'Акции') && (
             <Typography
               style={{
                 fontWeight: '700',
-                color: '#9C07FF',
+                color: '#07B0FF',
                 fontSize: '14px',
                 lineHeight: '20px',
                 textTransform: 'uppercase'
@@ -167,10 +167,10 @@ export default function MenuList({ specialist, services, currentId, onClose, set
                     <div
                       onClick={() => {
                         if (onClose) onClose();
-                          window.open(returnAtrLink(indx), '_blank');
+                        window.open(returnAtrLink(indx), '_blank');
                       }}
-                      style={{ 
-                        color: '#000000DE', 
+                      style={{
+                        color: '#000000DE',
                         fontSize: '14px',
                         cursor: 'pointer'
                       }}
@@ -180,8 +180,8 @@ export default function MenuList({ specialist, services, currentId, onClose, set
                   ) : (
                     <div
                       onClick={() => handleLinkClick(onClose, currentId === 1 ? returnLink(indx) : '/client')}
-                      style={{ 
-                        color: '#000000DE', 
+                      style={{
+                        color: '#000000DE',
                         fontSize: '14px',
                         cursor: 'pointer'
                       }}

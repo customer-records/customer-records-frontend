@@ -41,7 +41,7 @@ export default function MenuListOpened({
             to={'/client/'}
             style={{
               fontWeight: '700',
-              color: '#9C07FF',
+              color: '#07B0FF',
               fontSize: '14px',
               lineHeight: '20px',
               textTransform: 'uppercase'

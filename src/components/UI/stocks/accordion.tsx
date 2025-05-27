@@ -21,7 +21,7 @@ export default function Accordion({ title, children }: any) {
         mb: 2,
         overflow: 'hidden',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1), 0 -1px 2px rgba(0,0,0,0.05)',
-        userSelect: 'none', 
+        userSelect: 'none',
       }}
       onCopy={handleCopy}
       onCut={handleCopy}
@@ -35,25 +35,25 @@ export default function Accordion({ title, children }: any) {
           p: 2,
           cursor: 'pointer',
           bgcolor: 'background.paper',
-          '&:hover': { 
+          '&:hover': {
             bgcolor: 'action.hover',
           },
         }}
         onClick={toggleAccordion}
       >
-        <Typography 
-          variant="subtitle1" 
+        <Typography
+          variant="subtitle1"
           fontWeight="medium"
           color="text.primary"
           sx={{
-            fontWeight:'600',
-            fontSize:'15px'
+            fontWeight: '600',
+            fontSize: '15px'
           }}
         >
           {title}
         </Typography>
-        <IconButton 
-          size="small" 
+        <IconButton
+          size="small"
           disableRipple
           sx={{
             transition: 'transform 0.3s',
@@ -67,9 +67,9 @@ export default function Accordion({ title, children }: any) {
           )}
         </IconButton>
       </Box>
-      
+
       <Collapse in={isOpen}>
-        <Box 
+        <Box
           component="div"
           p={1}
           onCopy={handleCopy}

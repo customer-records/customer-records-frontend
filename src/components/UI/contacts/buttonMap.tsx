@@ -18,7 +18,7 @@ export default function ButtonMap({ img, name, type }: any) {
       <Button
         sx={{
           ...buttonStyle,
-          border: "1px solid #9C07FF",
+          border: "1px solid #07B0FF",
           color: "#FFFFFF",
           fontWeight: "700",
           fontSize: "14px",
@@ -38,7 +38,7 @@ const buttonStyle = {
   borderRadius: "20px",
   gap: "7px",
   borderWidth: "2px",
-  backgroundColor: "#9C07FF",
+  backgroundColor: "#07B0FF",
   color: "white",
   textTransform: "uppercase",
   fontFamily: "Roboto",

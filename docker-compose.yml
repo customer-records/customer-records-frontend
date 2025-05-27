@@ -5,6 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:80" # вот тут другой внешний порт
+      - "8082:80" # вот тут другой внешний порт
     environment:
-      - VITE_API_URL=http://94.228.120.140:4004 # тестовый бэкенд
+      - VITE_API_URL=http://94.228.120.140:4006 # тестовый бэкенд

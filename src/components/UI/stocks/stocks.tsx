@@ -3,8 +3,6 @@ import Header from "../header";
 import { Typography } from "@mui/material";
 import CartStocks from "./cartStocks";
 import { useNavigate } from "react-router-dom";
-import Accordion from "./accordion";
-import { stockDescriptions } from "./data";
 import { mockStocks } from "./data";
 
 export default function Stocks() {
@@ -56,72 +54,6 @@ export default function Stocks() {
                 description={elem.description}
                 img={elem.img}
               />
-              <Box
-                sx={{
-                  width: "90%",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: "black",
-                    fontSize: "27px",
-                    fontWeight: "700",
-                  }}
-                >
-                  ПОДРОБНОСТИ
-                </Typography>
-                <Box
-                  sx={{
-                    marginTop: "10px",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      color: "black",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    {stockDescriptions[indx].head}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "black",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {stockDescriptions[indx].description}
-                  </Typography>
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  width: "90%",
-                }}
-              >
-                {elem.accordion.head.map((element, indx) => (
-                  <Accordion title={element}>
-                    <ul
-                      style={{
-                        padding: "5px 20px",
-                      }}
-                    >
-                      {elem.accordion.lists[indx].map((elem: any) => (
-                        <li
-                          style={{
-                            color: "black",
-                            fontWeight: "400",
-                            fontSize: "13px",
-                          }}
-                        >
-                          {elem}
-                        </li>
-                      ))}
-                    </ul>
-                  </Accordion>
-                ))}
-              </Box>
             </>
           ))}
         </Box>
@@ -140,11 +72,17 @@ export default function Stocks() {
           <div className="buttons-block">
             <button
               className="round-button"
-              onClick={() =>
-                window.open("https://t.me/+4TGijmHMFOkwNTBi", "_blank")
-              }
+            // onClick={() => window.open("https://t.me/denta_rell", "_blank")}
             ></button>
-
+            <button
+              className="round-button"
+            // onClick={() =>
+            //   window.open(
+            //     "https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0",
+            //     "_blank"
+            //   )
+            // }
+            ></button>
             <button
               className="write-button"
               disabled={true}

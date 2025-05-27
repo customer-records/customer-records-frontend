@@ -39,13 +39,13 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
         },
       },
       '& fieldset': {
-        border: '1px solid #9C07FF',
+        border: '1px solid #07B0FF',
       },
       '&:hover fieldset': {
-        border: '1px solid #9C07FF',
+        border: '1px solid #07B0FF',
       },
       '&.Mui-focused fieldset': {
-        border: '1px solid #9C07FF',
+        border: '1px solid #07B0FF',
       },
     },
   
@@ -247,8 +247,8 @@ export default function ClientData({ onSubmit }: { onSubmit: (data: any) => void
                     <FormControlLabel
                         value="male"
                         control={<Radio sx={{ 
-                            color: '#9C07FF',
-                            '&.Mui-checked': { color: '#9C07FF' }
+                            color: '#07B0FF',
+                            '&.Mui-checked': { color: '#07B0FF' }
                         }} />}
                         label="Мужчина"
                         sx={{
@@ -266,8 +266,8 @@ export default function ClientData({ onSubmit }: { onSubmit: (data: any) => void
                     <FormControlLabel
                         value="female"
                         control={<Radio sx={{ 
-                            color: '#9C07FF',
-                            '&.Mui-checked': { color: '#9C07FF' }
+                            color: '#07B0FF',
+                            '&.Mui-checked': { color: '#07B0FF' }
                         }} />}
                         label="Женщина"
                         sx={{

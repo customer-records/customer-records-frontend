@@ -36,9 +36,9 @@ export default function CustomerRecord() {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   // Функция для определения, какой компонент отображать
-  // /client/table_for_two
-  // /client/from_four_to_six
-  // /client/xbox_from_four_to_six
+  // /client/table_for_two /initial_online_consultation
+  // /client/from_four_to_six /standard_online_consultation
+  // /client/xbox_from_four_to_six /standard_offline_consultation
   // /client/ps_from_four_to_six
   // /client/vip
   const renderContent = () => {
@@ -72,9 +72,9 @@ export default function CustomerRecord() {
           <div className="buttons-block">
             <button
               className="round-button"
-              onClick={() =>
-                window.open("https://t.me/+4TGijmHMFOkwNTBi", "_blank")
-              }
+            // onClick={() =>
+            //   window.open("https://t.me/+4TGijmHMFOkwNTBi", "_blank")
+            // }
             ></button>
 
             <button

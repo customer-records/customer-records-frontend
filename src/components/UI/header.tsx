@@ -12,53 +12,53 @@ export default function Header() {
     const [jusContent, SetJusContent] = useState('space-between')
     const switchText = () => {
         let path = window.location.pathname;
-        if(path.startsWith('/admin')){
+        if (path.startsWith('/admin')) {
             return 'Панель администратора';
-        }else if(path.startsWith('/client')){
+        } else if (path.startsWith('/client')) {
             return 'Онлайн запись';
         }
-        return ''; 
+        return '';
     }
-    useEffect(()=>{
+    useEffect(() => {
         let path = window.location.pathname;
-        if(path !== '/client' && path !== '/client/') {
+        if (path !== '/client' && path !== '/client/') {
             SetDisplay('none')
             SetHeight('auto')
             SetMinHeight('100px')
             SetJusContent('center')
-        }else{
+        } else {
             SetDisplay('flex')
             SetHeight('30dvh')
             SetMinHeight('25dvh')
             SetJusContent('space-between')
         }
-    },[])
+    }, [])
     const handleHome = () => {
         let path = window.location.pathname;
         console.log(path)
-        if(path !== '/client')navigate('/client')
+        if (path !== '/client') navigate('/client')
     }
     return (
         <>
-            <header style={{height:height, minHeight:MinHeight, justifyContent: jusContent}} className="header">
+            <header style={{ height: height, minHeight: MinHeight }} className="header">
                 <div className="header-background"></div>
                 <div className="header-top">
-                <div style={{display:'flex', gap:'10px'}}> 
-                    <button onClick={handleHome} className="home">
-                        <img src={home}></img>
-                    </button>
-                    <button 
-                    disabled={true} 
-                    className="online-booking-button"
-                    style={{  
-                        outline: 'none',
-                        border: 'none',
-                        boxShadow: 'none'
-                        }}>{switchText()}
-                    </button>
-                </div>
-                    <button 
-                        onClick={() => setIsOpen(true)} 
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <button onClick={handleHome} className="home">
+                            <img src={home}></img>
+                        </button>
+                        <button
+                            disabled={true}
+                            className="online-booking-button"
+                            style={{
+                                outline: 'none',
+                                border: 'none',
+                                boxShadow: 'none'
+                            }}>{switchText()}
+                        </button>
+                    </div>
+                    <button
+                        onClick={() => setIsOpen(true)}
                         className="burger-menu-button"
                     >
                         <div className="burger-icon">
@@ -66,16 +66,16 @@ export default function Header() {
                         </div>
                     </button>
                 </div>
-                <div className="headWrap" style={{display:display}}>
+                <div className="headWrap" style={{ display: display }}>
                     <div className="header-bottom">
-                        <h1 className="service-name">Кальянная</h1>
-                        <p className="company-name">BEERLOGA</p>
+                        <h1 className="service-name">Ваш личный психолог</h1>
+                        <p className="company-name">Анна Сергеевна</p>
                     </div>
                     <div className="roundLogo"></div>
                 </div>
             </header>
 
-            {isOpen && <BurgerMenu onClose={()=>setIsOpen(false)} />}
+            {isOpen && <BurgerMenu onClose={() => setIsOpen(false)} />}
         </>
     );
 }

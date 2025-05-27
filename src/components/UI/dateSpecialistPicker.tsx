@@ -55,9 +55,9 @@ export default function DateSpecialistPicker({
       <Box sx={{
         width: 176,
         height: 1,
-        border: '1px solid #9C07FF',
+        border: '1px solid #07B0FF',
         margin: '16px auto',
-        backgroundColor: '#9C07FF'
+        backgroundColor: '#07B0FF'
       }} />
     </Box>
   );
