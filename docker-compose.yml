@@ -1,5 +1,5 @@
 services:
-  frontend_dockM:
+  frontend_dockm:
     build:
       context: .
       dockerfile: Dockerfile
