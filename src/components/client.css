@@ -64,7 +64,7 @@ button:active {
   width: 74px;
   height: 74px;
   border-radius: 50%;
-  background-image: url(https://muratov-doctor-m.ru/bitrix/templates/st/img/logo.png);
+  background-image: url(../assets/logoM.png);
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 75%;
