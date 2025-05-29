@@ -15,7 +15,7 @@ export default function RegistrationClient() {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         phone: '+7 ',
-        code: '', 
+        code: '',
         firstName: '',
         middleName: '',
         lastName: '',
@@ -34,16 +34,16 @@ export default function RegistrationClient() {
     const theme = createTheme({
         breakpoints: {
             values: {
-              xs: 0,
-              sm: 300,  
-              md: 500,   
-              lg: 1200,
-              xl: 1600,
-        },
+                xs: 0,
+                sm: 300,
+                md: 500,
+                lg: 1200,
+                xl: 1600,
+            },
         },
     });
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-    const createClient = async (username = null,chatId = null) => { 
+    const createClient = async (username = null, chatId = null) => {
         console.log(username, chatId)
         try {
             const cleanPhone = formData.phone.replace(/\s+/g, '');
@@ -80,7 +80,7 @@ export default function RegistrationClient() {
         setVerificationError('');
         setClientCreationError('');
         setCodeError(false);
-        
+
         try {
             const verifyResponse = await fetch(`${apiUrl}/telegram/verify-code/${formData.code.code}`);
 
@@ -106,7 +106,7 @@ export default function RegistrationClient() {
                 if (!clearResponse.ok) {
                     throw new Error('Ошибка при очистке кода');
                 }
-                setClientTG({username:username, chat_id:chat_id})
+                setClientTG({ username: username, chat_id: chat_id })
                 setStep(4);
             } else {
                 throw new Error('Номер телефона не совпадает');
@@ -124,7 +124,7 @@ export default function RegistrationClient() {
         setVerificationError('');
         setClientCreationError('');
         setCodeError(false);
-        
+
         try {
             const verifyResponse = await fetch(`${apiUrl}/whatsapp/verify-code/${formData.code.code}`);
 
@@ -161,7 +161,7 @@ export default function RegistrationClient() {
     };
     const handleNext = async () => {
         if (step < totalSteps) {
-            if(step === 1 && codeType == 'WA'){
+            if (step === 1 && codeType == 'WA') {
                 const cleanPhone = formData.phone.replace(/\s+/g, '').replace(/\D/g, '');
                 const sendResponse = await fetch(`${apiUrl}/whatsapp/send-code/${cleanPhone}`, {
                     method: 'POST',
@@ -172,39 +172,39 @@ export default function RegistrationClient() {
                 if (!sendResponse.ok) {
                     setCodeError(true);
                     throw new Error('Неверный номер телефона');
-                }else setStep(2)
+                } else setStep(2)
             }
             if (step === 2) {
                 if (codeType === 'TG') {
-                    setStep(3); 
+                    setStep(3);
                     return;
                 } else {
-                    
+
                     let codeRes = await verifyCodeAndProceedWa();
                     console.log(codeRes)
-                    setStep(3);                  
+                    setStep(3);
                     return;
                 }
             }
-    
-            if ( codeType === 'WA' && step === 3) {
-              let regAns = await createClient();
-              console.log(regAns)
+
+            if (codeType === 'WA' && step === 3) {
+                let regAns = await createClient();
+                console.log(regAns)
             }
-            if(codeType === 'TG' && step === 3){
+            if (codeType === 'TG' && step === 3) {
                 if (codeType === 'TG') await verifyCodeAndProceedTg();
             }
-            if(codeType == 'TG' && step === 4){
+            if (codeType == 'TG' && step === 4) {
                 let regAnswer = await createClient(clientTG.username, clientTG.chat_id);
                 console.log(regAnswer)
-                if(regAnswer.status == 'success')setStep(step + 1);
+                if (regAnswer.status == 'success') setStep(step + 1);
             }
             setStep(step + 1);
         } else {
             navigate('/client');
         }
     };
-    
+
 
     const handleBack = () => {
         if (step > 1) {
@@ -214,8 +214,8 @@ export default function RegistrationClient() {
         }
     };
 
-    const handlePhoneSubmit = (data: { phone: string, isValid: boolean, type:string }) => {
-        setFormData(prev => ({...prev, phone: data.phone}));
+    const handlePhoneSubmit = (data: { phone: string, isValid: boolean, type: string }) => {
+        setFormData(prev => ({ ...prev, phone: data.phone }));
         setIsPhoneValid(data.isValid);
         setCodeType(data.type);
         console.log(data)
@@ -234,7 +234,7 @@ export default function RegistrationClient() {
     };
 
     const handleCodeSubmit = (code: string) => {
-        setFormData(prev => ({...prev, code}));
+        setFormData(prev => ({ ...prev, code }));
         setVerificationError('');
     };
 
@@ -244,27 +244,27 @@ export default function RegistrationClient() {
                 case 1:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                            <div className="header-text" style={{ marginBottom: '0px', marginTop: '20px' }}>
                                 <div>
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
+                                <div className="divider" style={{ marginTop: '20px', marginBottom: '10px' }}></div>
                             </div>
-                            <PhoneEnter phone={formData.phone} onSubmit={handlePhoneSubmit}/>
+                            <PhoneEnter phone={formData.phone} onSubmit={handlePhoneSubmit} />
                         </>
                     );
                 case 2:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                            <div className="header-text" style={{ marginBottom: '0px', marginTop: '20px' }}>
                                 <div>
                                     <span className="zapisites">Введите </span>
                                     <span className="na-priem"> код подтверждения</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px',marginBottom:'10px'}}></div>
+                                <div className="divider" style={{ marginTop: '20px', marginBottom: '10px' }}></div>
                             </div>
-                            <CodeEnter 
+                            <CodeEnter
                                 onSubmit={handleCodeSubmit}
                                 error={verificationError}
                                 type={codeType}
@@ -274,26 +274,26 @@ export default function RegistrationClient() {
                 case 3:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'40px', marginTop:'20px'}}>
+                            <div className="header-text" style={{ marginBottom: '40px', marginTop: '20px' }}>
                                 <div>
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px', marginBottom:'5px'}}></div>
+                                <div className="divider" style={{ marginTop: '20px', marginBottom: '5px' }}></div>
                             </div>
-                            <ClientData onSubmit={handleClientDataSubmit}/>
+                            <ClientData onSubmit={handleClientDataSubmit} />
                         </>
                     );
                 case 4:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                            <div className="header-text" style={{ marginBottom: '0px', marginTop: '20px' }}>
                                 <div>
                                     <span className="zapisites">Спасибо </span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px'}}></div>
+                                <div className="divider" style={{ marginTop: '20px' }}></div>
                             </div>
-                            <Congratulations name={{first_name: formData.firstName, patronymic: formData.middleName}}/>
+                            <Congratulations name={{ first_name: formData.firstName, patronymic: formData.middleName }} />
                         </>
                     );
                 default:
@@ -305,25 +305,25 @@ export default function RegistrationClient() {
                 case 1:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                            <div className="header-text" style={{ marginBottom: '0px', marginTop: '20px' }}>
                                 <div>
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
+                                <div className="divider" style={{ marginTop: '20px', marginBottom: '10px' }}></div>
                             </div>
-                            <PhoneEnter phone={formData.phone} onSubmit={handlePhoneSubmit}/>
+                            <PhoneEnter phone={formData.phone} onSubmit={handlePhoneSubmit} />
                         </>
                     );
                 case 2:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                            <div className="header-text" style={{ marginBottom: '0px', marginTop: '20px' }}>
                                 <div>
-                                <span className="zapisites">Подтвердите</span>
-                                <span className="na-priem"> регистрацию</span>
+                                    <span className="zapisites">Подтвердите</span>
+                                    <span className="na-priem"> регистрацию</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
+                                <div className="divider" style={{ marginTop: '20px', marginBottom: '10px' }}></div>
                             </div>
                             <TelegramRedir />
                         </>
@@ -331,14 +331,14 @@ export default function RegistrationClient() {
                 case 3:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                            <div className="header-text" style={{ marginBottom: '0px', marginTop: '20px' }}>
                                 <div>
                                     <span className="zapisites">Введите </span>
                                     <span className="na-priem"> код подтверждения</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px', marginBottom:'10px'}}></div>
+                                <div className="divider" style={{ marginTop: '20px', marginBottom: '10px' }}></div>
                             </div>
-                            <CodeEnter 
+                            <CodeEnter
                                 onSubmit={handleCodeSubmit}
                                 error={verificationError}
                                 type={codeType}
@@ -348,26 +348,26 @@ export default function RegistrationClient() {
                 case 4:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                            <div className="header-text" style={{ marginBottom: '0px', marginTop: '20px' }}>
                                 <div>
                                     <span className="zapisites">Укажите </span>
                                     <span className="na-priem"> данные</span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px', marginBottom:'5px'}}></div>
+                                <div className="divider" style={{ marginTop: '20px', marginBottom: '5px' }}></div>
                             </div>
-                            <ClientData onSubmit={handleClientDataSubmit}/>
+                            <ClientData onSubmit={handleClientDataSubmit} />
                         </>
                     );
                 case 5:
                     return (
                         <>
-                            <div className="header-text" style={{marginBottom:'0px', marginTop:'20px'}}>
+                            <div className="header-text" style={{ marginBottom: '0px', marginTop: '20px' }}>
                                 <div>
                                     <span className="zapisites">Спасибо </span>
                                 </div>
-                                <div className="divider" style={{marginTop:'20px'}}></div>
+                                <div className="divider" style={{ marginTop: '20px' }}></div>
                             </div>
-                            <Congratulations name={{first_name: formData.firstName, patronymic: formData.middleName}}/>
+                            <Congratulations name={{ first_name: formData.firstName, patronymic: formData.middleName }} />
                         </>
                     );
                 default:
@@ -377,74 +377,74 @@ export default function RegistrationClient() {
     };
 
     const renderButtons = () => {
-        if(codeType === 'TG'){
-            switch(step) {
+        if (codeType === 'TG') {
+            switch (step) {
                 case 1:
                     return (
                         <>
-                            <Button 
-                                sx={buttonStyle} 
+                            <Button
+                                sx={buttonStyle}
                                 onClick={handleNext}
                                 disabled={!isPhoneValid}
                             >
                                 ЗАРЕГИСТРИРОВАТЬСЯ
                                 <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
-                            <Button 
-                                sx={{ 
-                                    ...buttonStyle, 
-                                    backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
+                            <Button
+                                sx={{
+                                    ...buttonStyle,
+                                    backgroundColor: 'white',
+                                    border: '1px solid #0077FF',
                                     color: '#0077FF',
                                     width: '350px'
                                 }}
-                                onClick={()=>{navigate('/client')}}
+                                onClick={() => { navigate('/client') }}
                             >
                                 Вернуться на главную
                             </Button>
                         </>
                     );
                 case 2:
-                        return (
-                            <>
-                        <Button 
-                            sx={buttonStyle} 
-                            onClick={handleNext}
+                    return (
+                        <>
+                            <Button
+                                sx={buttonStyle}
+                                onClick={handleNext}
                             >
-                            ДАЛЕЕ
-                            <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
+                                ДАЛЕЕ
+                                <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
-                            <Button 
-                                sx={{ 
-                                    ...buttonStyle, 
-                                    backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
-                                    color: '#0077FF' 
+                            <Button
+                                sx={{
+                                    ...buttonStyle,
+                                    backgroundColor: 'white',
+                                    border: '1px solid #0077FF',
+                                    color: '#0077FF'
                                 }}
                                 onClick={handleBack}
                             >
-                            <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад' />
+                                <img loading="eager" fetchPriority="high" src={arrowRight} alt='назад' />
                                 НАЗАД
                             </Button>
                         </>
-                );
+                    );
                 case 3:
                     return (
                         <>
-                            <Button 
-                                sx={buttonStyle} 
+                            <Button
+                                sx={buttonStyle}
                                 onClick={handleNext}
                                 disabled={!formData.code || isVerifying}
                             >
                                 {isVerifying ? 'ПОДТВЕРЖДАЕМ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
                                 {!isVerifying && <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />}
                             </Button>
-                            <Button 
-                                sx={{ 
-                                    ...buttonStyle, 
-                                    backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
-                                    color: '#0077FF' 
+                            <Button
+                                sx={{
+                                    ...buttonStyle,
+                                    backgroundColor: 'white',
+                                    border: '1px solid #0077FF',
+                                    color: '#0077FF'
                                 }}
                                 onClick={handleBack}
                             >
@@ -456,20 +456,20 @@ export default function RegistrationClient() {
                 case 4:
                     return (
                         <>
-                            <Button 
-                                sx={buttonStyle} 
+                            <Button
+                                sx={buttonStyle}
                                 onClick={handleNext}
                                 disabled={!formData.isValid}
                             >
                                 ДАЛЕЕ
                                 <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
-                            <Button 
-                                sx={{ 
-                                    ...buttonStyle, 
-                                    backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
-                                    color: '#0077FF' 
+                            <Button
+                                sx={{
+                                    ...buttonStyle,
+                                    backgroundColor: 'white',
+                                    border: '1px solid #0077FF',
+                                    color: '#0077FF'
                                 }}
                                 onClick={handleBack}
                             >
@@ -480,8 +480,8 @@ export default function RegistrationClient() {
                     );
                 case 5:
                     return (
-                        <Button 
-                            sx={buttonStyle} 
+                        <Button
+                            sx={buttonStyle}
                             onClick={handleNext}
                         >
                             ПЕРЕЙТИ НА ГЛАВНУЮ
@@ -491,28 +491,28 @@ export default function RegistrationClient() {
                 default:
                     return null;
             }
-        }else if(codeType === 'WA'){
-            switch(step) {
+        } else if (codeType === 'WA') {
+            switch (step) {
                 case 1:
                     return (
                         <>
-                            <Button 
-                                sx={buttonStyle} 
+                            <Button
+                                sx={buttonStyle}
                                 onClick={handleNext}
                                 disabled={!isPhoneValid}
                             >
                                 ЗАРЕГИСТРИРОВАТЬСЯ
                                 <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
-                            <Button 
-                                sx={{ 
-                                    ...buttonStyle, 
-                                    backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
+                            <Button
+                                sx={{
+                                    ...buttonStyle,
+                                    backgroundColor: 'white',
+                                    border: '1px solid #0077FF',
                                     color: '#0077FF',
                                     width: '350px'
                                 }}
-                                onClick={()=>{navigate('/client')}}
+                                onClick={() => { navigate('/client') }}
                             >
                                 Вернуться на главную
                             </Button>
@@ -521,20 +521,20 @@ export default function RegistrationClient() {
                 case 2:
                     return (
                         <>
-                            <Button 
-                                sx={buttonStyle} 
+                            <Button
+                                sx={buttonStyle}
                                 onClick={handleNext}
                                 disabled={!formData.code || isVerifying}
                             >
                                 {isVerifying ? 'ПОДТВЕРЖДАЕМ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
                                 {!isVerifying && <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />}
                             </Button>
-                            <Button 
-                                sx={{ 
-                                    ...buttonStyle, 
-                                    backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
-                                    color: '#0077FF' 
+                            <Button
+                                sx={{
+                                    ...buttonStyle,
+                                    backgroundColor: 'white',
+                                    border: '1px solid #0077FF',
+                                    color: '#0077FF'
                                 }}
                                 onClick={handleBack}
                             >
@@ -546,20 +546,20 @@ export default function RegistrationClient() {
                 case 3:
                     return (
                         <>
-                            <Button 
-                                sx={buttonStyle} 
+                            <Button
+                                sx={buttonStyle}
                                 onClick={handleNext}
                                 disabled={!formData.isValid}
                             >
                                 ЗАРЕГИСТРИРОВАТЬСЯ
                                 <img loading="eager" fetchPriority="high" src={arrow} alt='далее' />
                             </Button>
-                            <Button 
-                                sx={{ 
-                                    ...buttonStyle, 
-                                    backgroundColor: 'white', 
-                                    border: '1px solid #0077FF', 
-                                    color: '#0077FF' 
+                            <Button
+                                sx={{
+                                    ...buttonStyle,
+                                    backgroundColor: 'white',
+                                    border: '1px solid #0077FF',
+                                    color: '#0077FF'
                                 }}
                                 onClick={handleBack}
                             >
@@ -570,8 +570,8 @@ export default function RegistrationClient() {
                     );
                 case 4:
                     return (
-                        <Button 
-                            sx={buttonStyle} 
+                        <Button
+                            sx={buttonStyle}
                             onClick={handleNext}
                         >
                             ПЕРЕЙТИ НА ГЛАВНУЮ
@@ -597,11 +597,11 @@ export default function RegistrationClient() {
                 flexDirection: 'column',
                 backgroundColor: '#fff',
                 overflowY: 'auto',
-                background:'#FFFFFF'
+                background: '#FFFFFF'
             }}
         >
             <Box sx={{ flexShrink: 0 }}>
-                <Header/>
+                <Header />
             </Box>
 
             <Box
@@ -610,22 +610,22 @@ export default function RegistrationClient() {
                     flex: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    padding:isDesktop ? '0 16px' : 0,
+                    padding: isDesktop ? '0 16px' : 0,
                     overflow: 'visible',
-                    justifyContent:'center'
+                    justifyContent: 'center'
                 }}
             >
                 {renderStepContent()}
-                
+
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <div className="divider" style={{ marginTop: "0px" }}></div>
                 </Box>
 
-                <Box sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'center', 
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
                     mt: step === 2 ? 5 : 15,
-                    gap: 2, 
+                    gap: 2,
                     flexDirection: 'column',
                     alignItems: 'center',
                     marginBottom: '20px',
@@ -634,23 +634,23 @@ export default function RegistrationClient() {
                 </Box>
             </Box>
 
-            <Box sx={{ 
+            <Box sx={{
                 flexShrink: 0,
                 padding: '0 16px 20px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '16px',
-                background:'#FFFFFF'
+                background: '#FFFFFF'
             }}>
-                <Box sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'center', 
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
                     gap: '10px',
                 }}>
-                    <button className="round-button" onClick={() => window.open('https://t.me/denta_rell', '_blank')}></button>
-                    <button className="round-button" onClick={() => window.open('https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0', '_blank')}></button>
-                    <button className="write-button" disabled={true} onClick={()=>navigate('/client/chat')}>НАПИСАТЬ</button>
+                    <button className="round-button" onClick={() => window.open('https://t.me/doctorm_kazan', '_blank')}></button>
+                    <button className="round-button" ></button>
+                    <button className="write-button" disabled={true} onClick={() => navigate('/client/chat')}>НАПИСАТЬ</button>
                 </Box>
             </Box>
 
@@ -660,8 +660,8 @@ export default function RegistrationClient() {
                 onClose={() => setCodeError(false)}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
-                <Alert 
-                    severity="error" 
+                <Alert
+                    severity="error"
                     onClose={() => setCodeError(false)}
                     sx={{ width: '100%' }}
                 >
@@ -675,8 +675,8 @@ export default function RegistrationClient() {
                 onClose={() => setClientCreationError('')}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
-                <Alert 
-                    severity="error" 
+                <Alert
+                    severity="error"
                     onClose={() => setClientCreationError('')}
                     sx={{ width: '100%' }}
                 >
@@ -711,5 +711,5 @@ const buttonStyle = {
         height: 50,
         borderRadius: '25px'
     }
-    
+
 };

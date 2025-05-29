@@ -24,10 +24,10 @@ interface FinalStepProps {
 }
 
 const nameToAvatar: Record<string, string> = {
-    'Ренат Гадисов': RG,
-    'Ринат Сергеев': RS,
-    'Светлана Бареева': BS,
-    'Альфия Шарипова': SA,
+  'Ренат Гадисов': RG,
+  'Ринат Сергеев': RS,
+  'Светлана Бареева': BS,
+  'Альфия Шарипова': SA,
 };
 
 const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
@@ -181,7 +181,7 @@ const FinalStep: React.FC<FinalStepProps> = ({ date, time, ics }) => {
             color: '#000000',
           }}
         >
-          Проспект Победы 35б
+          Чистопольская улица, 85
         </Typography>
       </Box>
 

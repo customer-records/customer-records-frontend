@@ -140,16 +140,10 @@ export default function Stocks() {
           <div className="buttons-block">
             <button
               className="round-button"
-              onClick={() => window.open("https://t.me/denta_rell", "_blank")}
+              onClick={() => window.open("https://t.me/doctorm_kazan", "_blank")}
             ></button>
             <button
               className="round-button"
-              onClick={() =>
-                window.open(
-                  "https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0",
-                  "_blank"
-                )
-              }
             ></button>
             <button
               className="write-button"

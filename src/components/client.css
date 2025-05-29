@@ -1,8 +1,8 @@
 button:focus {
-    outline: none; /* Убираем стандартный outline */
+  outline: none; /* Убираем стандартный outline */
 }
 button:active {
-    box-shadow: 0 0 0 2px #0077FF; /* Синяя тень вокруг кнопки */
+  box-shadow: 0 0 0 2px #0077ff; /* Синяя тень вокруг кнопки */
 }
 .fixed-container {
   position: fixed;
@@ -16,10 +16,10 @@ button:active {
   z-index: 999;
   padding: 16px;
 }
-.home{
+.home {
   width: 40px;
   height: 40px;
-  background-color: #0077FF;
+  background-color: #0077ff;
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -31,331 +31,339 @@ button:active {
 }
 /* хедер */
 .header {
-    height: 30vh; /* 30% высоты экрана */
-    min-height: 25vh;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-    color: white;
-    overflow: hidden;
-    background: url('../assets/companyback.jpg'); /* Замените на путь к вашему изображению */
-    background-size: cover;
-    background-position: center;
-    z-index: 0;
-    width: 100%;
-    border-bottom: 2px solid #0077FF;
-    border-bottom-right-radius: 40px;
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    pointer-events: none; /* Чтобы можно было взаимодействовать с элементами под затемнением */
-    z-index: -1;
-  }
-  .roundLogo{
-    background-color: #FFFFFF;
-    width: 74px;
-    height: 74px;
-    border-radius: 50%;
-    background-image: url(../assets/logo1.svg);
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-size:75%;
-    
-  }
-  .headWrap{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .header-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-   
-    z-index:-1;
-  }
-  
-  .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .online-booking-button {
-    background-color: #0077FF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-transform: uppercase;
-  }
-  .on-close-burger:focus, .on-close-burger:active {
-    outline: none !important;
-    box-shadow: none !important;
-  }
-  .on-close-burger{
-    outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-  .burger-menu-button:focus, .burger-menu-button:active {
-    outline: none !important;
-    box-shadow: none !important;
-  }
-  .burger-menu-button {
-    background: none;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px; /* Увеличили ширину в 2 раза */
-    height: 80px; /* Увеличили высоту в 2 раза */
-    outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-  
-  .burger-icon {
-    width: 38%;
-    height: 22px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .burger-icon::before,
-  .burger-icon::after,
-  .burger-icon div {
-    content: '';
-    width: 100%;
-    height: 4px; /* Увеличили толщину полосок в 2 раза */
-    background-color: #0077FF; /* Цвет полосок */
-    border-radius: 4px; /* Увеличили радиус скругления */
-  }
-  .header-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    height: 10vh;
-    justify-content: space-around;
-  }
-  
-  .service-name {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    margin: 0;
-    text-transform: uppercase;
-  }
-  
-  .company-name {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 300;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    margin: 0;
-    text-transform: uppercase;
-  }
+  height: 30vh; /* 30% высоты экрана */
+  min-height: 25vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  color: white;
+  overflow: hidden;
+  background: url("../assets/companyback.jpg"); /* Замените на путь к вашему изображению */
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  width: 100%;
+  border-bottom: 2px solid #0077ff;
+  border-bottom-right-radius: 40px;
+}
+.header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none; /* Чтобы можно было взаимодействовать с элементами под затемнением */
+  z-index: -1;
+}
+.roundLogo {
+  background-color: #ffffff;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background-image: url(https://muratov-doctor-m.ru/bitrix/templates/st/img/logo.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 75%;
+}
+.headWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  z-index: -1;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.online-booking-button {
+  background-color: #0077ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+.on-close-burger:focus,
+.on-close-burger:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.on-close-burger {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.burger-menu-button:focus,
+.burger-menu-button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.burger-menu-button {
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px; /* Увеличили ширину в 2 раза */
+  height: 80px; /* Увеличили высоту в 2 раза */
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.burger-icon {
+  width: 38%;
+  height: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.burger-icon::before,
+.burger-icon::after,
+.burger-icon div {
+  content: "";
+  width: 100%;
+  height: 4px; /* Увеличили толщину полосок в 2 раза */
+  background-color: #0077ff; /* Цвет полосок */
+  border-radius: 4px; /* Увеличили радиус скругления */
+}
+.header-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 10vh;
+  justify-content: space-around;
+}
+
+.service-name {
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.company-name {
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin: 0;
+  text-transform: uppercase;
+}
 
 /* секция с кнопками */
 .section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background-color: #ffffff; /* Фон блока */
-  }
-  
-  /* Заголовок */
-  .header-text {
-    text-align: center;
-    margin-bottom: 40px; /* Отступ от заголовка до кнопок */
-    text-align: center;
-    margin-bottom: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .zapisites {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: center;
-    text-transform: uppercase;
-    color: #0077FF;
-  }
-  
-  .na-priem {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: center;
-    text-transform: uppercase;
-    color: #000000;
-  }
-  
-  /* Кнопки */
-  .buttons-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Расстояние между кнопками */
-  }
-  
-  .custom-button {
-    width: 400px;
-    height: 64px;
-    padding: 0 14px;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    gap: 13px; /* Расстояние между иконкой и текстом */
-    border-radius: 30px;
-    background: #0077FF;
-    border: none;
-    cursor: pointer;
-  }
- .fast{
-    background: linear-gradient(92.3deg, #9C07FF 24.82%, #4F35EC 41.54%, #294CE3 57.3%, #0065D9 74.17%, #004799 91.1%);
-  }
-.center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #ffffff; /* Фон блока */
+}
+
+/* Заголовок */
+.header-text {
+  text-align: center;
+  margin-bottom: 40px; /* Отступ от заголовка до кнопок */
+  text-align: center;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.zapisites {
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #0077ff;
+}
+
+.na-priem {
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+/* Кнопки */
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Расстояние между кнопками */
+}
+
+.custom-button {
+  width: 400px;
+  height: 64px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 13px; /* Расстояние между иконкой и текстом */
+  border-radius: 30px;
+  background: #0077ff;
+  border: none;
+  cursor: pointer;
+}
+.fast {
+  background: linear-gradient(
+    92.3deg,
+    #9c07ff 24.82%,
+    #4f35ec 41.54%,
+    #294ce3 57.3%,
+    #0065d9 74.17%,
+    #004799 91.1%
+  );
+}
+.center {
   justify-content: center;
 }
-  .button-text {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: center;
-    text-transform: uppercase;
-    color: #FFFFFF;
-  }
-  
-  .button-icon {
-    /* Стили для иконки (добавьте свои иконки) */
-    width: 24px;
-    height: 24px;
-    background-color: transparent; /* Временный фон для визуализации */
-  }
-  
-  /* Полоска */
-  .divider {
-    width: 176px;
-    height: 1px;
-    border: 1px solid #0077FF;
-    margin-top: 40px; /* Отступ от кнопок до полоски */
-    background-color: #0077FF;
-  }
-  /* Контейнер для дополнительной кнопки */
+.button-text {
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.button-icon {
+  /* Стили для иконки (добавьте свои иконки) */
+  width: 24px;
+  height: 24px;
+  background-color: transparent; /* Временный фон для визуализации */
+}
+
+/* Полоска */
+.divider {
+  width: 176px;
+  height: 1px;
+  border: 1px solid #0077ff;
+  margin-top: 40px; /* Отступ от кнопок до полоски */
+  background-color: #0077ff;
+}
+/* Контейнер для дополнительной кнопки */
 .additional-button-container {
-    margin-top: 40px; 
-    display: flex;
-  }
-  /* Блок с кнопками */
+  margin-top: 40px;
+  display: flex;
+}
+/* Блок с кнопками */
 .buttons-block {
-    margin-top: 40px; 
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    margin-bottom: 40px;
-  }
-  
-  /* Круглые кнопки */
-  .round-button {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Делаем кнопку круглой */
-    border: none;
-    background-color: #ffffff; 
-    cursor: pointer;
-    background-size: cover; /* Масштабируем изображение, чтобы оно заполнило кнопку */
-    background-position: center; /* Центрируем изображение */
-    cursor: pointer;
-  }
-  .round-button:nth-child(1) {
-    background-image: url('../assets/tg.svg'); 
-    width: 40px;
-    height: 40px;
-  }
-  
-  .round-button:nth-child(2) {
-    background-image: url('../assets/WhatsAppOutlined.svg'); 
-    width: 45px;
-    height: 45px;
-  }
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+/* Круглые кнопки */
+.round-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Делаем кнопку круглой */
+  border: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  background-size: cover; /* Масштабируем изображение, чтобы оно заполнило кнопку */
+  background-position: center; /* Центрируем изображение */
+  cursor: pointer;
+}
+.round-button:nth-child(1) {
+  background-image: url("../assets/tg.svg");
+  width: 40px;
+  height: 40px;
+}
+
+.round-button:nth-child(2) {
+  background-image: url("../assets/WhatsAppOutlined.svg");
+  width: 45px;
+  height: 45px;
+}
 .write-button {
-    width: 181px;
-    height: 40px;
-    padding: 0; /* Убираем padding-top и padding-bottom */
-    border: none;
-    border-radius: 20px;
-    background-color: #0077FF; /* Цвет фона */
-    color: white; /* Цвет текста */
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: auto; /* Выравниваем справа */
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-  }
-  .write-button:disabled {
-    background-color: #cccccc !important;
-    color: #666666 !important;
-    cursor: not-allowed;
-  }
-  
-  .login-button {
-    width: 350px;
-    height: 40px;
-    padding: 0 14px; 
-    margin-top: 10px;
-    border: none;
-    border-radius: 20px;
-    background-color: #0077FF; /* Цвет фона */
-    color: white; /* Цвет текста */
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 13px; /* Отступ между иконкой и текстом (если будет иконка) */
-  }
-  .login-button:disabled{
-    background-color: #cccccc !important;
-    color: #666666 !important;
-    cursor: not-allowed;
-  }
-  .MuiDateCalendar-root {
+  width: 181px;
+  height: 40px;
+  padding: 0; /* Убираем padding-top и padding-bottom */
+  border: none;
+  border-radius: 20px;
+  background-color: #0077ff; /* Цвет фона */
+  color: white; /* Цвет текста */
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: auto; /* Выравниваем справа */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.write-button:disabled {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed;
+}
+
+.login-button {
+  width: 350px;
+  height: 40px;
+  padding: 0 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #0077ff; /* Цвет фона */
+  color: white; /* Цвет текста */
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px; /* Отступ между иконкой и текстом (если будет иконка) */
+}
+.login-button:disabled {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed;
+}
+.MuiDateCalendar-root {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
@@ -370,19 +378,19 @@ button:active {
 }
 
 .custom-calendar .Mui-selected {
-  background-color: #1976D2;
+  background-color: #1976d2;
   color: white;
 }
 
 .custom-calendar .MuiPickersDay-today {
-  border-color: #1976D2;
-  color: #1976D2;
+  border-color: #1976d2;
+  color: #1976d2;
 }
 
 .custom-calendar .Mui-selected.MuiPickersDay-today {
-  background-color: #1976D2;
+  background-color: #1976d2;
   color: white;
-  border-color: #1976D2;
+  border-color: #1976d2;
 }
 .custom-calendar .MuiPickersCalendarHeader-label {
   color: black;
@@ -414,7 +422,7 @@ button:active {
 }
 
 .specialist-avatar {
-  background-color: #BDBDBD;
+  background-color: #bdbdbd;
   width: 40px;
   height: 40px;
 }
@@ -429,13 +437,13 @@ button:active {
   width: 352px;
   height: 40px;
   border-radius: 20px;
-  background-color: #0077FF;
+  background-color: #0077ff;
   color: white;
   text-transform: none;
 }
 
 .next-button:hover {
-  background-color: #005BB5;
+  background-color: #005bb5;
 }
 /* Стили для календаря */
 .custom-calendar {
@@ -447,19 +455,19 @@ button:active {
 }
 
 .custom-calendar .Mui-selected {
-  background-color: #1976D2;
+  background-color: #1976d2;
   color: white;
 }
 
 .custom-calendar .MuiPickersDay-today {
-  border-color: #1976D2;
-  color: #1976D2;
+  border-color: #1976d2;
+  color: #1976d2;
 }
 
 .custom-calendar .Mui-selected.MuiPickersDay-today {
-  background-color: #1976D2;
+  background-color: #1976d2;
   color: white;
-  border-color: #1976D2;
+  border-color: #1976d2;
 }
 
 .custom-calendar .MuiPickersCalendarHeader-label {
@@ -492,7 +500,7 @@ button:active {
 }
 
 .specialist-avatar {
-  background-color: #BDBDBD;
+  background-color: #bdbdbd;
   width: 40px;
   height: 40px;
 }
@@ -507,104 +515,102 @@ button:active {
   width: 352px;
   height: 40px;
   border-radius: 20px;
-  background-color: #0077FF;
+  background-color: #0077ff;
   color: white;
   text-transform: none;
 }
 
 .next-button:hover {
-  background-color: #005BB5;
+  background-color: #005bb5;
 }
-@media (max-width:400px) {
-  .round-button{
+@media (max-width: 400px) {
+  .round-button {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
   }
-  .write-button{
+  .write-button {
     width: 171px;
     height: 35px;
     font-size: 14px;
   }
-  .online-booking-button{
+  .online-booking-button {
     font-size: 13px;
   }
-  .burger-menu-button{
+  .burger-menu-button {
     width: 70px;
     height: 60px;
   }
   .header-bottom {
     height: 8vh;
   }
-  .roundLogo{
+  .roundLogo {
     width: 64px;
     height: 64px;
   }
-  .button-icon{
+  .button-icon {
     width: 18px;
   }
-  .login-button{
+  .login-button {
     width: 90%;
   }
-  .service-name{
+  .service-name {
     font-size: 20px;
   }
-  .company-name{
+  .company-name {
     font-size: 20px;
   }
-  .custom-button{
+  .custom-button {
     width: 100%;
     height: 55px;
   }
   /* .additional-button-container {
     width: 85vw;
   } */
-  .button-text{
+  .button-text {
     font-size: 5.5vw;
     white-space: nowrap;
   }
-  .zapisites{
+  .zapisites {
     font-size: 5.5vw;
   }
-  .na-priem{
+  .na-priem {
     font-size: 5.5vw;
   }
 }
-@media(max-height:830px){
-  .button-text{
+@media (max-height: 830px) {
+  .button-text {
     font-size: 1rem;
-    
   }
-  .custom-button{
+  .custom-button {
     width: 300px;
     height: 45px;
   }
 }
-@media(max-width:350px){
-  .button-text{
+@media (max-width: 350px) {
+  .button-text {
     font-size: 5vw;
-    
   }
-  .custom-button{
+  .custom-button {
     width: 100%;
     height: 45px;
   }
 }
-@media(max-height:800px) and (max-width:450px){
-  .zapisites{
+@media (max-height: 800px) and (max-width: 450px) {
+  .zapisites {
     font-size: 5.5vw;
   }
-  .na-priem{
+  .na-priem {
     font-size: 5.5vw;
   }
 }
-@media(max-height:755px){
-  .online-booking-button{
+@media (max-height: 755px) {
+  .online-booking-button {
     font-size: 13px;
   }
 }
-@media(max-width:330px){
-  .online-booking-button{
+@media (max-width: 330px) {
+  .online-booking-button {
     font-size: 11px;
   }
 }

@@ -39,11 +39,11 @@ export default function MenuList({
   const returnAtrLink = (indx: number) => {
     switch (indx) {
       case 0:
-        return "tel:+79178585217";
+        return "tel:+7 (843) 251‒51‒12";
       case 1:
-        return "https://api.whatsapp.com/send/?phone=79178585217&text=Здравствуйте!%0A%0AПишу+из+приложения.%0A%0A&type=phone_number&app_absent=0";
+        return "";
       case 2:
-        return "https://t.me/denta_rell";
+        return "https://t.me/doctorm_kazan";
       case 3:
         return "/client/contacts";
       default:

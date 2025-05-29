@@ -1,28 +1,28 @@
 import { Button } from "@mui/material";
 
-export default function ButtonMap({img,name, type}:any){
-    const handleClick = (type:string) => {
-        if(type == 'YA') window.open('https://yandex.ru/maps/org/denta_rell/1352511434/?ll=49.212080%2C55.753306&z=14', '_blank', 'noopener,noreferrer');
-        else window.open('https://2gis.ru/kazan/search/дента%20рель%20/firm/2956015536907162/49.212087%2C55.753295?m=49.212065%2C55.753312%2F17.7', '_blank', 'noopener,noreferrer');
+export default function ButtonMap({ img, name, type }: any) {
+    const handleClick = (type: string) => {
+        if (type == 'YA') window.open('https://yandex.ru/maps/org/doktor_m/1335410661/?ll=49.154084%2C55.824219&z=15', '_blank', 'noopener,noreferrer');
+        else window.open('https://2gis.ru/kazan/firm/70000001029827693', '_blank', 'noopener,noreferrer');
     }
-return (
-    <>
-    <Button                
-    sx={{ 
-        ...buttonStyle,  
-        border: '1px solid #0077FF', 
-        color: '#FFFFFF',
-        fontWeight:'700',
-        fontSize:'14px',
-        textWrap:'nowrap'
-    }}
-    onClick={()=>handleClick(type)}
-    >
-        <img loading="eager" fetchPriority="high" src={img} alt='назад'></img>
-        {name}
-    </Button>
-    </>
-)
+    return (
+        <>
+            <Button
+                sx={{
+                    ...buttonStyle,
+                    border: '1px solid #0077FF',
+                    color: '#FFFFFF',
+                    fontWeight: '700',
+                    fontSize: '14px',
+                    textWrap: 'nowrap'
+                }}
+                onClick={() => handleClick(type)}
+            >
+                <img loading="eager" fetchPriority="high" src={img} alt='назад'></img>
+                {name}
+            </Button>
+        </>
+    )
 }
 const buttonStyle = {
     width: 227,
