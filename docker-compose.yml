@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  frontend:
+  frontend-hook:
     build: .
     ports:
       - "127.0.0.1:7979:80"
