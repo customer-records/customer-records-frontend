@@ -14,5 +14,6 @@ services:
       # nginx-конфиг внутри контейнера
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
-      # Вся папка с сертификатами
-      - /etc/letsencrypt/live/berlooga.ru/:/etc/nginx/certs/:ro
+      # SSL-сертификаты для berlooga.ru
+      - /etc/letsencrypt/live/berlooga.ru/fullchain.pem:/etc/nginx/certs/fullchain.pem:ro
+      - /etc/letsencrypt/live/berlooga.ru/privkey.pem:/etc/nginx/certs/privkey.pem:ro
