@@ -1,6 +1,6 @@
 # Тестовый стенд
 services:
-  frontend_test:
+  frontend_hookah:
     build:
       context: .
       dockerfile: Dockerfile
