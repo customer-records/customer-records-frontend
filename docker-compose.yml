@@ -3,7 +3,7 @@ services:
   frontend:
     build: .
     ports:
-      - "80:80"
+      - "127.0.0.1:7979:80"
       - "443:443"
     environment:
       # относительный путь, чтобы всё шло через Nginx
