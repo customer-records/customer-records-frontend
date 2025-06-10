@@ -5,10 +5,11 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "127.0.0.1:8080:80" # теперь только HTTP
+      - "127.0.0.1:8080:80" # только HTTP
     environment:
       - VITE_API_URL=http://94.228.120.140:4004
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
+      # единственный nginx-конфиг, без SSL
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
