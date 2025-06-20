@@ -13,11 +13,11 @@ const menuItems = [
     specialist: "Контакты",
     services: ["+7 (995) - 007 - 51 - 75", "Хусаина Мавлютовва 46"],
   },
-  {
-    id: 5,
-    specialist: "Акции",
-    services: [],
-  },
+  // {
+  //   id: 5,
+  //   specialist: "Акции",
+  //   services: [],
+  // },
 ];
 
 export default function BurgerMenu({ onClose }: any) {
