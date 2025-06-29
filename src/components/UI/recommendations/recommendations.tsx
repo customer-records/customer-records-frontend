@@ -82,6 +82,7 @@ export default function RecomendationPage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          padding: '10px 10px'
         }}
       >
         <Typography
@@ -109,6 +110,7 @@ export default function RecomendationPage() {
             borderRadius: "20px",
             mb: 2,
             "&:before": { display: "none" },
+
           }}
         >
           <AccordionSummary

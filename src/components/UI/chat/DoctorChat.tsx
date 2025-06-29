@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Avatar,
   Box,
@@ -11,6 +11,11 @@ import {
   createTheme,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+
+type ChatMessage = {
+  text: string;
+  from: 'user' | 'bot';
+};
 
 const DoctorChat: React.FC = () => {
   const theme = createTheme({
@@ -42,47 +47,61 @@ const DoctorChat: React.FC = () => {
     },
   };
 
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  const SAFE_FALLBACK_ANSWER =
+    'Извините, сервис временно недоступен. Мы свяжемся с вами позже.';
+
+  const handleSend = async () => {
+    if (inputValue.trim() === '') return;
+
+    const userMessage: ChatMessage = {
+      text: inputValue.trim(),
+      from: 'user',
+    };
+    setMessages((prev) => [...prev, userMessage]);
+    const textToSend = inputValue.trim();
+    setInputValue('');
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${apiUrl}/giga-chat/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: textToSend }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Giga Chat сервис не отвечает');
+      }
+
+      const data = await response.json();
+      const botMessage: ChatMessage = {
+        text: data.answer || SAFE_FALLBACK_ANSWER,
+        from: 'bot',
+      };
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      console.error(error);
+      const botMessage: ChatMessage = {
+        text: SAFE_FALLBACK_ANSWER,
+        from: 'bot',
+      };
+      setMessages((prev) => [...prev, botMessage]);
+    }
+  };
+
   useEffect(() => {
-    const input = document.querySelector('input');
-    if (!input) return;
-
-    const preventScroll = (e: TouchEvent) => {
-      e.preventDefault();
-    };
-
-    const handleFocus = () => {
-      window.scrollTo(0, 0);
-
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-      document.body.addEventListener('touchmove', preventScroll, { passive: false });
-
-      setTimeout(() => {
-        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 300);
-    };
-
-    const handleBlur = () => {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      document.body.removeEventListener('touchmove', preventScroll);
-    };
-
-    input.addEventListener('focus', handleFocus);
-    input.addEventListener('blur', handleBlur);
-
-    return () => {
-      input.removeEventListener('focus', handleFocus);
-      input.removeEventListener('blur', handleBlur);
-      document.body.removeEventListener('touchmove', preventScroll);
-    };
-  }, []);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
     <Box
       sx={{
         width: '80%',
-        maxHeight: { xs: '60dvh', md: '55dvh' },
+        maxHeight: { xs: '70%', md: '70%' },
         minHeight: 400,
         border: '1px solid #c6d2f0',
         borderRadius: 3,
@@ -128,6 +147,7 @@ const DoctorChat: React.FC = () => {
           p: 1.5,
           bgcolor: '#fff',
           borderRadius: 2,
+          display: messages.length > 0 ? 'none' : 'block',
         }}
       >
         <Typography
@@ -150,7 +170,41 @@ const DoctorChat: React.FC = () => {
 
       <Box
         sx={{
-          mt: 'auto',
+          flex: 1,
+          overflowY: 'auto',
+          px: 2,
+        }}
+      >
+        {messages.map((msg, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: 'flex',
+              justifyContent: msg.from === 'user' ? 'flex-end' : 'flex-start',
+              my: 0.5,
+            }}
+          >
+            <Paper
+              elevation={1}
+              sx={{
+                p: 1,
+                bgcolor: msg.from === 'user' ? '#1976d2' : '#e0e0e0',
+                color: msg.from === 'user' ? '#fff' : '#000',
+                borderRadius: 2,
+                maxWidth: '80%',
+              }}
+            >
+              <Typography sx={{ fontSize: isDesktop ? '12px' : '10px' }}>
+                {msg.text}
+              </Typography>
+            </Paper>
+          </Box>
+        ))}
+        <div ref={messagesEndRef} />
+      </Box>
+
+      <Box
+        sx={{
           display: 'flex',
           borderTop: '1px solid #ddd',
           px: 1,
@@ -162,10 +216,18 @@ const DoctorChat: React.FC = () => {
           placeholder="Напишите нам свой вопрос"
           variant="standard"
           fullWidth
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
           InputProps={{ disableUnderline: true }}
           sx={{ fontSize: isDesktop ? '14px' : '11px' }}
         />
-        <IconButton color="primary">
+        <IconButton color="primary" onClick={handleSend}>
           <SendIcon />
         </IconButton>
       </Box>
